@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    background-color: rgb(28, 28, 33);
+}
+
+.container {
+    display: flex;
+    margin-left: 320px;
+    margin-right: 320px;
+    width: 100%;
+}
+
+.sector {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.centralSector {
+    justify-content: center;
+}
+
+.rightSector {
+    justify-content: flex-start;
+}
+
+.leftSector {
+    justify-content: flex-end;
+}
