@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app';
+import App from './app/app';
+import "./index.css";
 import '@ya.praktikum/react-developer-burger-ui-components';
 
 const root = ReactDOM.createRoot(

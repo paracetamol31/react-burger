@@ -15,13 +15,13 @@ const AppHeader = (props) => {
         <header className={appHeaderStyles.header}>
             <div className={appHeaderStyles.container}>
                 <div className={`${appHeaderStyles.sector} ${appHeaderStyles.rightSector}`}>
-                    {/* TODO: После добавления роутинга теги <p> будут заменены */}
-                    <p href=""><СonstructorTab text="Конструктор" /></p>
-                    <p href="" className="ml-2"><OrderFeedTab text="Лента заказов" /></p>
+                    {/* TODO: После добавления роутинга теги <div> будут заменены */}
+                    <div href=""><СonstructorTab text="Конструктор" /></div>
+                    <div href="" className="ml-2"><OrderFeedTab text="Лента заказов" /></div>
                 </div>
                 <div className={`${appHeaderStyles.sector} ${appHeaderStyles.centralSector}`}>{<Logo />}</div>
                 <div className={`${appHeaderStyles.sector} ${appHeaderStyles.leftSector}`}>
-                    <p href=""><PersonalAccountTa text="Личный кабинет" /></p>
+                    <div href=""><PersonalAccountTa text="Личный кабинет" /></div>
                 </div>
             </div>
         </header>
