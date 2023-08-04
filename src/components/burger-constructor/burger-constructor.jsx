@@ -6,7 +6,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import data from "../../utils/data";
-import { generateKey } from "../../utils/helper-system";
 
 const BurgerConstructor = () => {
     return (
@@ -23,7 +22,7 @@ const BurgerConstructor = () => {
             <div className={burgerConstructorStyles.scrollBar}>
                 {data.map((item) => {
                     return (
-                        <div key={generateKey()} className={burgerConstructorStyles.wrapperConstructorElement}>
+                        <div key={item._id} className={burgerConstructorStyles.wrapperConstructorElement}>
                             <DragIcon />
                             < ConstructorElement
                                 extraClass="ml-2"

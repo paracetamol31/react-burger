@@ -5,6 +5,13 @@
     width: 100%;
 }
 
+.link,
+.link:hover,
+.link:active {
+    text-decoration: none;
+    color: white;
+}
+
 .container {
     display: flex;
     width: 1240px;
