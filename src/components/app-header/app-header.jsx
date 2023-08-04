@@ -7,7 +7,7 @@ import {
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const AppHeader = (props) => {
+const AppHeader = () => {
     const СonstructorTab = headerMenuItem(BurgerIcon, true);
     const OrderFeedTab = headerMenuItem(ListIcon)
     const PersonalAccountTa = headerMenuItem(ProfileIcon);
@@ -27,5 +27,7 @@ const AppHeader = (props) => {
         </header>
     )
 }
+
+
 
 export default AppHeader;

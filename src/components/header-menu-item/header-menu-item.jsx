@@ -1,4 +1,5 @@
 import headerMenuitemStyles from "./header-menu-item.module.css";
+import PropTypes from "prop-types";
 
 const headerMenuItem = (Icon, isTarget = false) => (props) => {
     return (
@@ -7,6 +8,11 @@ const headerMenuItem = (Icon, isTarget = false) => (props) => {
             <span className={`${!isTarget && "text_color_inactive"} text_type_main-default ml-2 `}>{props.text}</span>
         </div >
     )
+}
+
+headerMenuItem.propTypes = {
+    Icon: PropTypes.node,
+    isTarget: PropTypes.number
 }
 
 export default headerMenuItem;

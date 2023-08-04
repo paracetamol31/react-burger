@@ -4,6 +4,7 @@ import {
     CurrencyIcon,
     Counter
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from "prop-types";
 
 const IngredientСard = (props) => {
     const [counter, setCounter] = React.useState(1);
@@ -17,6 +18,12 @@ const IngredientСard = (props) => {
         </div>
         <span className={`${ingredientСardStyles.ingredientName} text text_type_main-default`}>{props.name}</span>
     </div>
+}
+
+IngredientСard.propTypes = {
+    image: PropTypes.string,
+    price: PropTypes.number,
+    name: PropTypes.string
 }
 
 export default IngredientСard;

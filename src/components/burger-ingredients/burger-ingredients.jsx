@@ -1,3 +1,4 @@
+import { generateKey } from "../../utils/helper-system";
 import IngredientsSection from "../ingredients-section/ingredients-section";
 import TabsPanel from "../panel-tabs/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
@@ -26,9 +27,9 @@ const BurgerIngredients = () => {
                 currentId={0}
             />
             <div className={`${burgerIngredientsStyles.scrollBar} pr-4 pl-4`}>
-                <IngredientsSection categoryName="Булки" type="bun" />
-                <IngredientsSection categoryName="Соусы" type="sauce" />
-                <IngredientsSection categoryName="Начинки" type="main" />
+                <IngredientsSection key={generateKey()} categoryName="Булки" type="bun" />
+                <IngredientsSection key={generateKey()} categoryName="Соусы" type="sauce" />
+                <IngredientsSection key={generateKey()} categoryName="Начинки" type="main" />
             </div>
         </section>
     )
