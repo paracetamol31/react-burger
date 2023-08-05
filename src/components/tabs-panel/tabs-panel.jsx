@@ -1,7 +1,8 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import tabsPanelStyles from "./tabs-panel.module.css";
-import React from 'react';
 import PropTypes from "prop-types";
+import React from 'react';
+
+import tabsPanelStyles from "./tabs-panel.module.css";
 
 const TabsPanel = (props) => {
     const [current, setCurrent] = React.useState(props.currentId);

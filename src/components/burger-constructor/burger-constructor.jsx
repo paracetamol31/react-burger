@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import {
     ConstructorElement,
     DragIcon,
@@ -5,9 +7,8 @@ import {
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import data from "../../utils/data";
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ingredientsData}) => {
     return (
         <section className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
             <div className={burgerConstructorStyles.wrapperConstructorElement}>
@@ -16,11 +17,11 @@ const BurgerConstructor = () => {
                     isLocked={true}
                     text="Краторная булка N-200i (верх)"
                     price={200}
-                    thumbnail={data[0].image}
+                    thumbnail={ingredientsData[0].image}
                 />
             </div>
             <div className={burgerConstructorStyles.scrollBar}>
-                {data.map((item) => {
+                {ingredientsData.map((item) => {
                     return (
                         <div key={item._id} className={burgerConstructorStyles.wrapperConstructorElement}>
                             <DragIcon />
@@ -40,7 +41,7 @@ const BurgerConstructor = () => {
                     isLocked={true}
                     text="Краторная булка N-200i (низ)"
                     price={200}
-                    thumbnail={data[0].image}
+                    thumbnail={ingredientsData[0].image}
                 />
             </div>
             <footer className={`${burgerConstructorStyles.footer} mt-10 mb-10 mr-4`}>
@@ -54,6 +55,10 @@ const BurgerConstructor = () => {
             </footer>
         </section>
     )
+}
+
+BurgerConstructor.propTypes = {
+    ingredientsData: PropTypes.object
 }
 
 export default BurgerConstructor;

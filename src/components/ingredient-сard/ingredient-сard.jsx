@@ -1,4 +1,3 @@
-import React from "react";
 import ingredientСardStyles from "./ingredient-сard.module.css";
 import {
     CurrencyIcon,
