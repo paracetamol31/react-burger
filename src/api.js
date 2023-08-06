@@ -12,7 +12,6 @@ export const makeRequestIngredients = async () => {
     try {
         const response = await fetch(urlRequestIngredients);
         const data = await response.json();
-        debugger
         return {
             data: data.data,
             requestStatus: RequestStatusEnum.Success

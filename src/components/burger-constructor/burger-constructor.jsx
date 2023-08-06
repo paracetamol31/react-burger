@@ -1,14 +1,23 @@
+import React from "react";
 import PropTypes from "prop-types";
-
 import {
     ConstructorElement,
     DragIcon,
     CurrencyIcon,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import burgerConstructorStyles from "./burger-constructor.module.css";
 
-const BurgerConstructor = ({ingredientsData}) => {
+import burgerConstructorStyles from "./burger-constructor.module.css";
+import ModalPortal from "../modal-portal/modal-portal";
+import OrderDetails from "../order-details/order-details";
+
+const BurgerConstructor = ({ ingredientsData }) => {
+    const [isOpenModalOrderDetails, setOpenModalOrderDetails] = React.useState(false);
+
+    const openModalOrderDetails = React.useCallback(() => {
+        setOpenModalOrderDetails(true)
+    }, [setOpenModalOrderDetails]);
+
     return (
         <section className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
             <div className={burgerConstructorStyles.wrapperConstructorElement}>
@@ -47,12 +56,17 @@ const BurgerConstructor = ({ingredientsData}) => {
             <footer className={`${burgerConstructorStyles.footer} mt-10 mb-10 mr-4`}>
                 <div className={burgerConstructorStyles.footerContentWraper}>
                     <span className="text text_type_main-large mr-2">999</span>
-                    <CurrencyIcon type="primary"/>
-                    <Button htmlType="button" type="primary" size="medium" extraClass="ml-10">
+                    <CurrencyIcon type="primary" />
+                    <Button htmlType="button" type="primary" size="medium" extraClass="ml-10"
+                        onClick={openModalOrderDetails}>
                         Оформить заказ
                     </Button>
                 </div>
             </footer>
+            {isOpenModalOrderDetails
+                && <ModalPortal setVisibleModalWindow={setOpenModalOrderDetails}>
+                    < OrderDetails />
+                </ModalPortal>}
         </section>
     )
 }
