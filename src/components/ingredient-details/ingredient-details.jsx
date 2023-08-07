@@ -4,7 +4,6 @@ import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient characteristics";
 
 const IngredientDetails = (props) => {
-    debugger
     return (
         <section className={ingredientCharacteristicsStyles.wrapper}>
             <img src={props.image_large} alt="Изображение ингредиента"></img>

@@ -8,8 +8,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import ModalPortal from "../modal-portal/modal-portal";
 import OrderDetails from "../order-details/order-details";
+import Modal from "../modal/modal";
 
 const BurgerConstructor = ({ ingredientsData }) => {
     const [isOpenModalOrderDetails, setOpenModalOrderDetails] = React.useState(false);
@@ -64,9 +64,9 @@ const BurgerConstructor = ({ ingredientsData }) => {
                 </div>
             </footer>
             {isOpenModalOrderDetails
-                && <ModalPortal setVisibleModalWindow={setOpenModalOrderDetails}>
+                && <Modal setVisibleModalWindow={setOpenModalOrderDetails} >
                     < OrderDetails />
-                </ModalPortal>}
+                </Modal>}
         </section>
     )
 }

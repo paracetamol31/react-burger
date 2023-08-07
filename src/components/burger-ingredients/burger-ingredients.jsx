@@ -6,15 +6,15 @@ import burgerIngredientsStyles from "./burger-ingredients.module.css";
 
 const tabsInfo = [
     {
-        text: "Булки",
+        label: "Булки",
         id: 0
     },
     {
-        text: "Соусы",
+        label: "Соусы",
         id: 1
     },
     {
-        text: "Начинки",
+        label: "Начинки",
         id: 2
     }
 ];

@@ -1,6 +1,6 @@
 import orderDetailsStyles from "./order-details.module.css";
 
-import checkIcon from "../../check.svg"
+import checkIcon from "../../images/check.svg"
 
 const OrderDetails = () => {
     return (

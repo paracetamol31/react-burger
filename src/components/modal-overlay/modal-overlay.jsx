@@ -4,24 +4,8 @@ import React from "react";
 import modalOverlayStyles from "./modal-overlay.module.css";
 
 const ModalOverlay = ({ setVisibleModalWindow, children }) => {
-    const closeModal = React.useCallback((event) => {
-        event.stopPropagation();
-        setVisibleModalWindow(false);
-    }, [setVisibleModalWindow])
-
-    const onEscDown = React.useCallback((event) => {
-        if (event.code === "Escape") {
-            closeModal(event);
-        }
-    }, [closeModal])
-
-    React.useEffect(() => {
-        window.addEventListener("keydown", onEscDown)
-        return (() => window.removeEventListener("keydown", onEscDown))
-    }, [onEscDown])
-
     return (
-        <section onClick={closeModal} className={modalOverlayStyles.modalOverlay}>
+        <section onClick={setVisibleModalWindow} className={modalOverlayStyles.modalOverlay}>
             {children}
         </section>
     )

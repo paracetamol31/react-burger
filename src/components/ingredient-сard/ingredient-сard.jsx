@@ -7,8 +7,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ingredientСardStyles from "./ingredient-сard.module.css";
-import ModalPortal from "../modal-portal/modal-portal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 const IngredientСard = (props) => {
     const [isOpenModal, setOpenModal] = React.useState(false);
@@ -26,10 +26,12 @@ const IngredientСard = (props) => {
             <CurrencyIcon type="primary" />
         </div>
         <span className={`${ingredientСardStyles.ingredientName} text text_type_main-default`}>{props.name}</span>
+        {/* TODO: Пока не придумал, как управлять видимостью модалки из компонента Modal. Если вынести  isOpenModal в Modal,
+        возникают проблемы с открытием модалки по клику на ингредиент. */}
         {isOpenModal
-            && <ModalPortal setVisibleModalWindow={setOpenModal} label={"Детали ингредиента"}>
+            && <Modal setVisibleModalWindow={setOpenModal} label={"Детали ингредиента"}>
                 <IngredientDetails {...props} />
-            </ModalPortal>}
+            </Modal>}
     </div>
 }
 

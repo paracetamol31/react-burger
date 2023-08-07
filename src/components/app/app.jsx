@@ -7,7 +7,7 @@ import appStyles from "./app.module.css";
 import {
   RequestStatusEnum,
   makeRequestIngredients
-} from "../../api";
+} from "../../utils/api";
 
 function App() {
   const [ingredientsData, setIngredientsData] = React.useState({ requestStatus: RequestStatusEnum.Loading })

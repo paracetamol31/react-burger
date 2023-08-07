@@ -10,7 +10,7 @@ const TabsPanel = (props) => {
         <div className={tabsPanelStyles.tabsPanel} >
             {props.tabsInfo.map((item) => {
                 return <Tab key={item.id} value={item.id} active={current === item.id} onClick={setCurrent}>
-                    {item.text}
+                    {item.label}
                 </Tab>
             })}
         </div>
@@ -19,7 +19,7 @@ const TabsPanel = (props) => {
 
 const tabsInfoTypes = PropTypes.shape({
     id: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired
 });
 
 TabsPanel.propTypes = {
