@@ -1,0 +1,16 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 244px;
+}
+
+.priceFrame {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.ingredientName {
+    text-align: center;
+}

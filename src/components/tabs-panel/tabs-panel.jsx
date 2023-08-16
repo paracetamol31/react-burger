@@ -1,0 +1,30 @@
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from "prop-types";
+import React from 'react';
+
+import tabsPanelStyles from "./tabs-panel.module.css";
+
+const TabsPanel = (props) => {
+    const [current, setCurrent] = React.useState(props.currentId);
+    return (
+        <div className={tabsPanelStyles.tabsPanel} >
+            {props.tabsInfo.map((item) => {
+                return <Tab key={item.id} value={item.id} active={current === item.id} onClick={setCurrent}>
+                    {item.label}
+                </Tab>
+            })}
+        </div>
+    )
+}
+
+const tabsInfoTypes = PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired
+});
+
+TabsPanel.propTypes = {
+    tabsInfo: PropTypes.arrayOf(tabsInfoTypes).isRequired,
+    currentId: PropTypes.number
+}
+
+export default TabsPanel;

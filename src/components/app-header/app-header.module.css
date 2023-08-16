@@ -1,0 +1,37 @@
+.header {
+    display: flex;
+    background-color: rgb(28, 28, 33);
+    justify-content: center;
+    width: 100%;
+}
+
+.link,
+.link:hover,
+.link:active {
+    text-decoration: none;
+    color: white;
+}
+
+.container {
+    display: flex;
+    width: 1240px;
+}
+
+.sector {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.centralSector {
+    justify-content: center;
+}
+
+.rightSector {
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.leftSector {
+    justify-content: flex-end;
+}

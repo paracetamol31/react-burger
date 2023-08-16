@@ -1,0 +1,40 @@
+.modalContainer {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalWindow {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 720px;
+    background-color: rgb(28, 28, 33);
+    border-radius: 30px;
+    border: 1px solid rgb(38, 38, 77);
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.label {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
