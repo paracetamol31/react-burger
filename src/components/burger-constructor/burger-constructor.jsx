@@ -1,78 +1,48 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-    ConstructorElement,
-    DragIcon,
-    CurrencyIcon,
-    Button
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useContext } from "react";
 
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
+import BurgerConstructorItem from "../burger-сonstructor-item/burger-сonstructor-item";
+import { IngredientsDataContext } from "../../services/ingredients-data-context";
+import OrderConstructorpPanel from "../order-constructor-panel/order-constructor-panel";
 
-const BurgerConstructor = ({ ingredientsData }) => {
-    const [isOpenModalOrderDetails, setOpenModalOrderDetails] = React.useState(false);
-
-    const openModalOrderDetails = React.useCallback(() => {
-        setOpenModalOrderDetails(true)
-    }, [setOpenModalOrderDetails]);
+const BurgerConstructor = () => {
+    const { ingredientsData } = useContext(IngredientsDataContext);
+    const bun = ingredientsData.find(item => item.type === "bun");
 
     return (
         <section className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
-            <div className={burgerConstructorStyles.wrapperConstructorElement}>
-                <ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={ingredientsData[0].image}
-                />
-            </div>
+            <BurgerConstructorItem
+                type="top"
+                isLocked={true}
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image}
+            />
             <div className={burgerConstructorStyles.scrollBar}>
                 {ingredientsData.map((item) => {
                     return (
-                        <div key={item._id} className={burgerConstructorStyles.wrapperConstructorElement}>
-                            <DragIcon />
-                            < ConstructorElement
-                                extraClass="ml-2"
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </div>
+                        item.type !== "bun"
+                        &&
+                        <BurgerConstructorItem
+                            key={item._id}
+                            extraClass="ml-2"
+                            text={item.name}
+                            price={item.price}
+                            thumbnail={item.image}
+                        />
                     )
                 })}
             </div>
-            <div className={burgerConstructorStyles.wrapperConstructorElement}>
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={200}
-                    thumbnail={ingredientsData[0].image}
-                />
-            </div>
-            <footer className={`${burgerConstructorStyles.footer} mt-10 mb-10 mr-4`}>
-                <div className={burgerConstructorStyles.footerContentWraper}>
-                    <span className="text text_type_main-large mr-2">999</span>
-                    <CurrencyIcon type="primary" />
-                    <Button htmlType="button" type="primary" size="medium" extraClass="ml-10"
-                        onClick={openModalOrderDetails}>
-                        Оформить заказ
-                    </Button>
-                </div>
-            </footer>
-            {isOpenModalOrderDetails
-                && <Modal setVisibleModalWindow={setOpenModalOrderDetails} >
-                    < OrderDetails />
-                </Modal>}
+            <BurgerConstructorItem
+                type="bottom"
+                isLocked={true}
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image}
+            />
+            <OrderConstructorpPanel />
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    ingredientsData: PropTypes.object
 }
 
 export default BurgerConstructor;

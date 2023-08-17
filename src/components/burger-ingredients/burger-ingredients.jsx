@@ -39,7 +39,7 @@ const BurgerIngredients = ({ ingredientsData }) => {
 }
 
 BurgerIngredients.propTypes = {
-    ingredientsData: PropTypes.object
+    ingredientsData: PropTypes.array
 }
 
 export default BurgerIngredients;

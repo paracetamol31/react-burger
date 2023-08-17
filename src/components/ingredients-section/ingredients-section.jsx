@@ -14,10 +14,10 @@ const IngredientsSection = (props) => {
     )
 }
 
-IngredientСard.propTypes = {
+IngredientsSection.propTypes = {
     type: PropTypes.string.isRequired,
     categoryName: PropTypes.string.isRequired,
-    ingredientsData: PropTypes.string.isRequired
+    ingredientsData: PropTypes.array.isRequired
 }
 
 export default IngredientsSection;
