@@ -16,7 +16,12 @@ function App() {
 
   React.useEffect(() => {
     const makeRequest = async () => {
-      setIngredientsData(await makeRequestIngredients())
+      try {
+        setIngredientsData(await makeRequestIngredients());
+      } catch (e) {
+        console.error(e);
+        setIngredientsData({ requestStatus: RequestStatusEnum.Failed });
+      }
     }
     makeRequest();
   }, []);
@@ -29,9 +34,9 @@ function App() {
           ingredientsData.requestStatus === RequestStatusEnum.Success
           &&
           <>
-            <BurgerIngredients ingredientsData={ingredientsData.data} />
+            <BurgerIngredients ingredientsData={ingredientsData.body.data} />
             {/* TODO: Использую randomGenerator для случайного создания списка ингредиентов в конструкторе бургера */}
-            <IngredientsDataContext.Provider value={{ ingredientsData: ingredientListCreator(ingredientsData.data) }}>
+            <IngredientsDataContext.Provider value={{ ingredientsData: ingredientListCreator(ingredientsData.body.data) }}>
               <BurgerConstructor />
             </IngredientsDataContext.Provider>
           </>

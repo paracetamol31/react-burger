@@ -26,8 +26,7 @@ const IngredientСard = (props) => {
             <CurrencyIcon type="primary" />
         </div>
         <span className={`${ingredientСardStyles.ingredientName} text text_type_main-default`}>{props.name}</span>
-        {/* TODO: Пока не придумал, как управлять видимостью модалки из компонента Modal. Если вынести  isOpenModal в Modal,
-        возникают проблемы с открытием модалки по клику на ингредиент. */}
+        {/* TODO: Принял во внимание замечания по улучшению работы с модальными окнами, проведу реффакторинг в ветке sprint-2/step-2 */}
         {isOpenModal
             && <Modal setVisibleModalWindow={setOpenModal} label={"Детали ингредиента"}>
                 <IngredientDetails {...props} />

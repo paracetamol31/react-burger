@@ -14,7 +14,7 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import orderConstructorpPanelStyles from "./order-constructor-panel.module.css";
 import { IngredientsDataContext } from "../../services/ingredients-data-context";
-import { makeOrderRequest, RequestStatusEnum } from "../../utils/api";
+import { makeOrderRequest } from "../../utils/api";
 
 const reducerTotalPrice = (state, action) => {
     switch (action.type) {
@@ -39,10 +39,11 @@ const OrderConstructorpPanel = () => {
     }, [ingredientsData])
 
     const makeRequest = useCallback(async () => {
-        const response = await makeOrderRequest(ingredientsData);
-        if (response.requestStatus === RequestStatusEnum.Success) {
-            setOrderId(`${response.data.order.number}`);
-        } else {
+        try {
+            const response = await makeOrderRequest(ingredientsData);
+            setOrderId(`${response.body.order.number}`);
+        } catch (e) {
+            console.error(e);
             setOrderId("####");
         }
     }, [ingredientsData]);

@@ -29,6 +29,7 @@ const BurgerIngredients = ({ ingredientsData }) => {
                 tabsInfo={tabsInfo}
                 currentId={0}
             />
+            {/* TODO: Принял во внимание замечания по функциональности scrollBar, реализую его в ветке sprint-2/step-2 */}
             <div className={`${burgerIngredientsStyles.scrollBar} pr-4 pl-4`}>
                 <IngredientsSection categoryName="Булки" type="bun" ingredientsData={ingredientsData} />
                 <IngredientsSection categoryName="Соусы" type="sauce" ingredientsData={ingredientsData} />

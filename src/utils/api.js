@@ -1,7 +1,6 @@
-import PropTypes from "prop-types";
-
-const urlRequestIngredients = "https://norma.nomoreparties.space/api/ingredients";
-const urlRequestMakeOrder = "https://norma.nomoreparties.space/api/orders";
+const BASE_URL = "https://norma.nomoreparties.space/api"
+const urlRequestIngredients = `${BASE_URL}/ingredients`;
+const urlRequestMakeOrder = `${BASE_URL}/orders`;
 
 export const RequestStatusEnum = {
     Loading: "Loading",
@@ -18,46 +17,22 @@ const makeRequest = async (url, method = "GET", body) => {
     if (!response.ok) {
         throw new Error("Ошибка запроса!");
     }
-    return response;
+    return {
+        body: await response.json(),
+        requestStatus: RequestStatusEnum.Success
+    }
 }
 
 export const makeRequestIngredients = async () => {
-    try {
-        const response = await makeRequest(urlRequestIngredients);
-        const data = await response.json();
-        return {
-            data: data.data,
-            requestStatus: RequestStatusEnum.Success
-        };
-    } catch {
-        return {
-            requestStatus: RequestStatusEnum.Failed
-        };
-    }
+    return makeRequest(urlRequestIngredients);
 }
 
 export const makeOrderRequest = async (idItems) => {
-    try {
-        const response = await makeRequest(
-            urlRequestMakeOrder,
-            "POST",
-            JSON.stringify({
-                ingredients: idItems.map(item => item._id)
-            })
-        );
-        const data = await response.json();
-        return {
-            data: data,
-            requestStatus: RequestStatusEnum.Success
-        };
-    } catch {
-        return {
-            requestStatus: RequestStatusEnum.Failed
-        };
-    }
+    return await makeRequest(
+        urlRequestMakeOrder,
+        "POST",
+        JSON.stringify({
+            ingredients: idItems.map(item => item._id)
+        })
+    );
 }
-
-export const responseIngredientsProps = PropTypes.shape({
-    data: PropTypes.object,
-    requestStatus: PropTypes.string.isRequired
-});
