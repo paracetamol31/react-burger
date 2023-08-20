@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
+import { useSelector } from 'react-redux';
 
 import orderDetailsStyles from "./order-details.module.css";
 import checkIcon from "../../images/check.svg"
 
-const OrderDetails = ({orderId}) => {
+const OrderDetails = () => {
+    const { orderId } = useSelector(state => state);
     return (
         <section className={orderDetailsStyles.wrapper}>
             <span className={`${orderDetailsStyles.orderId} text text_type_digits-large mb-8 mt-9`}>{orderId}</span>

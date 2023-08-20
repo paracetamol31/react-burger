@@ -1,25 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from 'react-dom';
+import { CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {
-    CloseIcon
-} from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById("root");
 
-const Modal = ({ setVisibleModalWindow, label, children }) => {
-    const closeModal = React.useCallback((event) => {
-        event.stopPropagation();
-        setVisibleModalWindow(false);
-    }, [setVisibleModalWindow])
-    
+const Modal = ({ label, children, closeModal }) => {
     React.useEffect(() => {
         const onEscDown = (event) => {
             if (event.code === "Escape") {
-                closeModal(event);
+                closeModal();
             }
         };
         window.addEventListener("keydown", onEscDown)
@@ -41,15 +34,15 @@ const Modal = ({ setVisibleModalWindow, label, children }) => {
                     {children}
                 </main>
             </div>
-            <ModalOverlay setVisibleModalWindow={closeModal} />
+            <ModalOverlay closeModal={closeModal}/>
         </section>,
         modalRoot
     )
 }
 
 Modal.propTypes = {
-    setVisibleModalWindow: PropTypes.func.isRequired,
-    label: PropTypes.string
+    label: PropTypes.string,
+    closeModal: PropTypes.func.isRequired
 }
 
 export default Modal;

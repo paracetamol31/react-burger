@@ -1,20 +1,22 @@
 import {
-    useState,
     useCallback,
     useEffect,
-    useContext,
     useReducer
 } from "react";
 import {
     CurrencyIcon,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector, useDispatch } from 'react-redux';
 
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import orderConstructorpPanelStyles from "./order-constructor-panel.module.css";
-import { IngredientsDataContext } from "../../services/ingredients-data-context";
-import { makeOrderRequest } from "../../utils/api";
+import {
+    applayOrderId,
+    SHOW_ORDER_MODAL,
+    CLOSE_ORDER_MODAL
+} from "../../services/actions/index";
 
 const reducerTotalPrice = (state, action) => {
     switch (action.type) {
@@ -28,30 +30,24 @@ const reducerTotalPrice = (state, action) => {
 }
 
 const OrderConstructorpPanel = () => {
-    const { ingredientsData } = useContext(IngredientsDataContext);
     const [totalPrice, dispatchChangeTotalPrice] = useReducer(reducerTotalPrice, 0);
-    const [isOpenModalOrderDetails, setOpenModalOrderDetails] = useState(false);
-    const [orderId, setOrderId] = useState(null);
+    const dispatch = useDispatch();
+    const { orderId, isShowOrderModal, constructorIngredients } = useSelector(state => state);
 
     useEffect(() => {
         dispatchChangeTotalPrice({ type: "clear" })
-        ingredientsData.forEach(item => dispatchChangeTotalPrice({ type: item.type, price: item.price }))
-    }, [ingredientsData])
-
-    const makeRequest = useCallback(async () => {
-        try {
-            const response = await makeOrderRequest(ingredientsData);
-            setOrderId(`${response.body.order.number}`);
-        } catch (e) {
-            console.error(e);
-            setOrderId("####");
-        }
-    }, [ingredientsData]);
+        constructorIngredients.forEach(item => dispatchChangeTotalPrice({ type: item.type, price: item.price }))
+    }, [constructorIngredients])
 
     const openModalOrderDetails = useCallback(() => {
-        makeRequest();
-        setOpenModalOrderDetails(true)
-    }, [setOpenModalOrderDetails, makeRequest]);
+        dispatch(applayOrderId(constructorIngredients))
+        dispatch({ type: SHOW_ORDER_MODAL })
+    }, [dispatch, constructorIngredients]);
+
+    const closeModal = useCallback(() => {
+        dispatch({type: CLOSE_ORDER_MODAL})
+    }, [dispatch]);
+
     return (
         <section className={`${orderConstructorpPanelStyles.contentWraper} mt-10 mb-10 mr-4`}>
             <div className={orderConstructorpPanelStyles.content}>
@@ -62,9 +58,9 @@ const OrderConstructorpPanel = () => {
                     Оформить заказ
                 </Button>
             </div>
-            {isOpenModalOrderDetails
-                && <Modal setVisibleModalWindow={setOpenModalOrderDetails} >
-                    < OrderDetails orderId={orderId} />
+            {(orderId && isShowOrderModal)
+                && <Modal closeModal={closeModal}>
+                    < OrderDetails />
                 </Modal>}
         </section>
     )

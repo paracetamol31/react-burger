@@ -3,16 +3,16 @@ import React from "react";
 
 import modalOverlayStyles from "./modal-overlay.module.css";
 
-const ModalOverlay = ({ setVisibleModalWindow, children }) => {
+const ModalOverlay = ({ closeModal, children }) => {
     return (
-        <section onClick={setVisibleModalWindow} className={modalOverlayStyles.modalOverlay}>
+        <section onClick={closeModal} className={modalOverlayStyles.modalOverlay}>
             {children}
         </section>
     )
 }
 
 ModalOverlay.propTypes = {
-    setVisibleModalWindow: PropTypes.func
+    closeModal: PropTypes.func
 }
 
 export default ModalOverlay;
