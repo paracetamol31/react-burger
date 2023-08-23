@@ -12,13 +12,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import orderConstructorpPanelStyles from "./order-constructor-panel.module.css";
+import { applayOrderId } from "../../services/actions/order";
 import {
-    applayOrderId,
     SHOW_ORDER_MODAL,
     CLOSE_ORDER_MODAL
-} from "../../services/actions/index";
+} from "../../services/actions/modal";
+
+
 
 const reducerTotalPrice = (state, action) => {
+    debugger
     switch (action.type) {
         case "bun":
             return state + action.price * 2
@@ -32,20 +35,23 @@ const reducerTotalPrice = (state, action) => {
 const OrderConstructorpPanel = () => {
     const [totalPrice, dispatchChangeTotalPrice] = useReducer(reducerTotalPrice, 0);
     const dispatch = useDispatch();
-    const { orderId, isShowOrderModal, constructorIngredients } = useSelector(state => state);
+    const { isShowOrderModal } = useSelector(state => state.modal);
+    const { orderId } = useSelector(state => state.order);
+    const { constructorItems, bun } = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
         dispatchChangeTotalPrice({ type: "clear" })
-        constructorIngredients.forEach(item => dispatchChangeTotalPrice({ type: item.type, price: item.price }))
-    }, [constructorIngredients])
+        constructorItems.forEach(item => dispatchChangeTotalPrice({ type: item.type, price: item.price }))
+        bun && dispatchChangeTotalPrice({type: bun.itemType, price: bun.price})
+    }, [constructorItems, bun])
 
     const openModalOrderDetails = useCallback(() => {
-        dispatch(applayOrderId(constructorIngredients))
+        dispatch(applayOrderId(constructorItems))
         dispatch({ type: SHOW_ORDER_MODAL })
-    }, [dispatch, constructorIngredients]);
+    }, [dispatch, constructorItems]);
 
     const closeModal = useCallback(() => {
-        dispatch({type: CLOSE_ORDER_MODAL})
+        dispatch({ type: CLOSE_ORDER_MODAL })
     }, [dispatch]);
 
     return (

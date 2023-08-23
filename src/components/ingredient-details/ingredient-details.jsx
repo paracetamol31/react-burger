@@ -4,7 +4,7 @@ import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient characteristics";
 
 const IngredientDetails = () => {
-    const { currentIngredient, ingredients } = useSelector(state => state);
+    const { currentIngredient, ingredients } = useSelector(state => state.ingredients);
 
     if (!ingredients || !currentIngredient) {
         return null;

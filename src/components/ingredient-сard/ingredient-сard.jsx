@@ -9,11 +9,12 @@ import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
 
 import ingredientСardStyles from "./ingredient-сard.module.css";
-import { SET_CURRENT_INGREDIENT, SHOW_INGREDIENT_MODAL } from "../../services/actions/index";
+import { SHOW_INGREDIENT_MODAL } from "../../services/actions/modal";
+import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredients";
 
 const IngredientСard = ({ id }) => {
     const dispatch = useDispatch();
-    const { ingredients } = useSelector(state => state);
+    const { ingredients } = useSelector(state => state.ingredients);
     const ingredientObject = ingredients.find(ingredient => ingredient._id === id);
 
     const openModal = React.useCallback(() => {
@@ -23,7 +24,13 @@ const IngredientСard = ({ id }) => {
 
     const [, dragRef] = useDrag({
         type: "ingredient",
-        item: { id: ingredientObject._id }
+        item: { 
+            image: ingredientObject.image,
+            price: ingredientObject.price,
+            id: ingredientObject._id,
+            name: ingredientObject.name,
+            type: ingredientObject.type
+         }
     });
 
     return (

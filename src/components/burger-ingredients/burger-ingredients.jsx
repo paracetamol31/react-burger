@@ -6,7 +6,7 @@ import TabsPanel from "../tabs-panel/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/index";
+import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/modal";
 
 const tabsInfo = [
     {
@@ -24,7 +24,8 @@ const tabsInfo = [
 ];
 
 const BurgerIngredients = () => {
-    const { currentIngredient, isShowIngredientModal } = useSelector(state => state);
+    const { isShowIngredientModal } = useSelector(state => state.modal);
+    const { currentIngredient } = useSelector(state => state.ingredients);
     const dispatch = useDispatch()
     const closeModal = useCallback(() => {
         dispatch({ type: CLOSE_INGREDIENT_MODAL })

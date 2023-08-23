@@ -5,7 +5,7 @@ import IngredientСard from "../ingredient-сard/ingredient-сard";
 import ingredientsSectionStyles from "./ingredients-section.module.css";
 
 const IngredientsSection = (props) => {
-    const { ingredients } = useSelector(state => state)
+    const { ingredients } = useSelector(state => state.ingredients)
     if (!ingredients) {
         return null;
     }

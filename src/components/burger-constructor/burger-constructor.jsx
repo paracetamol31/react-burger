@@ -1,65 +1,63 @@
-import { useContext } from "react";
 import { useDrop } from "react-dnd";
-import { useSelector } from 'react-redux';
+import {
+    useSelector,
+    useDispatch
+} from 'react-redux';
 
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-сonstructor-item/burger-сonstructor-item";
-import { IngredientsDataContext } from "../../services/ingredients-data-context";
 import OrderConstructorpPanel from "../order-constructor-panel/order-constructor-panel";
+import { ADD_CONSTRUCTOR_ITEM } from "../../services/actions/burgerConstructor";
 
 const BurgerConstructor = () => {
-    const { ingredientsData } = useContext(IngredientsDataContext);
-    const bun = ingredientsData.find(item => item.type === "bun");
-    const { constructorIngredients, ingredients } = useSelector(state => state);
-
-
+    const dispatch = useDispatch();
+    const { constructorItems, bun } = useSelector(state => state.burgerConstructor);
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(itemId) {
-            //onDropHandler(itemId);
+        drop(item) {
+            dispatch({
+                type: ADD_CONSTRUCTOR_ITEM,
+                image: item.image,
+                price: item.price,
+                id: item.id,
+                name: item.name,
+                itemType: item.type
+            });
         }
     });
 
-
-
     return (
-        <section className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
-            {constructorIngredients.map((item, index) => {
-                const ingredient = ingredients.find(idItem => item._id === idItem);
-                if (!ingredient) {
-                    return null;
-                }
-                if (ingredient.type === "bun") {
-                    if (index === 0) {
-                        <BurgerConstructorItem
-                            type="top"
-                            isLocked={true}
-                            text={ingredient.name}
-                            price={ingredient.price}
-                            thumbnail={ingredient.image}
-                        />
-                    } else if (index === constructorIngredients.length - 1) {
-                        <BurgerConstructorItem
-                            type="bottom"
-                            isLocked={true}
-                            text={ingredient.name}
-                            price={ingredient.price}
-                            thumbnail={ingredient.image}
-                        />
-                    } else {
-                        return null;
-                    }
-                } else {
-                    <BurgerConstructorItem
-                        key={item._id}
+        <section ref={dropTarget} className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
+            {bun && <BurgerConstructorItem
+                type="top"
+                isLocked={true}
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image}
+            />}
+
+            <div className={burgerConstructorStyles.scrollBar}>
+                {constructorItems.map((item, index) => {
+                    return <BurgerConstructorItem
+                        key={Math.round(Math.random() * 1000000)}
                         extraClass="ml-2"
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
+                        text={item.name}
+                        price={item.price}
+                        index={index}
+                        thumbnail={item.image}
                     />
-                }
-            })}
+                })}
+            </div>
+
+            {bun && <BurgerConstructorItem
+                type="bottom"
+                isLocked={true}
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image}
+            />}
+
             <OrderConstructorpPanel />
         </section>
     )
