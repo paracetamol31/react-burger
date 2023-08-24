@@ -10,7 +10,6 @@ const initialState = {
     isShowOrderModal: false,
 }
 
-/** TODO: Reducer получился слишком громоздким, когда буду вносить правки, разобью его на несколько.   */
 export const modalReducer = ((state = initialState, action) => {
     switch (action.type) {
         case SHOW_INGREDIENT_MODAL:

@@ -1,7 +1,6 @@
 import {
     useCallback,
     useEffect,
-    useReducer
 } from "react";
 import {
     CurrencyIcon,
@@ -17,37 +16,23 @@ import {
     SHOW_ORDER_MODAL,
     CLOSE_ORDER_MODAL
 } from "../../services/actions/modal";
-
-
-
-const reducerTotalPrice = (state, action) => {
-    switch (action.type) {
-        case "bun":
-            return state + action.price * 2
-        case "clear":
-            return 0
-        default:
-            return state + action.price
-    }
-}
+import { COUNT_TOTAL_PRICE } from "../../services/actions/totalPrice";
 
 const OrderConstructorpPanel = () => {
-    const [totalPrice, dispatchChangeTotalPrice] = useReducer(reducerTotalPrice, 0);
     const dispatch = useDispatch();
     const { isShowOrderModal } = useSelector(state => state.modal);
+    const { totalPrice } = useSelector(state => state.totalPrice);
     const { orderId } = useSelector(state => state.order);
-    const { constructorItems, bun } = useSelector(state => state.burgerConstructor);
+    const burgerConstructor = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
-        dispatchChangeTotalPrice({ type: "clear" })
-        constructorItems.forEach(item => dispatchChangeTotalPrice({ type: item.type, price: item.price }))
-        bun && dispatchChangeTotalPrice({type: bun.itemType, price: bun.price})
-    }, [constructorItems, bun])
+        dispatch({ type: COUNT_TOTAL_PRICE, burgerConstructor })
+    }, [dispatch, burgerConstructor])
 
     const openModalOrderDetails = useCallback(() => {
-        dispatch(applayOrderId(constructorItems))
+        dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
         dispatch({ type: SHOW_ORDER_MODAL })
-    }, [dispatch, constructorItems]);
+    }, [dispatch, burgerConstructor]);
 
     const closeModal = useCallback(() => {
         dispatch({ type: CLOSE_ORDER_MODAL })

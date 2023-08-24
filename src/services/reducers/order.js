@@ -10,7 +10,6 @@ const initialState = {
     orderIdFailed: false
 }
 
-/** TODO: Reducer получился слишком громоздким, когда буду вносить правки, разобью его на несколько.   */
 export const orderReducer = ((state = initialState, action) => {
     switch (action.type) {
         case APPLY_ORDER_ID_REQUEST:

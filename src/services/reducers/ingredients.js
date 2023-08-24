@@ -18,7 +18,6 @@ const initialState = {
     currentCategory: 0
 }
 
-/** TODO: Reducer получился слишком громоздким, когда буду вносить правки, разобью его на несколько.   */
 export const ingredientsReducer = ((state = initialState, action) => {
     switch (action.type) {
         case APPLY_INGREDIENTS_REQUEST:

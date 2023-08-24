@@ -18,7 +18,6 @@ const initialState = {
     yPoint: null
 }
 
-/** TODO: Reducer получился слишком громоздким, когда буду вносить правки, разобью его на несколько.   */
 export const burgerConstructorReducer = ((state = initialState, action) => {
     switch (action.type) {
         case SAVE_START_DRAG_POSITION: {
