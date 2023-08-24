@@ -22,7 +22,6 @@ const OrderConstructorpPanel = () => {
     const dispatch = useDispatch();
     const { isShowOrderModal } = useSelector(state => state.modal);
     const { totalPrice } = useSelector(state => state.totalPrice);
-    const { orderId } = useSelector(state => state.order);
     const burgerConstructor = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
@@ -30,8 +29,10 @@ const OrderConstructorpPanel = () => {
     }, [dispatch, burgerConstructor])
 
     const openModalOrderDetails = useCallback(() => {
-        dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
-        dispatch({ type: SHOW_ORDER_MODAL })
+        if (burgerConstructor.bun) {
+            dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
+            dispatch({ type: SHOW_ORDER_MODAL })
+        }
     }, [dispatch, burgerConstructor]);
 
     const closeModal = useCallback(() => {
@@ -48,7 +49,7 @@ const OrderConstructorpPanel = () => {
                     Оформить заказ
                 </Button>
             </div>
-            {(orderId && isShowOrderModal)
+            {isShowOrderModal
                 && <Modal closeModal={closeModal}>
                     < OrderDetails />
                 </Modal>}

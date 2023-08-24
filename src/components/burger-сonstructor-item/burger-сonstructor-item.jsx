@@ -20,6 +20,7 @@ import {
     ADD_CONSTRUCTOR_ITEM,
     CLEAR_START_DRAG_POSITION
 } from "../../services/actions/burgerConstructor";
+import { useEffect } from "react";
 
 const BurgerConstructorItem = (props) => {
     const { constructorItems, startDragPosition } = useSelector(state => state.burgerConstructor);
@@ -55,21 +56,23 @@ const BurgerConstructorItem = (props) => {
     }
     );
 
-    if (isDrag) {
-        dispatch({
-            type: SAVE_START_DRAG_POSITION,
-            index: props.index
-        })
-        dispatch({
-            type: CREATE_EMPTY_ITEM,
-            index: props.index,
-            yPoint: initialClientOffset.y
-        })
-        dispatch({
-            type: SET_DRAG,
-            isDrag: true
-        })
-    }
+    useEffect(() => {
+        if (isDrag) {
+            dispatch({
+                type: SAVE_START_DRAG_POSITION,
+                index: props.index
+            })
+            dispatch({
+                type: CREATE_EMPTY_ITEM,
+                index: props.index,
+                yPoint: initialClientOffset.y
+            })
+            dispatch({
+                type: SET_DRAG,
+                isDrag: true
+            })
+        }
+    }, [isDrag, dispatch, initialClientOffset, props.index]);
 
     const handleClose = () => {
         dispatch({

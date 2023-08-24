@@ -12,6 +12,7 @@ export const SET_CATEGORY_INGREDIENTS = "SET_CATEGORY_INGREDIENTS";
 export const INCREASE_COUNTER = "INCREASE_COUNTER";
 export const REDUCE_COUNTER = "REDUCE_COUNTER";
 export const CLEAR_BUNS_COUNTER = "CLEAR_BUNS_COUNTER";
+export const CLEAR_ALL_COUNTER = "CLEAR_ALL_COUNTER";
 
 
 export const applayIngredients = () => {

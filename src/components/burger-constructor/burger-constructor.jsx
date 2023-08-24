@@ -1,4 +1,5 @@
 import { useDrop } from "react-dnd";
+import { useCallback } from "react";
 import {
     useSelector,
     useDispatch
@@ -46,24 +47,28 @@ const BurgerConstructor = () => {
         }
     });
 
+    const onDragOver = useCallback((e) => {
+        if (isDragStart) {
+            e.preventDefault();
+            let result = Math.floor(Math.abs(e.clientY - yPoint) / heightChildItemBurgerConstructor);
+            result = e.clientY > yPoint ? result * 1 : result * -1;
+            dispatch({
+                type: SET_EMPTY_ITEM,
+                index: indexEmptyItem + result,
+                yPoint: e.clientY
+            })
+        }
+    }, [yPoint, indexEmptyItem, isDragStart, dispatch]);
+
     return (
         // TODO: Пришлось использовать в этом месте onDragOver, так как не смог найти в библиотеке
         // react dnd функционал с отслеживанием позиции курсора в момет событя drag.
-        <section onDragOver={(e) => {
-            if (isDragStart) {
-                let result = Math.floor(Math.abs(e.clientY - yPoint) / heightChildItemBurgerConstructor);
-                result = e.clientY > yPoint ? result * 1 : result * -1;
-                dispatch({
-                    type: SET_EMPTY_ITEM,
-                    index: indexEmptyItem + result,
-                    yPoint: e.clientY
-                })
-            }
-        }} ref={dropTarget} className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
+        <section onDragOver={onDragOver}
+            ref={dropTarget} className={`${burgerConstructorStyles.burgerConstructor} mt-25`}>
             {bun && <BurgerConstructorItem
                 type="top"
                 isLocked={true}
-                text={bun.name}
+                text={`${bun.name} (верх)`}
                 price={bun.price}
                 thumbnail={bun.image}
                 itemType="bun"
@@ -73,7 +78,7 @@ const BurgerConstructor = () => {
             <div className={burgerConstructorStyles.scrollBar}>
                 {constructorItems.map((item, index) => {
                     return <BurgerConstructorItem
-                        key={Math.round(Math.random() * 1000000)}
+                        key={item.uuid}
                         extraClass="ml-2"
                         text={item.name}
                         price={item.price}
@@ -88,7 +93,7 @@ const BurgerConstructor = () => {
             {bun && <BurgerConstructorItem
                 type="bottom"
                 isLocked={true}
-                text={bun.name}
+                text={`${bun.name} (низ)`}
                 price={bun.price}
                 thumbnail={bun.image}
                 itemType="bun"

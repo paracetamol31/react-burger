@@ -7,7 +7,8 @@ import {
     SET_CATEGORY_INGREDIENTS,
     INCREASE_COUNTER,
     REDUCE_COUNTER,
-    CLEAR_BUNS_COUNTER
+    CLEAR_BUNS_COUNTER,
+    CLEAR_ALL_COUNTER
 } from "../actions/ingredients";
 
 const initialState = {
@@ -89,6 +90,17 @@ export const ingredientsReducer = ((state = initialState, action) => {
                             item => (item._id !== action.id && item.type === "bun")
                                 ? { ...item, count: 0 }
                                 : item
+                        )
+                ]
+            }
+        }
+        case CLEAR_ALL_COUNTER: {
+            return {
+                ...state,
+                ingredients: [
+                    ...state.ingredients.map
+                        (
+                            item => { return { ...item, count: 0 } }
                         )
                 ]
             }

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import {
     ADD_CONSTRUCTOR_ITEM,
     REMOVE_CONSTRUCTOR_ITEM,
@@ -6,7 +8,8 @@ import {
     CLEAR_INDEX_EMPTY_ITEM,
     CREATE_EMPTY_ITEM,
     SAVE_START_DRAG_POSITION,
-    CLEAR_START_DRAG_POSITION
+    CLEAR_START_DRAG_POSITION,
+    CLEAR_BURGER_CONSTRUCTOR
 } from "../../services/actions/burgerConstructor";
 
 const initialState = {
@@ -34,7 +37,8 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
         }
         case CREATE_EMPTY_ITEM: {
             state.constructorItems.splice(action.index, 1, {
-                itemType: "empty"
+                itemType: "empty",
+                uuid: uuidv4()
             });
             return {
                 ...state,
@@ -65,7 +69,8 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
             }
             state.constructorItems.splice(state.indexEmptyItem, 1);
             state.constructorItems.splice(action.index, 0, {
-                itemType: "empty"
+                itemType: "empty",
+                uuid: uuidv4()
             });
             return {
                 ...state,
@@ -83,7 +88,8 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
                         price: action.price,
                         id: action.id,
                         name: action.name,
-                        itemType: action.itemType
+                        itemType: action.itemType,
+                        uuid: uuidv4()
                     }
                 }
             }
@@ -92,7 +98,8 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
                 price: action.price,
                 id: action.id,
                 name: action.name,
-                itemType: action.itemType
+                itemType: action.itemType,
+                uuid: uuidv4()
             });
             return {
                 ...state,
@@ -104,6 +111,16 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
             return {
                 ...state,
                 constructorItems: [...state.constructorItems]
+            }
+        }
+        case CLEAR_BURGER_CONSTRUCTOR: {
+            return {
+                constructorItems: [],
+                bun: null,
+                isDragStart: false,
+                indexEmptyItem: null,
+                startDragPosition: null,
+                yPoint: null
             }
         }
         default:
