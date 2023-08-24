@@ -21,7 +21,6 @@ import {
 
 
 const reducerTotalPrice = (state, action) => {
-    debugger
     switch (action.type) {
         case "bun":
             return state + action.price * 2
