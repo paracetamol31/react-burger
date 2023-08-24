@@ -8,6 +8,10 @@ import {
 import { useDrag } from "react-dnd";
 
 import {
+    REDUCE_COUNTER
+} from "../../services/actions/ingredients";
+
+import {
     REMOVE_CONSTRUCTOR_ITEM,
     CREATE_EMPTY_ITEM,
     SET_DRAG,
@@ -69,6 +73,10 @@ const BurgerConstructorItem = (props) => {
 
     const handleClose = () => {
         dispatch({
+            type: REDUCE_COUNTER,
+            id: props.id
+        })
+        dispatch({
             type: REMOVE_CONSTRUCTOR_ITEM,
             index: props.index
         })
@@ -96,7 +104,8 @@ BurgerConstructorItem.propTypes = {
     isLocked: PropTypes.bool,
     extraClass: PropTypes.string,
     index: PropTypes.number,
-    itemType: PropTypes.string
+    itemType: PropTypes.string,
+    id: PropTypes.string
 }
 
 export default BurgerConstructorItem;

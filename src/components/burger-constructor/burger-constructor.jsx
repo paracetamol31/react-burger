@@ -65,6 +65,7 @@ const BurgerConstructor = () => {
                 price={bun.price}
                 thumbnail={bun.image}
                 itemType="bun"
+                id={bun.id}
             />}
 
             <div className={burgerConstructorStyles.scrollBar}>
@@ -77,6 +78,7 @@ const BurgerConstructor = () => {
                         index={index}
                         thumbnail={item.image}
                         itemType={item.itemType}
+                        id={item.id}
                     />
                 })}
             </div>
@@ -88,6 +90,7 @@ const BurgerConstructor = () => {
                 price={bun.price}
                 thumbnail={bun.image}
                 itemType="bun"
+                id={bun.id}
             />}
 
             <OrderConstructorpPanel />

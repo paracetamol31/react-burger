@@ -10,7 +10,7 @@ const IngredientsSection = (props) => {
         return null;
     }
     return (
-        <section className={ingredientsSectionStyles.section}>
+        <section ref={props.sectionRef} className={ingredientsSectionStyles.section}>
             <span className="mt-6 mb-10 text text_type_main-medium">{props.categoryName}</span>
             <div className={`${ingredientsSectionStyles.wrapper} pr-4 pl-4`}>
                 {ingredients.map((item) => props.type === item.type && <IngredientСard key={item._id} id={item._id} />)}
@@ -21,7 +21,8 @@ const IngredientsSection = (props) => {
 
 IngredientsSection.propTypes = {
     type: PropTypes.string.isRequired,
-    categoryName: PropTypes.string.isRequired
+    categoryName: PropTypes.string.isRequired,
+    sectionRef: PropTypes.object.isRequired
 }
 
 export default IngredientsSection;

@@ -10,7 +10,11 @@ import { useSelector } from 'react-redux';
 
 import ingredientСardStyles from "./ingredient-сard.module.css";
 import { SHOW_INGREDIENT_MODAL } from "../../services/actions/modal";
-import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredients";
+import {
+    SET_CURRENT_INGREDIENT,
+    INCREASE_COUNTER,
+    CLEAR_BUNS_COUNTER
+} from "../../services/actions/ingredients";
 
 const IngredientСard = ({ id }) => {
     const dispatch = useDispatch();
@@ -24,18 +28,32 @@ const IngredientСard = ({ id }) => {
 
     const [, dragRef] = useDrag({
         type: "ingredient",
-        item: { 
+        item: {
             image: ingredientObject.image,
             price: ingredientObject.price,
             id: ingredientObject._id,
             name: ingredientObject.name,
             type: ingredientObject.type
-         }
+        },
+        end: (item, monitor) => {
+            if (monitor.didDrop()) {
+                dispatch({
+                    type: INCREASE_COUNTER,
+                    id: item.id
+                })
+
+                if (item.type === "bun") {
+                    dispatch({
+                        type: CLEAR_BUNS_COUNTER,
+                        id: item.id
+                    })
+                }
+            }
+        }
     });
 
     return (
         <div ref={dragRef} onClick={openModal} className={`${ingredientСardStyles.card} pl-4 pr-4`}>
-            {/* TODO: Значение count временно захардкожено*/}
             {!!ingredientObject.count && <Counter count={ingredientObject.count} size="default" extraClass="m-1" />}
             <img src={ingredientObject.image} alt="Картина ингредиента" />
             <div className={`${ingredientСardStyles.priceFrame} mt-1 mb-1`}>

@@ -1,15 +1,15 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
-import React from 'react';
+import { useSelector } from 'react-redux';
 
 import tabsPanelStyles from "./tabs-panel.module.css";
 
 const TabsPanel = (props) => {
-    const [current, setCurrent] = React.useState(props.currentId);
+    const { currentCategory } = useSelector(state => state.ingredients);
     return (
         <div className={tabsPanelStyles.tabsPanel} >
             {props.tabsInfo.map((item) => {
-                return <Tab key={item.id} value={item.id} active={current === item.id} onClick={setCurrent}>
+                return <Tab key={item.id} value={item.id} active={currentCategory === item.id} >
                     {item.label}
                 </Tab>
             })}
