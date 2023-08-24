@@ -47,6 +47,8 @@ const BurgerConstructor = () => {
     });
 
     return (
+        // TODO: Пришлось использовать в этом месте onDragOver, так как не смог найти в библиотеке
+        // react dnd функционал с отслеживанием позиции курсора в момет событя drag.
         <section onDragOver={(e) => {
             if (isDragStart) {
                 let result = Math.floor(Math.abs(e.clientY - yPoint) / heightChildItemBurgerConstructor);
