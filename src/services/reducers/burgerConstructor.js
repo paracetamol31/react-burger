@@ -36,14 +36,14 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
         }
         case CREATE_EMPTY_ITEM: {
             state.constructorItems.splice(payload.index, 1, {
-                itemType: "empty"
+                itemType: "empty",
+                uuid: payload.uuid
             });
             return {
                 ...state,
                 constructorItems: [...state.constructorItems],
                 indexEmptyItem: payload.index,
-                yPoint: payload.yPoint,
-                uuid: payload.uuid
+                yPoint: payload.yPoint
             }
         }
         case SET_DRAG: {
@@ -68,14 +68,14 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
             }
             state.constructorItems.splice(state.indexEmptyItem, 1);
             state.constructorItems.splice(payload.index, 0, {
-                itemType: "empty"
+                itemType: "empty",
+                uuid: payload.uuid
             });
             return {
                 ...state,
                 constructorItems: [...state.constructorItems],
                 indexEmptyItem: payload.index,
-                yPoint: payload.yPoint,
-                uuid: payload.uuid
+                yPoint: payload.yPoint
             }
         }
         case ADD_CONSTRUCTOR_ITEM: {
