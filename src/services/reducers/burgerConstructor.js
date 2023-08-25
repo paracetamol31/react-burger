@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import {
     ADD_CONSTRUCTOR_ITEM,
     REMOVE_CONSTRUCTOR_ITEM,
@@ -22,11 +20,12 @@ const initialState = {
 }
 
 export const burgerConstructorReducer = ((state = initialState, action) => {
-    switch (action.type) {
+    const { type, payload } = action;
+    switch (type) {
         case SAVE_START_DRAG_POSITION: {
             return {
                 ...state,
-                startDragPosition: action.index
+                startDragPosition: payload.index
             }
         }
         case CLEAR_START_DRAG_POSITION: {
@@ -36,21 +35,21 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
             }
         }
         case CREATE_EMPTY_ITEM: {
-            state.constructorItems.splice(action.index, 1, {
-                itemType: "empty",
-                uuid: uuidv4()
+            state.constructorItems.splice(payload.index, 1, {
+                itemType: "empty"
             });
             return {
                 ...state,
                 constructorItems: [...state.constructorItems],
-                indexEmptyItem: action.index,
-                yPoint: action.yPoint
+                indexEmptyItem: payload.index,
+                yPoint: payload.yPoint,
+                uuid: payload.uuid
             }
         }
         case SET_DRAG: {
             return {
                 ...state,
-                isDragStart: action.isDrag
+                isDragStart: payload.isDrag
             }
         }
         case CLEAR_INDEX_EMPTY_ITEM: {
@@ -62,44 +61,44 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
             }
         }
         case SET_EMPTY_ITEM: {
-            if (action.index === state.indexEmptyItem
-                || action.index < 0
-                || action.index > state.constructorItems.length - 1) {
+            if (payload.index === state.indexEmptyItem
+                || payload.index < 0
+                || payload.index > state.constructorItems.length - 1) {
                 return state;
             }
             state.constructorItems.splice(state.indexEmptyItem, 1);
-            state.constructorItems.splice(action.index, 0, {
-                itemType: "empty",
-                uuid: uuidv4()
+            state.constructorItems.splice(payload.index, 0, {
+                itemType: "empty"
             });
             return {
                 ...state,
                 constructorItems: [...state.constructorItems],
-                indexEmptyItem: action.index,
-                yPoint: action.yPoint
+                indexEmptyItem: payload.index,
+                yPoint: payload.yPoint,
+                uuid: payload.uuid
             }
         }
         case ADD_CONSTRUCTOR_ITEM: {
-            if (action.itemType === "bun") {
+            if (payload.itemType === "bun") {
                 return {
                     ...state,
                     bun: {
-                        image: action.image,
-                        price: action.price,
-                        id: action.id,
-                        name: action.name,
-                        itemType: action.itemType,
-                        uuid: uuidv4()
+                        image: payload.image,
+                        price: payload.price,
+                        id: payload.id,
+                        name: payload.name,
+                        itemType: payload.itemType,
+                        uuid: payload.uuid
                     }
                 }
             }
-            state.constructorItems.splice(action.index ?? state.constructorItems.length, 0, {
-                image: action.image,
-                price: action.price,
-                id: action.id,
-                name: action.name,
-                itemType: action.itemType,
-                uuid: uuidv4()
+            state.constructorItems.splice(payload.index ?? state.constructorItems.length, 0, {
+                image: payload.image,
+                price: payload.price,
+                id: payload.id,
+                name: payload.name,
+                itemType: payload.itemType,
+                uuid: payload.uuid
             });
             return {
                 ...state,
@@ -107,7 +106,7 @@ export const burgerConstructorReducer = ((state = initialState, action) => {
             }
         }
         case REMOVE_CONSTRUCTOR_ITEM: {
-            state.constructorItems.splice(action.index, 1);
+            state.constructorItems.splice(payload.index, 1);
             return {
                 ...state,
                 constructorItems: [...state.constructorItems]

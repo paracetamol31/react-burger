@@ -6,8 +6,8 @@ import TabsPanel from "../tabs-panel/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { CLOSE_INGREDIENT_MODAL } from "../../services/actions/modal";
-import { SET_CATEGORY_INGREDIENTS } from "../../services/actions/ingredients";
+import { cloaeIngredientModal } from "../../services/actions/modal";
+import { setCategoryIngredients } from "../../services/actions/ingredients";
 
 const tabsInfo = [
     {
@@ -29,7 +29,7 @@ const BurgerIngredients = () => {
     const { currentIngredient } = useSelector(state => state.ingredients);
     const dispatch = useDispatch()
     const closeModal = useCallback(() => {
-        dispatch({ type: CLOSE_INGREDIENT_MODAL })
+        dispatch(cloaeIngredientModal())
     }, [dispatch]);
 
     const refCategoryBun = useRef();
@@ -40,12 +40,12 @@ const BurgerIngredients = () => {
     const onScroll = useCallback(() => {
         if (Math.abs(refScrollBar.current.scrollTop - refCategoryBun.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)) {
-            dispatch({ type: SET_CATEGORY_INGREDIENTS, value: 0 })
+            dispatch(setCategoryIngredients({value: 0 }))
         } else if (Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategorySauce.current.offsetTop)) {
-            dispatch({ type: SET_CATEGORY_INGREDIENTS, value: 1 })
+            dispatch(setCategoryIngredients({value: 1 }))
         } else {
-            dispatch({ type: SET_CATEGORY_INGREDIENTS, value: 2 })
+            dispatch(setCategoryIngredients({value: 2}))
         }
     }, [dispatch]);
 

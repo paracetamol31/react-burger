@@ -13,10 +13,10 @@ import Modal from "../modal/modal";
 import orderConstructorpPanelStyles from "./order-constructor-panel.module.css";
 import { applayOrderId } from "../../services/actions/order";
 import {
-    SHOW_ORDER_MODAL,
-    CLOSE_ORDER_MODAL
+    showOrderMoal,
+    closeOrderModal
 } from "../../services/actions/modal";
-import { COUNT_TOTAL_PRICE } from "../../services/actions/totalPrice";
+import { countTotalPrice } from "../../services/actions/totalPrice";
 
 const OrderConstructorpPanel = () => {
     const dispatch = useDispatch();
@@ -25,18 +25,18 @@ const OrderConstructorpPanel = () => {
     const burgerConstructor = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
-        dispatch({ type: COUNT_TOTAL_PRICE, burgerConstructor })
+        dispatch(countTotalPrice({ burgerConstructor }));
     }, [dispatch, burgerConstructor])
 
     const openModalOrderDetails = useCallback(() => {
         if (burgerConstructor.bun) {
             dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
-            dispatch({ type: SHOW_ORDER_MODAL })
+            dispatch(showOrderMoal())
         }
     }, [dispatch, burgerConstructor]);
 
     const closeModal = useCallback(() => {
-        dispatch({ type: CLOSE_ORDER_MODAL })
+        dispatch(closeOrderModal())
     }, [dispatch]);
 
     return (

@@ -9,11 +9,11 @@ import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
 
 import ingredientСardStyles from "./ingredient-сard.module.css";
-import { SHOW_INGREDIENT_MODAL } from "../../services/actions/modal";
+import { showIngredientModal } from "../../services/actions/modal";
 import {
-    SET_CURRENT_INGREDIENT,
-    INCREASE_COUNTER,
-    CLEAR_BUNS_COUNTER
+    setCurrentIngredient,
+    increaseCounter,
+    clearBunsCounter
 } from "../../services/actions/ingredients";
 
 const IngredientСard = ({ id }) => {
@@ -22,8 +22,8 @@ const IngredientСard = ({ id }) => {
     const ingredientObject = ingredients.find(ingredient => ingredient._id === id);
 
     const openModal = React.useCallback(() => {
-        dispatch({ type: SET_CURRENT_INGREDIENT, id: ingredientObject._id });
-        dispatch({ type: SHOW_INGREDIENT_MODAL });
+        dispatch(setCurrentIngredient({ id: ingredientObject._id }));
+        dispatch(showIngredientModal());
     }, [dispatch, ingredientObject._id]);
 
     const [, dragRef] = useDrag({
@@ -37,16 +37,14 @@ const IngredientСard = ({ id }) => {
         },
         end: (item, monitor) => {
             if (monitor.didDrop()) {
-                dispatch({
-                    type: INCREASE_COUNTER,
+                dispatch(increaseCounter({
                     id: item.id
-                })
+                }))
 
                 if (item.type === "bun") {
-                    dispatch({
-                        type: CLEAR_BUNS_COUNTER,
+                    dispatch(clearBunsCounter({
                         id: item.id
-                    })
+                    }))
                 }
             }
         }

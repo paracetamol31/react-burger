@@ -11,7 +11,8 @@ const initialState = {
 }
 
 export const orderReducer = ((state = initialState, action) => {
-    switch (action.type) {
+    const { type, payload } = action;
+    switch (type) {
         case APPLY_ORDER_ID_REQUEST:
             return {
                 ...state,
@@ -22,7 +23,7 @@ export const orderReducer = ((state = initialState, action) => {
                 ...state,
                 orderIdRequest: false,
                 orderIdFailed: false,
-                orderId: action.value
+                orderId: payload.value
             }
         case APPLY_ORDER_ID_FAILED:
             return {

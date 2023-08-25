@@ -20,7 +20,8 @@ const initialState = {
 }
 
 export const ingredientsReducer = ((state = initialState, action) => {
-    switch (action.type) {
+    const {type, payload} = action;
+    switch (type) {
         case APPLY_INGREDIENTS_REQUEST:
             return {
                 ...state,
@@ -31,9 +32,10 @@ export const ingredientsReducer = ((state = initialState, action) => {
                 ...state,
                 ingredientsRequest: false,
                 ingredientsFailed: false,
-                ingredients: action.value
+                ingredients: payload.value
             }
         case APPLY_INGREDIENTS_FAILED:
+            debugger
             return {
                 ...state,
                 ingredientsRequest: false,
@@ -42,7 +44,7 @@ export const ingredientsReducer = ((state = initialState, action) => {
         case SET_CURRENT_INGREDIENT:
             return {
                 ...state,
-                currentIngredient: action.id
+                currentIngredient: payload.id
             }
         case CLEAR_CURRENT_INGREDIENT:
             return {
@@ -52,7 +54,7 @@ export const ingredientsReducer = ((state = initialState, action) => {
         case SET_CATEGORY_INGREDIENTS:
             return {
                 ...state,
-                currentCategory: action.value
+                currentCategory: payload.value
             }
 
         case INCREASE_COUNTER: {
@@ -61,7 +63,7 @@ export const ingredientsReducer = ((state = initialState, action) => {
                 ingredients: [
                     ...state.ingredients.map
                         (
-                            item => item._id === action.id
+                            item => item._id === payload.id
                                 ? { ...item, count: item.type === "bun" ? 2 : item.count + 1 }
                                 : item
                         )
@@ -74,7 +76,7 @@ export const ingredientsReducer = ((state = initialState, action) => {
                 ingredients: [
                     ...state.ingredients.map
                         (
-                            item => item._id === action.id
+                            item => item._id === payload.id
                                 ? { ...item, count: item.type === "bun" ? 0 : item.count - 1 }
                                 : item
                         )
@@ -87,7 +89,7 @@ export const ingredientsReducer = ((state = initialState, action) => {
                 ingredients: [
                     ...state.ingredients.map
                         (
-                            item => (item._id !== action.id && item.type === "bun")
+                            item => (item._id !== payload.id && item.type === "bun")
                                 ? { ...item, count: 0 }
                                 : item
                         )

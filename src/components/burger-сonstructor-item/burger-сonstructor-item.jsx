@@ -8,17 +8,17 @@ import {
 import { useDrag } from "react-dnd";
 
 import {
-    REDUCE_COUNTER
+    reduceCounter
 } from "../../services/actions/ingredients";
 
 import {
-    REMOVE_CONSTRUCTOR_ITEM,
-    CREATE_EMPTY_ITEM,
-    SET_DRAG,
-    SAVE_START_DRAG_POSITION,
-    CLEAR_INDEX_EMPTY_ITEM,
-    ADD_CONSTRUCTOR_ITEM,
-    CLEAR_START_DRAG_POSITION
+    removeConstructorItem,
+    createEmptyItem,
+    setDrag,
+    saveStartDragPosition,
+    clearIndexEmptyItem,
+    addConstructorItem,
+    clearStartDragPosition
 } from "../../services/actions/burgerConstructor";
 import { useEffect } from "react";
 
@@ -40,17 +40,16 @@ const BurgerConstructorItem = (props) => {
         // со свойством dropadle  
         end: (item, monitor) => {
             if (!monitor.didDrop()) {
-                dispatch({ type: CLEAR_INDEX_EMPTY_ITEM });
-                dispatch({
-                    type: ADD_CONSTRUCTOR_ITEM,
+                dispatch(clearIndexEmptyItem());
+                dispatch(addConstructorItem({
                     image: item.image,
                     price: item.price,
                     id: item.id,
                     name: item.name,
                     itemType: item.itemType,
                     index: startDragPosition
-                });
-                dispatch({ type: CLEAR_START_DRAG_POSITION });
+                }));
+                dispatch(clearStartDragPosition());
             }
         }
     }
@@ -58,31 +57,26 @@ const BurgerConstructorItem = (props) => {
 
     useEffect(() => {
         if (isDrag) {
-            dispatch({
-                type: SAVE_START_DRAG_POSITION,
+            dispatch(saveStartDragPosition({
                 index: props.index
-            })
-            dispatch({
-                type: CREATE_EMPTY_ITEM,
+            }))
+            dispatch(createEmptyItem({
                 index: props.index,
                 yPoint: initialClientOffset.y
-            })
-            dispatch({
-                type: SET_DRAG,
+            }))
+            dispatch(setDrag({
                 isDrag: true
-            })
+            }))
         }
     }, [isDrag, dispatch, initialClientOffset, props.index]);
 
     const handleClose = () => {
-        dispatch({
-            type: REDUCE_COUNTER,
+        dispatch(reduceCounter({
             id: props.id
-        })
-        dispatch({
-            type: REMOVE_CONSTRUCTOR_ITEM,
+        }))
+        dispatch(removeConstructorItem({
             index: props.index
-        })
+        }))
     }
 
     return <div

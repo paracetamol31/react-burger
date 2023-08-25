@@ -5,15 +5,16 @@ const initialState = {
 }
 
 export const totalPrice = ((state = initialState, action) => {
-    switch (action.type) {
+    const { type, payload } = action;
+    switch (type) {
         case COUNT_TOTAL_PRICE: {
-            if(action.burgerConstructor.isDragStart){
+            if (payload.burgerConstructor.isDragStart) {
                 return state;
             }
             return {
                 ...state,
-                totalPrice: action.burgerConstructor.constructorItems.reduce((accumulator, currentItem) => accumulator + currentItem?.price || 0, 0)
-                    + (action.burgerConstructor.bun?.price || 0) * 2
+                totalPrice: payload.burgerConstructor.constructorItems.reduce((accumulator, currentItem) => accumulator + currentItem?.price || 0, 0)
+                    + (payload.burgerConstructor.bun?.price || 0) * 2
             }
         }
         default:

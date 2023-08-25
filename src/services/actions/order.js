@@ -1,29 +1,42 @@
 import { makeOrderRequest } from "../../utils/api";
-import { CLEAR_BURGER_CONSTRUCTOR } from "../../services/actions/burgerConstructor";
-import { CLEAR_ALL_COUNTER } from "../../services/actions/ingredients";
+import { clearBurgerConstructor} from "../../services/actions/burgerConstructor";
+import { clearAllCounter } from "../../services/actions/ingredients";
 
-//TODO: когда будет больше времени, добавлю генераторы экшкнов.
 export const APPLY_ORDER_ID_REQUEST = "APPLY_ORDER_ID_REQUEST";
 export const APPLY_ORDER_ID_SUCCESS = "APPLY_ORDER_ID_SUCCESS";
 export const APPLY_ORDER_ID_FAILED = "APPLY_ORDER_ID_FAILED";
 
 export const applayOrderId = (ingredientsData) => {
     return async (dispatch) => {
-        dispatch({ type: APPLY_ORDER_ID_REQUEST })
+        dispatch(applayOrderIdRequest());
         makeOrderRequest(ingredientsData).then(response => {
-            dispatch({
-                type: APPLY_ORDER_ID_SUCCESS,
+            dispatch(applayOrderIdSuccess({
                 value: response.order.number
-            })
-            dispatch({
-                type: CLEAR_BURGER_CONSTRUCTOR
-            })
-            dispatch({
-                type: CLEAR_ALL_COUNTER
-            })
+            }));
+            dispatch(clearBurgerConstructor());
+            dispatch(clearAllCounter());
         }).catch(e => {
             console.error(e);
-            dispatch({ type: APPLY_ORDER_ID_FAILED })
+            dispatch(applayOrderIdFailed());
         });
     }
 }
+
+export const applayOrderIdRequest = () => {
+    return {
+        type: APPLY_ORDER_ID_REQUEST
+    }
+} 
+
+export const applayOrderIdSuccess = (value) => {
+    return {
+        type: APPLY_ORDER_ID_SUCCESS,
+        payload: {...value}
+    }
+} 
+
+export const applayOrderIdFailed = () => {
+    return {
+        type: APPLY_ORDER_ID_FAILED
+    }
+} 

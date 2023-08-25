@@ -9,11 +9,11 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-сonstructor-item/burger-сonstructor-item";
 import OrderConstructorpPanel from "../order-constructor-panel/order-constructor-panel";
 import {
-    ADD_CONSTRUCTOR_ITEM,
-    SET_DRAG,
-    SET_EMPTY_ITEM,
-    CLEAR_START_DRAG_POSITION,
-    CLEAR_INDEX_EMPTY_ITEM
+    addConstructorItem,
+    setDrag,
+    setEmptyItem,
+    clearStartDragPosition,
+    clearIndexEmptyItem
 } from "../../services/actions/burgerConstructor";
 
 const heightChildItemBurgerConstructor = 96;
@@ -25,25 +25,19 @@ const BurgerConstructor = () => {
     const [, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
-            dispatch({
-                type: ADD_CONSTRUCTOR_ITEM,
+            dispatch(addConstructorItem({
                 image: item.image,
                 price: item.price,
                 id: item.id,
                 name: item.name,
                 itemType: item.type,
                 index: indexEmptyItem
-            });
-            dispatch({
-                type: CLEAR_INDEX_EMPTY_ITEM
-            })
-            dispatch({
-                type: CLEAR_START_DRAG_POSITION
-            })
-            dispatch({
-                type: SET_DRAG,
+            }));
+            dispatch(clearIndexEmptyItem());
+            dispatch(clearStartDragPosition());
+            dispatch(setDrag({
                 isDrag: false
-            })
+            }));
         }
     });
 
@@ -52,11 +46,10 @@ const BurgerConstructor = () => {
             e.preventDefault();
             let result = Math.floor(Math.abs(e.clientY - yPoint) / heightChildItemBurgerConstructor);
             result = e.clientY > yPoint ? result * 1 : result * -1;
-            dispatch({
-                type: SET_EMPTY_ITEM,
+            dispatch(setEmptyItem({
                 index: indexEmptyItem + result,
                 yPoint: e.clientY
-            })
+            }))
         }
     }, [yPoint, indexEmptyItem, isDragStart, dispatch]);
 
