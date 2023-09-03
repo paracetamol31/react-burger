@@ -1,44 +1,70 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { useDispatch } from 'react-redux';
 import {
     CurrencyIcon,
     Counter
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrag } from "react-dnd";
+import { useSelector } from 'react-redux';
 
 import ingredientСardStyles from "./ingredient-сard.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
+import { showIngredientModal } from "../../services/actions/modal";
+import {
+    setCurrentIngredient,
+    increaseCounter,
+    clearBunsCounter
+} from "../../services/actions/ingredients";
 
-const IngredientСard = (props) => {
-    const [isOpenModal, setOpenModal] = React.useState(false);
+const IngredientСard = ({ id }) => {
+    const dispatch = useDispatch();
+    const { ingredients } = useSelector(state => state.ingredients);
+    const ingredientObject = ingredients.find(ingredient => ingredient._id === id);
 
     const openModal = React.useCallback(() => {
-        setOpenModal(true)
-    }, [setOpenModal]);
+        dispatch(setCurrentIngredient({ id: ingredientObject._id }));
+        dispatch(showIngredientModal());
+    }, [dispatch, ingredientObject._id]);
 
-    return <div onClick={openModal} className={`${ingredientСardStyles.card} pl-4 pr-4`}>
-        {/* TODO: Значение count временно захардкожено*/}
-        <Counter count={1} size="default" extraClass="m-1" />
-        <img src={props.image} alt="Картина ингредиента" />
-        <div className={`${ingredientСardStyles.priceFrame} mt-1 mb-1`}>
-            <span className="mr-2 text text_type_main-medium">{props.price}</span>
-            <CurrencyIcon type="primary" />
+    const [, dragRef] = useDrag({
+        type: "ingredient",
+        item: {
+            image: ingredientObject.image,
+            price: ingredientObject.price,
+            id: ingredientObject._id,
+            name: ingredientObject.name,
+            type: ingredientObject.type
+        },
+        end: (item, monitor) => {
+            if (monitor.didDrop()) {
+                dispatch(increaseCounter({
+                    id: item.id
+                }))
+
+                if (item.type === "bun") {
+                    dispatch(clearBunsCounter({
+                        id: item.id
+                    }))
+                }
+            }
+        }
+    });
+
+    return (
+        <div ref={dragRef} onClick={openModal} className={`${ingredientСardStyles.card} pl-4 pr-4`}>
+            {!!ingredientObject.count && <Counter count={ingredientObject.count} size="default" extraClass="m-1" />}
+            <img src={ingredientObject.image} alt="Картина ингредиента" />
+            <div className={`${ingredientСardStyles.priceFrame} mt-1 mb-1`}>
+                <span className="mr-2 text text_type_main-medium">{ingredientObject.price}</span>
+                <CurrencyIcon type="primary" />
+            </div>
+            <span className={`${ingredientСardStyles.ingredientName} text text_type_main-default`}>{ingredientObject.name}</span>
         </div>
-        <span className={`${ingredientСardStyles.ingredientName} text text_type_main-default`}>{props.name}</span>
-        {/* TODO: Пока не придумал, как управлять видимостью модалки из компонента Modal. Если вынести  isOpenModal в Modal,
-        возникают проблемы с открытием модалки по клику на ингредиент. */}
-        {isOpenModal
-            && <Modal setVisibleModalWindow={setOpenModal} label={"Детали ингредиента"}>
-                <IngredientDetails {...props} />
-            </Modal>}
-    </div>
+    )
 }
 
 IngredientСard.propTypes = {
-    image: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string
+    id: PropTypes.string
 }
 
 export default IngredientСard;

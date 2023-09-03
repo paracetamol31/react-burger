@@ -1,37 +1,29 @@
-import PropTypes from "prop-types";
+const BASE_URL = "https://norma.nomoreparties.space/api"
+const urlRequestIngredients = `${BASE_URL}/ingredients`;
+const urlRequestMakeOrder = `${BASE_URL}/orders`;
 
-const urlRequestIngredients = "https://norma.nomoreparties.space/api/ingredients";
-
-export const RequestStatusEnum = {
-    Loading: "Loading",
-    Success: "Success",
-    Failed: "Failed"
-}
-
-const makeRequest = async (url) => {
-    const response = await fetch(url);
+const makeRequest = async (url, method = "GET", body) => {
+    const response = await fetch(url, {
+        headers: { 'Content-Type': 'application/json' },
+        method: method,
+        body: body
+    });
     if (!response.ok) {
         throw new Error("Ошибка запроса!");
     }
-    return response;
+    return await response.json();
 }
 
 export const makeRequestIngredients = async () => {
-    try {
-        const response = await makeRequest(urlRequestIngredients);
-        const data = await response.json();
-        return {
-            data: data.data,
-            requestStatus: RequestStatusEnum.Success
-        };
-    } catch {
-        return {
-            requestStatus: RequestStatusEnum.Failed
-        };
-    }
+    return makeRequest(urlRequestIngredients);
 }
 
-export const responseIngredientsProps = PropTypes.shape({
-    data: PropTypes.object,
-    requestStatus: PropTypes.string.isRequired
-});
+export const makeOrderRequest = async (idItems) => {
+    return await makeRequest(
+        urlRequestMakeOrder,
+        "POST",
+        JSON.stringify({
+            ingredients: idItems.map(item => item)
+        })
+    );
+}

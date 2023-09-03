@@ -13,20 +13,3 @@
     gap: 16px;
     overflow: auto;
 }
-
-.wrapperConstructorElement {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.footerContentWraper {
-    display: flex;
-    align-items: center;
-}
