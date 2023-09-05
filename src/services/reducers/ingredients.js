@@ -35,7 +35,6 @@ export const ingredientsReducer = ((state = initialState, action) => {
                 ingredients: payload.value
             }
         case APPLY_INGREDIENTS_FAILED:
-            debugger
             return {
                 ...state,
                 ingredientsRequest: false,

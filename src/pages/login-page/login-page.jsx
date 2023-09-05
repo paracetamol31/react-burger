@@ -8,11 +8,19 @@ import {
     Link,
     useNavigate
 } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { login } from "../../services/actions/tokens"
 
 export const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const onButtonClick = useCallback(() => {
         navigate("/constructor");
+        dispatch(login({
+            "email": "ilya.hotchenkov@list.ru",
+            "password": "2213"
+        }));
     }, [navigate]);
 
     return (

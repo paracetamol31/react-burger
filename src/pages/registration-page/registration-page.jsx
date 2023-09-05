@@ -4,14 +4,23 @@ import {
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import {
     Link,
     useNavigate
 } from 'react-router-dom';
 
+import { register } from "../../services/actions/tokens"
+
 export const RegistrationPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const onButtonClick = useCallback(() => {
+        dispatch(register({
+            "email": "ilya.hotchenkov@list.ru",
+            "password": "2213",
+            "name": "ilya"
+        }))
         navigate("/constructor");
     }, [navigate]);
 
