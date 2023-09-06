@@ -9,8 +9,7 @@ import {
     useNavigate
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-import { login } from "../../services/actions/tokens"
+import { login } from "../../services/actions/user";
 
 export const LoginPage = () => {
     const navigate = useNavigate();

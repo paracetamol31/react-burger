@@ -9,8 +9,7 @@ import {
     Link,
     useNavigate
 } from 'react-router-dom';
-
-import { register } from "../../services/actions/tokens"
+import { register } from "../../services/actions/user";
 
 export const RegistrationPage = () => {
     const navigate = useNavigate();
