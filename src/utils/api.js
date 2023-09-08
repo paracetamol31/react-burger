@@ -2,7 +2,7 @@ import {
     accessToken,
     getCookie,
     refreshToken
-} from "./cookieHelper";
+} from "./cookie";
 
 const BASE_URL = "https://norma.nomoreparties.space/api"
 const urlRequestIngredients = `${BASE_URL}/ingredients`;

@@ -12,12 +12,12 @@ export const ProtectedRouteElement = ({ element }) => {
 
     useEffect(() => {
         dispatch(getUserInfo());
-    }, []);
+    }, [dispatch]);
 
     if (!userInfoLoaded) {
         return null
     }
-    
+
     return userInfo ? element : <Navigate to="/login" replace />;
 }
 

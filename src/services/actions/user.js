@@ -9,7 +9,7 @@ import {
     expires20Minut,
     accessToken,
     refreshToken
-} from "../../utils/cookieHelper";
+} from "../../utils/cookie";
 
 export const SET_USER_INFO = "SET_USER_INFO";
 export const USER_INFO_LOADED = "USER_INFO_LOADED";

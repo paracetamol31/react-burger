@@ -8,7 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const AppHeader = () => {
-    const СonstructorTab = headerMenuItem(BurgerIcon, true);
+    const ConstructorTab = headerMenuItem(BurgerIcon, true);
     const OrderFeedTab = headerMenuItem(ListIcon)
     const PersonalAccountTa = headerMenuItem(ProfileIcon);
     return (
@@ -16,7 +16,7 @@ const AppHeader = () => {
             <div className={appHeaderStyles.container}>
                 <div className={`${appHeaderStyles.sector} ${appHeaderStyles.rightSector}`}>
                     {/* TODO: После добавления роутинга теги <a> будут заменены */}
-                    <a className={appHeaderStyles.link} href="/#"><СonstructorTab text="Конструктор" /></a>
+                    <a className={appHeaderStyles.link} href="/#"><ConstructorTab text="Конструктор" /></a>
                     <a className={`${appHeaderStyles.link} ml-2`} href="/#" ><OrderFeedTab text="Лента заказов" /></a>
                 </div>
                 <div className={`${appHeaderStyles.sector} ${appHeaderStyles.centralSector}`}>{<Logo />}</div>
