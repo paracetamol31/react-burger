@@ -8,6 +8,6 @@ export const userProfile = "userProfile";
 export const setCurrentMenuHeader = (currentItem) => {
     return {
         type: SET_CURRENT_MENU_HEADER,
-        payLoad: { currentItem }
+        payload: { currentItem }
     }
 }

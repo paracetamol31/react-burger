@@ -1,12 +1,30 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import profilePageStyles from "./profile-page.module.css";
-
+import { useCallback, useEffect } from "react";
 import {
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from "react-router-dom";
+
+import {
+    setCurrentMenuHeader,
+    userProfile
+} from "../../services/actions/header";
+import { logout } from "../../services/actions/user";
 
 export const ProfilePage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { name, email } = useSelector(state => state.user.userInfo);
+
+    useEffect(() => {
+        dispatch(setCurrentMenuHeader(userProfile));
+    }, [dispatch])
+
+    const callLogout = useCallback(() => {
+        dispatch(logout(() => { navigate("/login") }));
+    }, [dispatch, navigate])
+
     return <section className={profilePageStyles.pageWrapper}>
         <div className={`${profilePageStyles.rightPanel}`} >
             <div className={`${profilePageStyles.menuPanel} mb-20`} >
@@ -17,7 +35,12 @@ export const ProfilePage = () => {
                     <span className="text text_type_main-medium text_color_inactive">История заказов</span>
                 </div>
                 <div className={profilePageStyles.menuItem}>
-                    <span className="text text_type_main-medium text_color_inactive">Выход</span>
+                    <span
+                        className="text text_type_main-medium text_color_inactive"
+                        onClick={callLogout}
+                    >
+                        Выход
+                    </span>
                 </div>
             </div>
             <div className={`${profilePageStyles.menuPanel} footerRightPanel`} >

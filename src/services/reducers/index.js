@@ -7,6 +7,7 @@ import { burgerConstructorReducer } from "./burgerConstructor.js";
 import { totalPrice } from "./totalPrice.js";
 import { userReducer } from "./user.js";
 import { authorizationInputFields } from "./authorizationInputFields.js";
+import { headerReducer } from "./header.js";
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
     burgerConstructor: burgerConstructorReducer,
     totalPrice: totalPrice,
     user: userReducer,
-    authorizationInputFields: authorizationInputFields
+    authorizationInputFields: authorizationInputFields,
+    header: headerReducer
 });

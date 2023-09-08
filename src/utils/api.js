@@ -74,3 +74,12 @@ export const accessTokenRequest = async () => {
         JSON.stringify({ token: getCookie(refreshToken) })
     );
 }
+
+export const logoutRequest = async () => {
+    return await makeRequest(
+        urlRequestLogout,
+        "POST",
+        {},
+        JSON.stringify({ token: getCookie(refreshToken) })
+    );
+}

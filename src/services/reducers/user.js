@@ -1,6 +1,7 @@
 import {
     SET_USER_INFO,
-    USER_INFO_LOADED
+    USER_INFO_LOADED,
+    CLEAR_USER_INFO
 } from "../actions/user";
 
 const initialState = {
@@ -24,6 +25,11 @@ export const userReducer = ((state = initialState, action) => {
             return {
                 ...state,
                 userInfoLoaded: true
+            }
+        case CLEAR_USER_INFO:
+            return {
+                ...state,
+                ...initialState
             }
         default:
             return state;
