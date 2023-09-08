@@ -1,4 +1,4 @@
-export const expires20Minut = 1000 * 60 * 20;
+export const expires20Minut = 60 * 20;
 export const accessToken = "accessToken";
 export const refreshToken = "refreshToken";
 

@@ -23,11 +23,11 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 const store = createStore(rootReducer as any, enhancer);
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <Router>
         <App />
       </Router>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

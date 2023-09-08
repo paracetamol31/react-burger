@@ -1,14 +1,29 @@
-import { SET_USER_INFO } from "../actions/user";
+import {
+    SET_USER_INFO,
+    USER_INFO_LOADED
+} from "../actions/user";
 
-export const userReducer = ((state = null, action) => {
+const initialState = {
+    userInfo: null,
+    userInfoLoaded: false
+}
+
+export const userReducer = ((state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
         case SET_USER_INFO:
-            debugger
             return {
                 ...state,
-                email: payload.email,
-                name: payload.name
+                userInfo: {
+                    ...state.userInfoLoaded,
+                    email: payload.email,
+                    name: payload.name
+                }
+            }
+        case USER_INFO_LOADED:
+            return {
+                ...state,
+                userInfoLoaded: true
             }
         default:
             return state;

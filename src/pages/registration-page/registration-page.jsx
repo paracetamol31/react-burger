@@ -4,44 +4,75 @@ import {
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import {
+    useDispatch,
+    useSelector
+} from "react-redux";
 import {
     Link,
     useNavigate
 } from 'react-router-dom';
 import { register } from "../../services/actions/user";
+import {
+    nameInput,
+    emailInput,
+    passwordInput,
+    registrationPage
+} from "../../services/reducers/authorizationInputFields";
+import {
+    changeInputValue
+} from "../../services/actions/authorizationInputFields";
 
 export const RegistrationPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { name, email, password } = useSelector(state => state.authorizationInputFields.registrationPage);
+    
     const onButtonClick = useCallback(() => {
-        dispatch(register({
-            "email": "ilya.hotchenkov@list.ru",
-            "password": "2213",
-            "name": "ilya"
-        }))
-        navigate("/constructor");
-    }, [navigate]);
+        dispatch(
+            register(
+                { name, email, password },
+                () => navigate("/")
+            )
+        );
+    }, [navigate, dispatch, name, email, password]);
+
+    const onInputsChanged = useCallback((event) => {
+        dispatch(changeInputValue({
+            pageName: registrationPage,
+            inputName: event.target.name,
+            value: event.target.value
+        }));
+    }, [dispatch]);
 
     return (
         <section className={registrationPageStyles.registrationPageWrapper}>
             <div className={registrationPageStyles.registrationPage}>
                 <span className={`${registrationPageStyles.title} mb-6 text text_type_main-medium`}>Регистрация</span>
                 <Input
+                    name={nameInput}
                     type={'text'}
                     placeholder={'Имя'}
                     extraClass={`${registrationPageStyles.inputs} mb-6`}
+                    onChange={onInputsChanged}
+                    value={name}
                 />
                 <Input
+                    name={emailInput}
                     type={'text'}
                     placeholder={'E-mail'}
                     extraClass={`${registrationPageStyles.inputs} mb-6`}
+                    onChange={onInputsChanged}
+                    value={email}
                 />
                 <Input
-                    type={'text'}
+                    name={passwordInput}
+                    type={'password'}
                     placeholder={'Пароль'}
                     icon={'ShowIcon'}
                     extraClass={`${registrationPageStyles.inputs} mb-6`}
+                    onChange={onInputsChanged}
+                    value={password}
                 />
 
                 <Button
