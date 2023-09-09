@@ -88,10 +88,9 @@ export const getUserInfo = () => {
 
                 userInfoRequest().then(response => {
                     dispatch(setUserInfo(response.user));
-                }).catch(e => console.error(e)).finally(() => dispatch(userInfoLoaded()));
+                }).finally(() => dispatch(userInfoLoaded()));
 
             }).catch(e => {
-                console.error(e);
                 dispatch(userInfoLoaded());
             })
 
