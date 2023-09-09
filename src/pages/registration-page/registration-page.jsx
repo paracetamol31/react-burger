@@ -1,7 +1,8 @@
 import registrationPageStyles from "./registration-page.module.css";
 import {
-    Input,
-    Button
+    EmailInput,
+    Button,
+    PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
 import {
@@ -10,6 +11,7 @@ import {
 } from "react-redux";
 import {
     Link,
+    Navigate,
     useNavigate
 } from 'react-router-dom';
 import { register } from "../../services/actions/user";
@@ -27,15 +29,17 @@ export const RegistrationPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { name, email, password } = useSelector(state => state.authorizationInputFields.registrationPage);
-    
+    const { userInfo } = useSelector(state => state.user);
+    const { savedPathname } = useSelector(state => state.routing);
+
     const onButtonClick = useCallback(() => {
         dispatch(
             register(
                 { name, email, password },
-                () => navigate("/")
+                () => navigate(savedPathname, { replace: true })
             )
         );
-    }, [navigate, dispatch, name, email, password]);
+    }, [navigate, dispatch, name, email, password, savedPathname]);
 
     const onInputsChanged = useCallback((event) => {
         dispatch(changeInputValue({
@@ -45,37 +49,36 @@ export const RegistrationPage = () => {
         }));
     }, [dispatch]);
 
-    return (
-        <section className={registrationPageStyles.registrationPageWrapper}>
+    return !userInfo
+        ? <section className={registrationPageStyles.registrationPageWrapper}>
             <div className={registrationPageStyles.registrationPage}>
                 <span className={`${registrationPageStyles.title} mb-6 text text_type_main-medium`}>Регистрация</span>
-                <Input
+                <EmailInput
                     name={nameInput}
-                    type={'text'}
                     placeholder={'Имя'}
                     extraClass={`${registrationPageStyles.inputs} mb-6`}
+                    error={false}
                     onChange={onInputsChanged}
                     value={name}
                 />
-                <Input
+                <EmailInput
                     name={emailInput}
-                    type={'text'}
                     placeholder={'E-mail'}
                     extraClass={`${registrationPageStyles.inputs} mb-6`}
                     onChange={onInputsChanged}
                     value={email}
                 />
-                <Input
+                <PasswordInput
                     name={passwordInput}
-                    type={'password'}
                     placeholder={'Пароль'}
-                    icon={'ShowIcon'}
                     extraClass={`${registrationPageStyles.inputs} mb-6`}
                     onChange={onInputsChanged}
                     value={password}
                 />
 
                 <Button
+                    htmlType="button"
+                    type="primary"
                     extraClass={`${registrationPageStyles.button} text text_type_main-default mb-20`}
                     onClick={onButtonClick}
                 >
@@ -89,5 +92,5 @@ export const RegistrationPage = () => {
                 </span>
             </div>
         </section>
-    );
+        : <Navigate to={savedPathname} replace />;
 }

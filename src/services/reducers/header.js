@@ -1,6 +1,7 @@
 import {
     SET_CURRENT_MENU_HEADER,
-    burgerConstructor
+    burgerConstructor,
+    CLEAR_HEADER_STATE
 } from "../../services/actions/header";
 
 const initialState = {
@@ -14,6 +15,11 @@ export const headerReducer = ((state = initialState, action) => {
             return {
                 ...state,
                 currentItem: payload.currentItem
+            }
+        case CLEAR_HEADER_STATE:
+            return {
+                ...state,
+                ...initialState
             }
         default:
             return state;

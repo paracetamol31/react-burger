@@ -2,7 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import profilePageStyles from "./profile-page.module.css";
 import { useCallback, useEffect } from "react";
 import {
-    Input
+    EmailInput,
+    PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
 
@@ -48,23 +49,24 @@ export const ProfilePage = () => {
             </div>
         </div>
         <div className={profilePageStyles.inputsWrapper}>
-            <Input
-                type={'text'}
+            <EmailInput
                 placeholder={'Имя'}
                 value={name}
+                isIcon={true}
+                error={false}
                 onChange={() => { }}
             />
-            <Input
-                type={'text'}
+            <EmailInput
                 placeholder={'Логин'}
                 value={email}
+                isIcon={true}
                 onChange={() => { }}
             />
-            <Input
-                type={'password'}
+            <PasswordInput
                 placeholder={'Пароль'}
                 value={""}
                 onChange={() => { }}
+                icon="EditIcon"
             />
         </div>
     </section>

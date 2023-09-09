@@ -9,7 +9,6 @@
 .loginPage {
     display: flex;
     width: 480px;
-    height: 430px;
     flex-direction: column;
     align-items: center;
 }

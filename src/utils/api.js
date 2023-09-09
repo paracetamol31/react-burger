@@ -12,6 +12,8 @@ const urlRequestRegister = `${BASE_URL}/auth/register`; //эндпоинт дл�
 const urlRequestLogout = `${BASE_URL}/auth/logout`; //эндпоинт для выхода из системы
 const urlRequestToken = `${BASE_URL}/auth/token`; //эндпоинт обновления токена
 const urlRequestUserInfo = `${BASE_URL}/auth/user`; //эндпоинт запроса данных о пользователе
+const urlRequestPasswordForgot = `${BASE_URL}/password-reset`;
+const urlRequestPasswordReset = `${BASE_URL}/password-reset/reset`;
 
 const makeRequest = async (url, method = "GET", headers, body) => {
     const response = await fetch(url, {
@@ -81,5 +83,23 @@ export const logoutRequest = async () => {
         "POST",
         {},
         JSON.stringify({ token: getCookie(refreshToken) })
+    );
+}
+
+export const forgotPasswordRequest = async (email) => {
+    return await makeRequest(
+        urlRequestPasswordForgot,
+        "POST",
+        {},
+        JSON.stringify({ email })
+    );
+}
+
+export const resetPasswordRequest = async (password, token) => {
+    return await makeRequest(
+        urlRequestPasswordReset,
+        "POST",
+        {},
+        JSON.stringify({ password, token })
     );
 }

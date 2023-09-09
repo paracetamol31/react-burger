@@ -3,7 +3,9 @@ import {
     loginRequest,
     userInfoRequest,
     accessTokenRequest,
-    logoutRequest
+    logoutRequest,
+    forgotPasswordRequest,
+    resetPasswordRequest
 } from "../../utils/api";
 import {
     setCookie,
@@ -13,6 +15,12 @@ import {
     deleteCookie
 } from "../../utils/cookie";
 import { clearInputValue } from "../../services/actions/authorizationInputFields";
+import {
+    startedPasswordReset,
+    overPasswordReset,
+    clearRoutingState
+} from "./routing";
+import { clearHeaderState } from "../../services/actions/header";
 
 export const SET_USER_INFO = "SET_USER_INFO";
 export const USER_INFO_LOADED = "USER_INFO_LOADED";
@@ -96,7 +104,31 @@ export const logout = (callBack) => {
             deleteCookie(accessToken);
             deleteCookie(refreshToken);
             dispatch(clearUserInfo());
+            dispatch(clearHeaderState());
+            dispatch(clearRoutingState());
             callBack();
+        }).catch(e => {
+            console.error(e);
+        });
+    }
+}
+
+export const forgotPassword = (email, callBack) => {
+    return async (dispatch) => {
+        forgotPasswordRequest(email).then(() => {
+            dispatch(startedPasswordReset());
+            callBack();
+        }).catch(e => {
+            console.error(e);
+        });
+    }
+}
+
+export const resetPassword = (password, code, callBack) => {
+    return async (dispatch) => {
+        resetPasswordRequest(password, code).then(() => {
+            callBack();
+            dispatch(overPasswordReset());
         }).catch(e => {
             console.error(e);
         });
