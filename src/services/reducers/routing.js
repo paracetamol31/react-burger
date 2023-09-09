@@ -8,6 +8,7 @@ import {
 
 const initialState = {
     isStartedPasswordReset: false,
+    isResetPassword: false,
     savedPathname: "/"
 }
 
@@ -17,12 +18,14 @@ export const routingReducer = ((state = initialState, action) => {
         case START_PASSWORD_RESET:
             return {
                 ...state,
-                isStartedPasswordReset: true
+                isStartedPasswordReset: true,
+                isResetPassword: false
             }
         case OVER_PASSWORD_RESET:
             return {
                 ...state,
-                isStartedPasswordReset: false
+                isStartedPasswordReset: false,
+                isResetPassword: true
             }
         case SET_SAVED_PATHNAME:
             return {

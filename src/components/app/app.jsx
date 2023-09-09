@@ -1,56 +1,41 @@
-import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 import AppHeader from "../app-header/app-header";
 import { ConstructorPage } from "../../pages/constructor-page/constructor-page";
 import appStyles from "./app.module.css";
-import { applayIngredients } from "../../services/actions/ingredients";
 import { LoginPage } from "../../pages/login-page/login-page";
 import { RegistrationPage } from "../../pages/registration-page/registration-page";
 import { ForgotPasswordPage } from "../../pages/forgot-password-page/forgot-password-page";
 import { ResetPasswordPage } from "../../pages/reset-password-page/reset-password-page";
 import { ProtectedRouteElement } from "../../components/protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile-page/profile-page";
+import { IngredientsPage } from "../../pages/ingredients-page/ingredients-page";
+import { NotFaundPage } from "../../pages/not-faund-page/not-faund-page";
 
 function App() {
-  const dispatch = useDispatch();
-  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(state => state.ingredients);
-
-  React.useEffect(() => {
-    dispatch(applayIngredients());
-  }, [dispatch]);
+  const { currentIngredient } = useSelector(state => state.ingredients);
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
       <main className={appStyles.main}>
-        {
-          (!ingredientsRequest && !ingredientsFailed && ingredients)
-          &&
-          <Routes>
-            <Route path="/registration" element={<RegistrationPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<ProtectedRouteElement element={<ConstructorPage />} />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
-          </Routes>
-        }
-        {
-          ingredientsRequest
-          &&
-          <div className={appStyles.messageError}>
-            <span className="text_type_main-default">{"Загрузка космических ингредиентов..."}</span>
-          </div>
-
-        }
-        {
-          ingredientsFailed
-          && <div className={appStyles.messageError}>
-            <span className="text_type_main-default">{"Ошибка загрузки космических ингредиентов :( "}</span>
-          </div>
-        }
+        <Routes>
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<ConstructorPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+          <Route
+            path="/ingredients/:id"
+            element={
+              currentIngredient
+                ? <ProtectedRouteElement element={<ConstructorPage />} />
+                : <ProtectedRouteElement element={<IngredientsPage />} />
+            } />
+          <Route path="*" element={<NotFaundPage />} />
+        </Routes>
       </main>
     </div>
   );

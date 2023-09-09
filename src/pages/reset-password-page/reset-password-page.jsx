@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
     Link,
     Navigate,
@@ -14,18 +15,22 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     resetPassword
 } from "../../services/actions/user";
-import { changeInputValue } from "../../services/actions/authorizationInputFields";
+import {
+    changeInputValue,
+    clearResetPasswordValue
+} from "../../services/actions/authorizationInputFields";
 import {
     codeInput,
     passwordInput,
     resetPasswordPage
 } from "../../services/reducers/authorizationInputFields";
+import { overPasswordReset } from "../../services/actions/routing";
 
 export const ResetPasswordPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { password, code } = useSelector(state => state.authorizationInputFields.resetPasswordPage);
-    const { isStartedPasswordReset } = useSelector(state => state.routing);
+    const { isStartedPasswordReset, isResetPassword } = useSelector(state => state.routing);
     const { userInfo } = useSelector(state => state.user);
 
     const onButtonClick = useCallback(() => {
@@ -40,8 +45,19 @@ export const ResetPasswordPage = () => {
         }));
     }, [dispatch]);
 
-    if (!userInfo && !isStartedPasswordReset) {
+    useEffect(() => {
+        return (() => {
+            dispatch(overPasswordReset());
+            dispatch(clearResetPasswordValue());
+        })
+    }, []);
+
+    if (userInfo) {
         return <Navigate to="/" replace />;
+    }
+
+    if (isResetPassword) {
+        return <Navigate to="/login" replace />;
     }
 
     return isStartedPasswordReset

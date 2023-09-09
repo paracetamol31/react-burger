@@ -35,7 +35,7 @@ export const makeOrderRequest = async (idItems) => {
     return await makeRequest(
         urlRequestMakeOrder,
         "POST",
-        {},
+        { Authorization: 'Bearer ' + getCookie(accessToken) },
         JSON.stringify({
             ingredients: idItems.map(item => item)
         })

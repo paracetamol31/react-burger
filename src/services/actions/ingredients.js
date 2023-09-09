@@ -96,5 +96,3 @@ export const clearAllCounter = () => {
         type: CLEAR_ALL_COUNTER,
     }
 }
-
-

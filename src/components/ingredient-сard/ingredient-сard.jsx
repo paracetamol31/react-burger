@@ -15,16 +15,20 @@ import {
     increaseCounter,
     clearBunsCounter
 } from "../../services/actions/ingredients";
+import { useNavigate } from "react-router-dom";
 
 const IngredientСard = ({ id }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { ingredients } = useSelector(state => state.ingredients);
     const ingredientObject = ingredients.find(ingredient => ingredient._id === id);
 
     const openModal = React.useCallback(() => {
         dispatch(setCurrentIngredient({ id: ingredientObject._id }));
         dispatch(showIngredientModal());
-    }, [dispatch, ingredientObject._id]);
+        navigate(`/ingredients/${ingredientObject._id}`);
+
+    }, [dispatch, ingredientObject._id, navigate]);
 
     const [, dragRef] = useDrag({
         type: "ingredient",

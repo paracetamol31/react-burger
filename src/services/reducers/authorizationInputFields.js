@@ -1,6 +1,7 @@
 import {
     CHANGE_INPUT_VALUE,
-    CLEAR_INPUT_VALUE
+    CLEAR_INPUT_VALUE,
+    CLEAR_RESET_PASSWORD_VALUE
 } from "../actions/authorizationInputFields";
 
 //Константы для имен страниц
@@ -123,6 +124,15 @@ export const authorizationInputFields = ((state = initialState, action) => {
                     }
                 default:
                     return state;
+            }
+        }
+    } else if (type === CLEAR_RESET_PASSWORD_VALUE) {
+        return {
+            ...state,
+            resetPasswordPage: {
+                ...state.resetPasswordPage,
+                password: "",
+                code: ""
             }
         }
     } else if (type === CLEAR_INPUT_VALUE) {

@@ -14,10 +14,11 @@ import {
     refreshToken,
     deleteCookie
 } from "../../utils/cookie";
-import { clearInputValue } from "../../services/actions/authorizationInputFields";
+import {
+    clearInputValue
+} from "../../services/actions/authorizationInputFields";
 import {
     startedPasswordReset,
-    overPasswordReset,
     clearRoutingState
 } from "./routing";
 import { clearHeaderState } from "../../services/actions/header";
@@ -128,7 +129,6 @@ export const resetPassword = (password, code, callBack) => {
     return async (dispatch) => {
         resetPasswordRequest(password, code).then(() => {
             callBack();
-            dispatch(overPasswordReset());
         }).catch(e => {
             console.error(e);
         });

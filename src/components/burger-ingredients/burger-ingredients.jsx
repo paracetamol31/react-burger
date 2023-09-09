@@ -8,6 +8,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { cloaeIngredientModal } from "../../services/actions/modal";
 import { setCategoryIngredients } from "../../services/actions/ingredients";
+import { useNavigate } from 'react-router-dom';
 
 const tabsInfo = [
     {
@@ -25,12 +26,14 @@ const tabsInfo = [
 ];
 
 const BurgerIngredients = () => {
+    const navigane = useNavigate();
     const { isShowIngredientModal } = useSelector(state => state.modal);
     const { currentIngredient } = useSelector(state => state.ingredients);
     const dispatch = useDispatch()
     const closeModal = useCallback(() => {
         dispatch(cloaeIngredientModal())
-    }, [dispatch]);
+        navigane("/", { replace: true })
+    }, [dispatch, navigane]);
 
     const refCategoryBun = useRef();
     const refCategoryMain = useRef();
@@ -40,12 +43,12 @@ const BurgerIngredients = () => {
     const onScroll = useCallback(() => {
         if (Math.abs(refScrollBar.current.scrollTop - refCategoryBun.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)) {
-            dispatch(setCategoryIngredients({value: 0 }))
+            dispatch(setCategoryIngredients({ value: 0 }))
         } else if (Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategorySauce.current.offsetTop)) {
-            dispatch(setCategoryIngredients({value: 1 }))
+            dispatch(setCategoryIngredients({ value: 1 }))
         } else {
-            dispatch(setCategoryIngredients({value: 2}))
+            dispatch(setCategoryIngredients({ value: 2 }))
         }
     }, [dispatch]);
 
@@ -65,7 +68,7 @@ const BurgerIngredients = () => {
             </div>
             {(currentIngredient && isShowIngredientModal)
                 && <Modal closeModal={closeModal} label={"Детали ингредиента"}>
-                    <IngredientDetails />
+                    <IngredientDetails currentIngredient={currentIngredient} />
                 </Modal>}
         </section>
     )

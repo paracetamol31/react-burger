@@ -17,11 +17,16 @@ import {
     closeOrderModal
 } from "../../services/actions/modal";
 import { countTotalPrice } from "../../services/actions/totalPrice";
+import { useNavigate } from "react-router-dom";
 
 const OrderConstructorpPanel = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { isShowOrderModal } = useSelector(state => state.modal);
     const { totalPrice } = useSelector(state => state.totalPrice);
+    const { userInfo } = useSelector(state => state.user);
+    const { orderIdRequest } = useSelector(state => state.order);
+
     const burgerConstructor = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
@@ -29,15 +34,21 @@ const OrderConstructorpPanel = () => {
     }, [dispatch, burgerConstructor])
 
     const openModalOrderDetails = useCallback(() => {
+        if (!userInfo) {
+            navigate("/login");
+            return;
+        }
         if (burgerConstructor.bun) {
             dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
             dispatch(showOrderMoal())
         }
-    }, [dispatch, burgerConstructor]);
+    }, [dispatch, burgerConstructor, navigate, userInfo]);
 
     const closeModal = useCallback(() => {
-        dispatch(closeOrderModal())
-    }, [dispatch]);
+        if (!orderIdRequest) {
+            dispatch(closeOrderModal())
+        }
+    }, [dispatch, orderIdRequest]);
 
     return (
         <section className={`${orderConstructorpPanelStyles.contentWraper} mt-10 mb-10 mr-4`}>
