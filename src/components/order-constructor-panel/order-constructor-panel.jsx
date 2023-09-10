@@ -8,25 +8,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from 'react-redux';
 
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
 import orderConstructorpPanelStyles from "./order-constructor-panel.module.css";
-import { applayOrderId } from "../../services/actions/order";
-import {
-    showOrderMoal,
-    closeOrderModal
-} from "../../services/actions/modal";
 import { countTotalPrice } from "../../services/actions/totalPrice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OrderConstructorpPanel = () => {
+    const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isShowOrderModal } = useSelector(state => state.modal);
     const { totalPrice } = useSelector(state => state.totalPrice);
-    const { userInfo } = useSelector(state => state.user);
-    const { orderIdRequest } = useSelector(state => state.order);
-
     const burgerConstructor = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
@@ -34,21 +24,10 @@ const OrderConstructorpPanel = () => {
     }, [dispatch, burgerConstructor])
 
     const openModalOrderDetails = useCallback(() => {
-        if (!userInfo) {
-            navigate("/login");
-            return;
-        }
         if (burgerConstructor.bun) {
-            dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
-            dispatch(showOrderMoal())
+            navigate("/order", { state: { background: location } });
         }
-    }, [dispatch, burgerConstructor, navigate, userInfo]);
-
-    const closeModal = useCallback(() => {
-        if (!orderIdRequest) {
-            dispatch(closeOrderModal())
-        }
-    }, [dispatch, orderIdRequest]);
+    }, [burgerConstructor, navigate, location]);
 
     return (
         <section className={`${orderConstructorpPanelStyles.contentWraper} mt-10 mb-10 mr-4`}>
@@ -60,10 +39,6 @@ const OrderConstructorpPanel = () => {
                     Оформить заказ
                 </Button>
             </div>
-            {isShowOrderModal
-                && <Modal closeModal={closeModal}>
-                    < OrderDetails />
-                </Modal>}
         </section>
     )
 }

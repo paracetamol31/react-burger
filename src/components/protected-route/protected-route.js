@@ -9,7 +9,7 @@ import { setSavedPathname } from "../../services/actions/routing";
 
 export const ProtectedRouteElement = ({ element }) => {
     const dispatch = useDispatch();
-    const { userInfo, userInfoLoaded } = useSelector(state => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
     const { pathname } = useLocation();
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export const ProtectedRouteElement = ({ element }) => {
         dispatch(setSavedPathname(pathname));
     }, [dispatch, pathname]);
 
-    if (!userInfoLoaded) {
+    if (!isUserInfoLoaded) {
         return null
     }
 

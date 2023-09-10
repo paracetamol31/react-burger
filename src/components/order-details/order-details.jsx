@@ -1,12 +1,22 @@
+import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import orderDetailsStyles from "./order-details.module.css";
+import { applayOrderId } from "../../services/actions/order";
 import checkIcon from "../../images/check.svg"
 
 const OrderDetails = () => {
+    const dispatch = useDispatch();
+    const burgerConstructor = useSelector(state => state.burgerConstructor);
     const { orderId, orderIdRequest, orderIdFailed } = useSelector(state => state.order);
-    
+
+    useEffect(() => {
+        if (burgerConstructor.constructorItems.length) {
+            dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
+        }
+    }, [dispatch, burgerConstructor])
+
     return (
         <>
             {

@@ -34,9 +34,10 @@ export const setUserInfo = (userInfo) => {
     }
 }
 
-export const userInfoLoaded = () => {
+export const userInfoLoaded = (value) => {
     return {
-        type: USER_INFO_LOADED
+        type: USER_INFO_LOADED,
+        payload: { value }
     }
 }
 
@@ -78,7 +79,7 @@ export const getUserInfo = () => {
     return async (dispatch) => {
         userInfoRequest().then(response => {
             dispatch(setUserInfo(response.user));
-            dispatch(userInfoLoaded());
+            dispatch(userInfoLoaded(true));
         }).catch(e => {
 
             accessTokenRequest().then(response => {
@@ -88,10 +89,10 @@ export const getUserInfo = () => {
 
                 userInfoRequest().then(response => {
                     dispatch(setUserInfo(response.user));
-                }).finally(() => dispatch(userInfoLoaded()));
+                }).finally(() => dispatch(userInfoLoaded(true)));
 
             }).catch(e => {
-                dispatch(userInfoLoaded());
+                dispatch(userInfoLoaded(true));
             })
 
         })

@@ -1,14 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useCallback, useRef } from "react";
 
 import IngredientsSection from "../ingredients-section/ingredients-section";
 import TabsPanel from "../tabs-panel/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-import { cloaeIngredientModal } from "../../services/actions/modal";
 import { setCategoryIngredients } from "../../services/actions/ingredients";
-import { useNavigate } from 'react-router-dom';
 
 const tabsInfo = [
     {
@@ -26,14 +22,7 @@ const tabsInfo = [
 ];
 
 const BurgerIngredients = () => {
-    const navigane = useNavigate();
-    const { isShowIngredientModal } = useSelector(state => state.modal);
-    const { currentIngredient } = useSelector(state => state.ingredients);
     const dispatch = useDispatch()
-    const closeModal = useCallback(() => {
-        dispatch(cloaeIngredientModal())
-        navigane("/", { replace: true })
-    }, [dispatch, navigane]);
 
     const refCategoryBun = useRef();
     const refCategoryMain = useRef();
@@ -60,16 +49,11 @@ const BurgerIngredients = () => {
             <TabsPanel
                 tabsInfo={tabsInfo}
             />
-            {/* TODO: Принял во внимание замечания по функциональности scrollBar, реализую его в ветке sprint-2/step-2 */}
             <div ref={refScrollBar} onScroll={onScroll} className={`${burgerIngredientsStyles.scrollBar} pr-4 pl-4`}>
                 <IngredientsSection sectionRef={refCategoryBun} categoryName="Булки" type="bun" />
                 <IngredientsSection sectionRef={refCategoryMain} categoryName="Соусы" type="sauce" />
                 <IngredientsSection sectionRef={refCategorySauce} categoryName="Начинки" type="main" />
             </div>
-            {(currentIngredient && isShowIngredientModal)
-                && <Modal closeModal={closeModal} label={"Детали ингредиента"}>
-                    <IngredientDetails currentIngredient={currentIngredient} />
-                </Modal>}
         </section>
     )
 }

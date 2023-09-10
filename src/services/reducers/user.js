@@ -6,7 +6,7 @@ import {
 
 const initialState = {
     userInfo: null,
-    userInfoLoaded: false
+    isUserInfoLoaded: false
 }
 
 export const userReducer = ((state = initialState, action) => {
@@ -16,7 +16,7 @@ export const userReducer = ((state = initialState, action) => {
             return {
                 ...state,
                 userInfo: {
-                    ...state.userInfoLoaded,
+                    ...state.isUserInfoLoaded,
                     email: payload.email,
                     name: payload.name
                 }
@@ -24,7 +24,7 @@ export const userReducer = ((state = initialState, action) => {
         case USER_INFO_LOADED:
             return {
                 ...state,
-                userInfoLoaded: true
+                isUserInfoLoaded: payload.value
             }
         case CLEAR_USER_INFO:
             return {

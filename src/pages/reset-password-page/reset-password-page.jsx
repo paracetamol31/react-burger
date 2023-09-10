@@ -50,7 +50,7 @@ export const ResetPasswordPage = () => {
             dispatch(overPasswordReset());
             dispatch(clearResetPasswordValue());
         })
-    }, []);
+    }, [dispatch]);
 
     if (userInfo) {
         return <Navigate to="/" replace />;

@@ -1,24 +1,25 @@
-import {useEffect} from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 
 import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient characteristics";
-import {applayIngredients} from "../../services/actions/ingredients";
+import { applayIngredients } from "../../services/actions/ingredients";
 
-const IngredientDetails = ({ currentIngredient }) => {
+const IngredientDetails = () => {
     const dispatch = useDispatch()
+    const { id } = useParams();
     const { ingredients } = useSelector(state => state.ingredients);
 
     useEffect(() => {
         !ingredients && dispatch(applayIngredients());
     }, [dispatch, ingredients])
 
-    if (!ingredients || !currentIngredient) {
+    if (!ingredients) {
         return null;
     }
 
-    const currentIngredientObject = ingredients.find(item => item._id === currentIngredient);
+    const currentIngredientObject = ingredients.find(item => item._id === id);
 
     if (!currentIngredientObject) {
         return null;
@@ -36,10 +37,6 @@ const IngredientDetails = ({ currentIngredient }) => {
             </div>
         </section>
     );
-}
-
-IngredientDetails.propTypes = {
-    currentIngredient: PropTypes.string
 }
 
 export default IngredientDetails;

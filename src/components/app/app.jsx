@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import AppHeader from "../app-header/app-header";
 import { ConstructorPage } from "../../pages/constructor-page/constructor-page";
@@ -12,33 +12,43 @@ import { ProtectedRouteElement } from "../../components/protected-route/protecte
 import { ProfilePage } from "../../pages/profile-page/profile-page";
 import { IngredientsPage } from "../../pages/ingredients-page/ingredients-page";
 import { NotFaundPage } from "../../pages/not-faund-page/not-faund-page";
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
 
 function App() {
-  const { currentIngredient } = useSelector(state => state.ingredients);
+  const { orderIdRequest } = useSelector(state => state.order);
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
       <main className={appStyles.main}>
-        <Routes>
+        <Routes location={background || location}>
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<ConstructorPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
-          <Route
-            path="/ingredients/:id"
-            element={
-              currentIngredient
-                ? <ProtectedRouteElement element={<ConstructorPage />} />
-                : <ProtectedRouteElement element={<IngredientsPage />} />
-            } />
+          <Route path="/ingredients/:id" element={<IngredientsPage />} />
           <Route path="*" element={<NotFaundPage />} />
         </Routes>
+
+        {background && <Routes >
+          <Route
+            path="/ingredients/:id"
+            element={<Modal label={"Детали ингредиента"}><IngredientDetails /></Modal>}
+          />
+          <Route
+            path="/order"
+            element={<ProtectedRouteElement element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
+          />
+        </Routes>}
+
       </main>
     </div>
   );
 }
-
 export default App;
