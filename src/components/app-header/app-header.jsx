@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import headerMenuItem from "../header-menu-item/header-menu-item";
 import appHeaderStyles from "./app-header.module.css";
 import {
@@ -17,10 +18,15 @@ import {
 
 const AppHeader = () => {
     const { currentItem } = useSelector(state => state.header);
+    const navigate = useNavigate();
 
     const ConstructorTab = headerMenuItem(BurgerIcon, currentItem === burgerConstructor);
     const OrderFeedTab = headerMenuItem(ListIcon, currentItem === orderFeed)
     const PersonalAccountTab = headerMenuItem(ProfileIcon, currentItem === userProfile);
+
+    const onClickByLogo = useCallback(() => {
+        navigate("/");
+    }, [navigate]);
 
     return (
         <header className={appHeaderStyles.header}>
@@ -33,8 +39,10 @@ const AppHeader = () => {
                         <OrderFeedTab text="Лента заказов" />
                     </Link>
                 </div>
-                <div className={`${appHeaderStyles.sector} ${appHeaderStyles.centralSector}`}>{<Logo />}</div>
-                <div className={`${appHeaderStyles.sector} ${appHeaderStyles.leftSector}`}>
+                <div className={`${appHeaderStyles.sector} ${appHeaderStyles.centralSector}`} onClick={onClickByLogo}>
+                    <Logo />
+                </div>
+                <div className={`${appHeaderStyles.sector} ${appHeaderStyles.leftSector}`} >
                     <Link className={appHeaderStyles.link} to='/profile'>
                         <PersonalAccountTab text="Личный кабинет" />
                     </Link>

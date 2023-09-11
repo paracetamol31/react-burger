@@ -28,7 +28,6 @@ export const routingReducer = ((state = initialState, action) => {
                 isResetPassword: true
             }
         case SET_SAVED_LOCATION:
-            debugger
             return {
                 ...state,
                 savedLocation: payload.location

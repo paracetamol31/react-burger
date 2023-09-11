@@ -1,19 +1,12 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient characteristics";
-import { applayIngredients } from "../../services/actions/ingredients";
 
 const IngredientDetails = () => {
-    const dispatch = useDispatch()
     const { id } = useParams();
     const { ingredients } = useSelector(state => state.ingredients);
-
-    useEffect(() => {
-        !ingredients && dispatch(applayIngredients());
-    }, [dispatch, ingredients])
 
     if (!ingredients) {
         return null;

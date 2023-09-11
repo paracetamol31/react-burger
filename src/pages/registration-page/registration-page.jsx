@@ -35,7 +35,8 @@ export const RegistrationPage = () => {
     const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
     const { savedLocation } = useSelector(state => state.routing);
 
-    const onButtonClick = useCallback(() => {
+    const onSubmit = useCallback((event) => {
+        event.preventDefault();
         dispatch(
             register(
                 { name, email, password },
@@ -66,37 +67,38 @@ export const RegistrationPage = () => {
         ? <section className={registrationPageStyles.registrationPageWrapper}>
             <div className={registrationPageStyles.registrationPage}>
                 <span className={`${registrationPageStyles.title} mb-6 text text_type_main-medium`}>Регистрация</span>
-                <EmailInput
-                    name={nameInput}
-                    placeholder={'Имя'}
-                    extraClass={`${registrationPageStyles.inputs} mb-6`}
-                    error={false}
-                    onChange={onInputsChanged}
-                    value={name}
-                />
-                <EmailInput
-                    name={emailInput}
-                    placeholder={'E-mail'}
-                    extraClass={`${registrationPageStyles.inputs} mb-6`}
-                    onChange={onInputsChanged}
-                    value={email}
-                />
-                <PasswordInput
-                    name={passwordInput}
-                    placeholder={'Пароль'}
-                    extraClass={`${registrationPageStyles.inputs} mb-6`}
-                    onChange={onInputsChanged}
-                    value={password}
-                />
+                <form className={registrationPageStyles.form} onSubmit={onSubmit}>
+                    <EmailInput
+                        name={nameInput}
+                        placeholder={'Имя'}
+                        extraClass={`${registrationPageStyles.inputs} mb-6`}
+                        error={false}
+                        onChange={onInputsChanged}
+                        value={name}
+                    />
+                    <EmailInput
+                        name={emailInput}
+                        placeholder={'E-mail'}
+                        extraClass={`${registrationPageStyles.inputs} mb-6`}
+                        onChange={onInputsChanged}
+                        value={email}
+                    />
+                    <PasswordInput
+                        name={passwordInput}
+                        placeholder={'Пароль'}
+                        extraClass={`${registrationPageStyles.inputs} mb-6`}
+                        onChange={onInputsChanged}
+                        value={password}
+                    />
 
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    extraClass={`${registrationPageStyles.button} text text_type_main-default mb-20`}
-                    onClick={onButtonClick}
-                >
-                    Зарегестрироваться
-                </Button>
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        extraClass={`${registrationPageStyles.button} text text_type_main-default mb-20`}
+                    >
+                        Зарегистрироваться
+                    </Button>
+                </form>
                 <span className={`text text_type_main-default text_color_inactive`}>
                     <span>Уже зарегистрированы? </span>
                     <Link className={registrationPageStyles.linkText} to='/login'>

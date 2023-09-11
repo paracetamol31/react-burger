@@ -9,7 +9,7 @@ import {
 } from "../../utils/api";
 import {
     setCookie,
-    expires20Minut,
+    expires20Minute,
     accessToken,
     refreshToken,
     deleteCookie
@@ -50,7 +50,7 @@ export const clearUserInfo = () => {
 export const register = (userInfo, callBack) => {
     return async (dispatch) => {
         registerRequest(userInfo).then(response => {
-            setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minut });
+            setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
             setCookie(refreshToken, response.refreshToken);
             dispatch(setUserInfo(response.user));
             dispatch(clearInputValue());
@@ -64,7 +64,7 @@ export const register = (userInfo, callBack) => {
 export const login = (userInfo, callBack) => {
     return async (dispatch) => {
         loginRequest(userInfo).then(response => {
-            setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minut });
+            setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
             setCookie(refreshToken, response.refreshToken);
             dispatch(setUserInfo(response.user));
             dispatch(clearInputValue());
@@ -83,7 +83,7 @@ export const getUserInfo = () => {
         }).catch(e => {
 
             accessTokenRequest().then(response => {
-                setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minut });
+                setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
                 setCookie(refreshToken, response.refreshToken)
             }).then(() => {
 

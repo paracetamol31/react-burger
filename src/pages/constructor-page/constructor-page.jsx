@@ -3,23 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import constructorPageStyles from "./construcror-page.module.css";
+import constructorPageStyles from "./constructor-page.module.css";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import {
     setCurrentMenuHeader,
     burgerConstructor
 } from "../../services/actions/header";
-import { applayIngredients } from "../../services/actions/ingredients";
 
 export const ConstructorPage = () => {
     const dispatch = useDispatch();
     const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(state => state.ingredients);
-    
+
     useEffect(() => {
         dispatch(setCurrentMenuHeader(burgerConstructor));
-        !ingredients && dispatch(applayIngredients());
-    }, [dispatch, ingredients])
+    }, [dispatch])
 
     return (
         <>

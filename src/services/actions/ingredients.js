@@ -15,27 +15,27 @@ export const CLEAR_BUNS_COUNTER = "CLEAR_BUNS_COUNTER";
 export const CLEAR_ALL_COUNTER = "CLEAR_ALL_COUNTER";
 
 
-export const applayIngredients = () => {
+export const applyIngredients = () => {
     return async (dispatch) => {
-        dispatch(applayIngredientsRequest())
+        dispatch(applyIngredientsRequest())
         makeRequestIngredients().then(response => {
             dispatch(
-                applayIngredientsSuccess({ value: response.data.map(item => { return { ...item, count: 0 } }) })
+                applyIngredientsSuccess({ value: response.data.map(item => { return { ...item, count: 0 } }) })
             )
         }).catch(e => {
             console.error(e);
-            dispatch(applayIngredientsFailed())
+            dispatch(applyIngredientsFailed())
         });
     }
 }
 
-export const applayIngredientsRequest = () => {
+export const applyIngredientsRequest = () => {
     return {
         type: APPLY_INGREDIENTS_REQUEST
     }
 }
 
-export const applayIngredientsSuccess = (value) => {
+export const applyIngredientsSuccess = (value) => {
     return {
         type: APPLY_INGREDIENTS_SUCCESS,
         payload: {
@@ -44,7 +44,7 @@ export const applayIngredientsSuccess = (value) => {
     }
 }
 
-export const applayIngredientsFailed = () => {
+export const applyIngredientsFailed = () => {
     return {
         type: APPLY_INGREDIENTS_FAILED,
     }
@@ -53,7 +53,7 @@ export const applayIngredientsFailed = () => {
 export const setCurrentIngredient = (value) => {
     return {
         type: SET_CURRENT_INGREDIENT,
-        payload: {...value}
+        payload: { ...value }
     }
 }
 
@@ -66,28 +66,28 @@ export const clearCurrentIngredient = () => {
 export const setCategoryIngredients = (value) => {
     return {
         type: SET_CATEGORY_INGREDIENTS,
-        payload : {...value}
+        payload: { ...value }
     }
 }
 
 export const increaseCounter = (value) => {
     return {
         type: INCREASE_COUNTER,
-        payload : {...value}
+        payload: { ...value }
     }
 }
 
 export const reduceCounter = (value) => {
     return {
         type: REDUCE_COUNTER,
-        payload : {...value}
+        payload: { ...value }
     }
 }
 
 export const clearBunsCounter = (value) => {
     return {
         type: CLEAR_BUNS_COUNTER,
-        payload : {...value}
+        payload: { ...value }
     }
 }
 

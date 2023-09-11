@@ -30,7 +30,8 @@ export const LoginPage = () => {
     const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
     const { savedLocation } = useSelector(state => state.routing);
 
-    const onButtonClick = useCallback(() => {
+    const onSubmit = useCallback((event) => {
+        event.preventDefault();
         dispatch(
             login(
                 { email, password },
@@ -61,31 +62,32 @@ export const LoginPage = () => {
         ? <section className={loginPageStyles.loginPageWrapper}>
             <div className={loginPageStyles.loginPage}>
                 <span className={`${loginPageStyles.title} mb-6 text text_type_main-medium`}>Вход</span>
-                <EmailInput
-                    name={emailInput}
-                    placeholder={'E-mail'}
-                    extraClass={`${loginPageStyles.inputs} mb-6`}
-                    onChange={onInputsChanged}
-                    value={email}
-                />
-                <PasswordInput
-                    name={passwordInput}
-                    placeholder={'Пароль'}
-                    extraClass={`${loginPageStyles.inputs} mb-6`}
-                    onChange={onInputsChanged}
-                    error={false}
-                    icon="ShowIcon"
-                    value={password}
-                />
+                <form className={loginPageStyles.form} onSubmit={onSubmit}>
+                    <EmailInput
+                        name={emailInput}
+                        placeholder={'E-mail'}
+                        extraClass={`${loginPageStyles.inputs} mb-6`}
+                        onChange={onInputsChanged}
+                        value={email}
+                    />
+                    <PasswordInput
+                        name={passwordInput}
+                        placeholder={'Пароль'}
+                        extraClass={`${loginPageStyles.inputs} mb-6`}
+                        onChange={onInputsChanged}
+                        error={false}
+                        icon="ShowIcon"
+                        value={password}
+                    />
 
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    extraClass={`${loginPageStyles.button} text text_type_main-default mb-20`}
-                    onClick={onButtonClick}
-                >
-                    Войти
-                </Button>
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        extraClass={`${loginPageStyles.button} text text_type_main-default mb-20`}
+                    >
+                        Войти
+                    </Button>
+                </form>
                 <span className={`mb-4 text text_type_main-default text_color_inactive`}>
                     <span>Вы - новый пользователь? </span>
                     <Link className={loginPageStyles.linkText} to='/registration'>

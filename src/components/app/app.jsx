@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import AppHeader from "../app-header/app-header";
 import { ConstructorPage } from "../../pages/constructor-page/constructor-page";
@@ -11,15 +12,22 @@ import { ResetPasswordPage } from "../../pages/reset-password-page/reset-passwor
 import { ProtectedRouteElement } from "../../components/protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile-page/profile-page";
 import { IngredientsPage } from "../../pages/ingredients-page/ingredients-page";
-import { NotFaundPage } from "../../pages/not-faund-page/not-faund-page";
+import { NotFoundPage } from "../../pages/not-found-page/not-found-page";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { applyIngredients } from "../../services/actions/ingredients";
 
 function App() {
-  const { orderIdRequest } = useSelector(state => state.order);
+  const dispatch = useDispatch();
   const location = useLocation();
+  const { orderIdRequest } = useSelector(state => state.order);
+  const { ingredients } = useSelector(state => state.ingredients);
   const background = location.state && location.state.background;
+
+  useEffect(() => {
+    !ingredients && dispatch(applyIngredients());
+  }, [dispatch, ingredients]);
 
   return (
     <div className={appStyles.app}>
@@ -33,7 +41,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
           <Route path="/ingredients/:id" element={<IngredientsPage />} />
-          <Route path="*" element={<NotFaundPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
 
         {background && <Routes >
@@ -45,6 +53,7 @@ function App() {
             path="/order"
             element={<ProtectedRouteElement background={background} element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
           />
+          <Route path="*" element={null} />
         </Routes>}
 
       </main>

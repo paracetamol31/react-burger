@@ -3,9 +3,9 @@ import {
     Navigate,
     useNavigate
 } from "react-router-dom";
-import forgotRasswordPageStyles from "./forgot-password-page.module.css";
+import forgotPasswordPageStyles from "./forgot-password-page.module.css";
 import {
-    Input,
+    EmailInput,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback, useEffect } from "react";
@@ -27,7 +27,8 @@ export const ForgotPasswordPage = () => {
     const { email } = useSelector(state => state.authorizationInputFields.forgotPasswordPage);
     const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
 
-    const onButtonClick = useCallback(() => {
+    const onSubmit = useCallback((event) => {
+        event.preventDefault();
         dispatch(forgotPassword(email, () => navigate("/reset-password")))
     }, [navigate, dispatch, email]);
 
@@ -50,31 +51,32 @@ export const ForgotPasswordPage = () => {
     }
 
     return !userInfo
-        ? <section className={forgotRasswordPageStyles.forgotRasswordPageWrapper}>
-            <div className={forgotRasswordPageStyles.forgotRasswordPage}>
-                <span className={`${forgotRasswordPageStyles.title} mb-6 text text_type_main-medium`}>
+        ? <section className={forgotPasswordPageStyles.forgotPasswordPageWrapper}>
+            <div className={forgotPasswordPageStyles.forgotPasswordPage}>
+                <span className={`${forgotPasswordPageStyles.title} mb-6 text text_type_main-medium`} >
                     Восстановление пароля
                 </span>
-                <Input
-                    name={emailInput}
-                    type={'text'}
-                    placeholder={'Укажите E-mail'}
-                    extraClass={`${forgotRasswordPageStyles.inputs} mb-6`}
-                    value={email}
-                    onChange={onInputsChanged}
-                />
+                <form className={forgotPasswordPageStyles.form} onSubmit={onSubmit} >
+                    <EmailInput
+                        name={emailInput}
+                        type={'text'}
+                        placeholder={'Укажите E-mail'}
+                        extraClass={`${forgotPasswordPageStyles.inputs} mb-6`}
+                        value={email}
+                        onChange={onInputsChanged}
+                    />
 
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    extraClass={`${forgotRasswordPageStyles.button} text text_type_main-default mb-20`}
-                    onClick={onButtonClick}
-                >
-                    Восстановить
-                </Button>
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        extraClass={`${forgotPasswordPageStyles.button} text text_type_main-default mb-20`}
+                    >
+                        Восстановить
+                    </Button>
+                </form>
                 <span className="text text_type_main-default text_color_inactive">
                     <span >Вспомнили пароль? </span>
-                    <Link className={forgotRasswordPageStyles.linkText} to='/login'>
+                    <Link className={forgotPasswordPageStyles.linkText} to='/login'>
                         Войти
                     </Link>
                 </span>

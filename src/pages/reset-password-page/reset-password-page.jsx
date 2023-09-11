@@ -6,7 +6,8 @@ import {
 } from "react-router-dom";
 import resetPasswordPageStyles from "./reset-password-page.module.css";
 import {
-    Input,
+    PasswordInput,
+    EmailInput,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
@@ -34,7 +35,8 @@ export const ResetPasswordPage = () => {
     const { isStartedPasswordReset, isResetPassword } = useSelector(state => state.routing);
     const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
 
-    const onButtonClick = useCallback(() => {
+    const onSubmit = useCallback((event) => {
+        event.preventDefault();
         dispatch(resetPassword(password, code, () => navigate("/login", { replace: true })))
     }, [navigate, dispatch, password, code]);
 
@@ -78,32 +80,33 @@ export const ResetPasswordPage = () => {
                 <span className={`${resetPasswordPageStyles.title} mb-6 text text_type_main-medium`}>
                     Восстановление пароля
                 </span>
-                <Input
-                    name={passwordInput}
-                    type={'text'}
-                    placeholder={'Введите новый пароль'}
-                    icon={'ShowIcon'}
-                    extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
-                    value={password}
-                    onChange={onInputsChanged}
-                />
-                <Input
-                    name={codeInput}
-                    type={'text'}
-                    placeholder={'Введите код из письма'}
-                    extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
-                    value={code}
-                    onChange={onInputsChanged}
-                />
+                <form className={resetPasswordPageStyles.form} onSubmit={onSubmit}>
+                    <PasswordInput
+                        name={passwordInput}
+                        placeholder={'Введите новый пароль'}
+                        icon={'ShowIcon'}
+                        extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
+                        value={password}
+                        onChange={onInputsChanged}
+                    />
+                    <EmailInput
+                        name={codeInput}
+                        error={false}
+                        type={'text'}
+                        placeholder={'Введите код из письма'}
+                        extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
+                        value={code}
+                        onChange={onInputsChanged}
+                    />
 
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    extraClass={`${resetPasswordPageStyles.button} text text_type_main-default mb-20`}
-                    onClick={onButtonClick}
-                >
-                    Сохранить
-                </Button>
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        extraClass={`${resetPasswordPageStyles.button} text text_type_main-default mb-20`}
+                    >
+                        Сохранить
+                    </Button>
+                </form>
                 <span className="text text_type_main-default text_color_inactive">
                     <span >Вспомнили пароль? </span>
                     <Link className={resetPasswordPageStyles.linkText} to='/login' replace>
