@@ -5,17 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { getUserInfo } from "../../services/actions/user";
-import { setSavedPathname } from "../../services/actions/routing";
+import { setSavedLocation } from "../../services/actions/routing";
 
-export const ProtectedRouteElement = ({ element }) => {
+export const ProtectedRouteElement = ({ element, background }) => {
     const dispatch = useDispatch();
     const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
-    const { pathname } = useLocation();
+    const location = useLocation();
 
     useEffect(() => {
         dispatch(getUserInfo());
-        dispatch(setSavedPathname(pathname));
-    }, [dispatch, pathname]);
+        dispatch(setSavedLocation(background || location));
+    }, [dispatch, location, background]);
 
     if (!isUserInfoLoaded) {
         return null
@@ -25,5 +25,6 @@ export const ProtectedRouteElement = ({ element }) => {
 }
 
 ProtectedRouteElement.propTypes = {
+    background: PropTypes.object,
     element: PropTypes.element
 }

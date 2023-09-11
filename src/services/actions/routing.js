@@ -1,6 +1,6 @@
 export const START_PASSWORD_RESET = "START_PASSWORD_RESET";
 export const OVER_PASSWORD_RESET = "OVER_PASSWORD_RESET";
-export const SET_SAVED_PATHNAME = "SET_SAVED_PATHNAME";
+export const SET_SAVED_LOCATION = "SET_SAVED_LOCATION";
 export const CLEAR_SAVED_PATHNAME = "CLEAR_SAVED_PATHNAME";
 export const CLEAR_ROUTING_STATE = "CLEAR_ROUTING_STATE";
 
@@ -16,10 +16,10 @@ export const overPasswordReset = () => {
     }
 }
 
-export const setSavedPathname = (pathname) => {
+export const setSavedLocation = (location) => {
     return {
-        type: SET_SAVED_PATHNAME,
-        payload: { pathname }
+        type: SET_SAVED_LOCATION,
+        payload: { location }
     }
 }
 

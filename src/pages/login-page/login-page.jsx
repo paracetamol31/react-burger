@@ -28,16 +28,18 @@ export const LoginPage = () => {
     const dispatch = useDispatch();
     const { email, password } = useSelector(state => state.authorizationInputFields.loginPage);
     const { userInfo } = useSelector(state => state.user);
-    const { savedPathname } = useSelector(state => state.routing);
+    const { savedLocation } = useSelector(state => state.routing);
+
+    console.log(savedLocation);
 
     const onButtonClick = useCallback(() => {
         dispatch(
             login(
                 { email, password },
-                () => (navigate(savedPathname, { replace: true }))
+                () => (navigate(savedLocation.pathname, { replace: true }))
             )
         );
-    }, [navigate, dispatch, email, password, savedPathname]);
+    }, [navigate, dispatch, email, password, savedLocation.pathname]);
 
     const onInputsChanged = useCallback((event) => {
         dispatch(changeInputValue({
@@ -90,5 +92,5 @@ export const LoginPage = () => {
                 </span>
             </div>
         </section>
-        : <Navigate to={savedPathname} replace />;
+        : <Navigate to={savedLocation.pathname || "/"} state={{ background: savedLocation }} replace />;
 }

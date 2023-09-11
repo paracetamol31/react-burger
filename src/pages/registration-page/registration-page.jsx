@@ -30,16 +30,16 @@ export const RegistrationPage = () => {
     const dispatch = useDispatch();
     const { name, email, password } = useSelector(state => state.authorizationInputFields.registrationPage);
     const { userInfo } = useSelector(state => state.user);
-    const { savedPathname } = useSelector(state => state.routing);
+    const { savedLocation } = useSelector(state => state.routing);
 
     const onButtonClick = useCallback(() => {
         dispatch(
             register(
                 { name, email, password },
-                () => navigate(savedPathname, { replace: true })
+                () => navigate(savedLocation.pathname, { replace: true })
             )
         );
-    }, [navigate, dispatch, name, email, password, savedPathname]);
+    }, [navigate, dispatch, name, email, password, savedLocation]);
 
     const onInputsChanged = useCallback((event) => {
         dispatch(changeInputValue({
@@ -92,5 +92,5 @@ export const RegistrationPage = () => {
                 </span>
             </div>
         </section>
-        : <Navigate to={savedPathname} replace />;
+        : <Navigate to={savedLocation.pathname || "/"} state={{ background: savedLocation }} replace />;
 }

@@ -1,7 +1,7 @@
 import {
     START_PASSWORD_RESET,
     OVER_PASSWORD_RESET,
-    SET_SAVED_PATHNAME,
+    SET_SAVED_LOCATION,
     CLEAR_SAVED_PATHNAME,
     CLEAR_ROUTING_STATE
 } from "../actions/routing";
@@ -9,7 +9,7 @@ import {
 const initialState = {
     isStartedPasswordReset: false,
     isResetPassword: false,
-    savedPathname: "/"
+    savedLocation: { pathname: "/" }
 }
 
 export const routingReducer = ((state = initialState, action) => {
@@ -27,15 +27,16 @@ export const routingReducer = ((state = initialState, action) => {
                 isStartedPasswordReset: false,
                 isResetPassword: true
             }
-        case SET_SAVED_PATHNAME:
+        case SET_SAVED_LOCATION:
+            debugger
             return {
                 ...state,
-                savedPathname: payload.pathname
+                savedLocation: payload.location
             }
         case CLEAR_SAVED_PATHNAME:
             return {
                 ...state,
-                savedPathname: "/"
+                savedLocation: {}
             }
         case CLEAR_ROUTING_STATE: {
             return {

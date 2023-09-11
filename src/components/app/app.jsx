@@ -43,7 +43,7 @@ function App() {
           />
           <Route
             path="/order"
-            element={<ProtectedRouteElement element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
+            element={<ProtectedRouteElement background={background} element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
           />
         </Routes>}
 
