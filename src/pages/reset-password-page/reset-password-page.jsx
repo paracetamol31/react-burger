@@ -13,7 +13,8 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-    resetPassword
+    resetPassword,
+    getUserInfo
 } from "../../services/actions/user";
 import {
     changeInputValue,
@@ -31,7 +32,7 @@ export const ResetPasswordPage = () => {
     const navigate = useNavigate();
     const { password, code } = useSelector(state => state.authorizationInputFields.resetPasswordPage);
     const { isStartedPasswordReset, isResetPassword } = useSelector(state => state.routing);
-    const { userInfo } = useSelector(state => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
 
     const onButtonClick = useCallback(() => {
         dispatch(resetPassword(password, code, () => navigate("/login", { replace: true })))
@@ -51,6 +52,16 @@ export const ResetPasswordPage = () => {
             dispatch(clearResetPasswordValue());
         })
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!userInfo && !isUserInfoLoaded) {
+            dispatch(getUserInfo());
+        };
+    }, [dispatch, userInfo, isUserInfoLoaded]);
+
+    if (!isUserInfoLoaded) {
+        return null
+    }
 
     if (userInfo) {
         return <Navigate to="/" replace />;

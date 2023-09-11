@@ -8,11 +8,14 @@ import {
     Input,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { changeInputValue } from "../../services/actions/authorizationInputFields";
-import { forgotPassword } from "../../services/actions/user";
+import {
+    forgotPassword,
+    getUserInfo
+} from "../../services/actions/user";
 import {
     emailInput,
     forgotPasswordPage
@@ -22,7 +25,7 @@ export const ForgotPasswordPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { email } = useSelector(state => state.authorizationInputFields.forgotPasswordPage);
-    const { userInfo } = useSelector(state => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
 
     const onButtonClick = useCallback(() => {
         dispatch(forgotPassword(email, () => navigate("/reset-password")))
@@ -35,6 +38,16 @@ export const ForgotPasswordPage = () => {
             value: event.target.value
         }));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!userInfo && !isUserInfoLoaded) {
+            dispatch(getUserInfo());
+        };
+    }, [dispatch, userInfo, isUserInfoLoaded]);
+
+    if (!isUserInfoLoaded) {
+        return null
+    }
 
     return !userInfo
         ? <section className={forgotRasswordPageStyles.forgotRasswordPageWrapper}>

@@ -4,7 +4,7 @@ import {
     Button,
     PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import {
     useDispatch,
     useSelector
@@ -14,7 +14,10 @@ import {
     Navigate,
     useNavigate
 } from 'react-router-dom';
-import { register } from "../../services/actions/user";
+import {
+    register,
+    getUserInfo
+} from "../../services/actions/user";
 import {
     nameInput,
     emailInput,
@@ -29,7 +32,7 @@ export const RegistrationPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { name, email, password } = useSelector(state => state.authorizationInputFields.registrationPage);
-    const { userInfo } = useSelector(state => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
     const { savedLocation } = useSelector(state => state.routing);
 
     const onButtonClick = useCallback(() => {
@@ -48,6 +51,16 @@ export const RegistrationPage = () => {
             value: event.target.value
         }));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!userInfo && !isUserInfoLoaded) {
+            dispatch(getUserInfo());
+        };
+    }, [dispatch, userInfo, isUserInfoLoaded]);
+
+    if (!isUserInfoLoaded) {
+        return null
+    }
 
     return !userInfo
         ? <section className={registrationPageStyles.registrationPageWrapper}>

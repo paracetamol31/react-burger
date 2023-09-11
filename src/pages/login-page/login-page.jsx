@@ -3,7 +3,7 @@ import {
     Button,
     PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import {
     Link,
     Navigate,
@@ -15,7 +15,7 @@ import {
 } from "react-redux";
 
 import loginPageStyles from "./login-page.module.css";
-import { login } from "../../services/actions/user";
+import { login, getUserInfo } from "../../services/actions/user";
 import {
     emailInput,
     passwordInput,
@@ -27,10 +27,8 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { email, password } = useSelector(state => state.authorizationInputFields.loginPage);
-    const { userInfo } = useSelector(state => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
     const { savedLocation } = useSelector(state => state.routing);
-
-    console.log(savedLocation);
 
     const onButtonClick = useCallback(() => {
         dispatch(
@@ -48,6 +46,16 @@ export const LoginPage = () => {
             value: event.target.value
         }));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!userInfo && !isUserInfoLoaded) {
+            dispatch(getUserInfo());
+        };
+    }, [dispatch, userInfo, isUserInfoLoaded]);
+
+    if (!isUserInfoLoaded) {
+        return null
+    }
 
     return !userInfo
         ? <section className={loginPageStyles.loginPageWrapper}>
