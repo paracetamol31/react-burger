@@ -9,22 +9,25 @@ import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
 
 import ingredientСardStyles from "./ingredient-сard.module.css";
-import { showIngredientModal } from "../../services/actions/modal";
 import {
     setCurrentIngredient,
     increaseCounter,
     clearBunsCounter
 } from "../../services/actions/ingredients";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const IngredientСard = ({ id }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
     const { ingredients } = useSelector(state => state.ingredients);
     const ingredientObject = ingredients.find(ingredient => ingredient._id === id);
 
     const openModal = React.useCallback(() => {
         dispatch(setCurrentIngredient({ id: ingredientObject._id }));
-        dispatch(showIngredientModal());
-    }, [dispatch, ingredientObject._id]);
+        navigate(`/ingredients/${ingredientObject._id}`, { state: { background: location } });
+
+    }, [dispatch, ingredientObject._id, navigate, location]);
 
     const [, dragRef] = useDrag({
         type: "ingredient",

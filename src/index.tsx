@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/app/app';
 import "./index.css";
 import '@ya.praktikum/react-developer-burger-ui-components';
@@ -22,9 +23,11 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 const store = createStore(rootReducer as any, enhancer);
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

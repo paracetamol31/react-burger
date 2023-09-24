@@ -1,16 +1,18 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient characteristics";
 
 const IngredientDetails = () => {
-    const { currentIngredient, ingredients } = useSelector(state => state.ingredients);
+    const { id } = useParams();
+    const { ingredients } = useSelector(state => state.ingredients);
 
-    if (!ingredients || !currentIngredient) {
+    if (!ingredients) {
         return null;
     }
 
-    const currentIngredientObject = ingredients.find(item => item._id === currentIngredient);
+    const currentIngredientObject = ingredients.find(item => item._id === id);
 
     if (!currentIngredientObject) {
         return null;

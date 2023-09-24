@@ -1,0 +1,36 @@
+.loginPageWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginPage {
+    display: flex;
+    width: 480px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputs {
+    width: 100%;
+}
+
+.button {
+    width: 128px;
+    height: 56px;
+    border-radius: 64px;
+    background: linear-gradient(to bottom left, #4C4CFF, #801AB2);
+}
+
+.linkText {
+    color: #4C4CFF;
+    text-decoration: none;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

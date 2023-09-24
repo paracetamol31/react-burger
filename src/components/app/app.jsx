@@ -1,51 +1,63 @@
-import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import AppHeader from "../app-header/app-header";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import { ConstructorPage } from "../../pages/constructor-page/constructor-page";
 import appStyles from "./app.module.css";
-import { applayIngredients } from "../../services/actions/ingredients";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { LoginPage } from "../../pages/login-page/login-page";
+import { RegistrationPage } from "../../pages/registration-page/registration-page";
+import { ForgotPasswordPage } from "../../pages/forgot-password-page/forgot-password-page";
+import { ResetPasswordPage } from "../../pages/reset-password-page/reset-password-page";
+import { ProtectedRouteElement } from "../../components/protected-route/protected-route";
+import { ProfilePage } from "../../pages/profile-page/profile-page";
+import { IngredientsPage } from "../../pages/ingredients-page/ingredients-page";
+import { NotFoundPage } from "../../pages/not-found-page/not-found-page";
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
+import { applyIngredients } from "../../services/actions/ingredients";
 
 function App() {
   const dispatch = useDispatch();
-  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(state => state.ingredients);
+  const location = useLocation();
+  const { orderIdRequest } = useSelector(state => state.order);
+  const { ingredients } = useSelector(state => state.ingredients);
+  const background = location.state && location.state.background;
 
-  React.useEffect(() => {
-    dispatch(applayIngredients());
-  }, [dispatch]);
+  useEffect(() => {
+    !ingredients && dispatch(applyIngredients());
+  }, [dispatch, ingredients]);
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
       <main className={appStyles.main}>
-        {
-          !ingredientsRequest && !ingredientsFailed && ingredients
-          &&
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </DndProvider>
-        }
-        {
-          ingredientsRequest
-          &&
-          <div className={appStyles.messageError}>
-            <span className="text_type_main-default">{"Загрузка космических ингредиентов..."}</span>
-          </div>
+        <Routes location={background || location}>
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<ConstructorPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+          <Route path="/ingredients/:id" element={<IngredientsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
 
-        }
-        {
-          ingredientsFailed
-          && <div className={appStyles.messageError}>
-            <span className="text_type_main-default">{"Ошибка загрузки космических ингредиентов :( "}</span>
-          </div>
-        }
+        {background && <Routes >
+          <Route
+            path="/ingredients/:id"
+            element={<Modal label={"Детали ингредиента"}><IngredientDetails /></Modal>}
+          />
+          <Route
+            path="/order"
+            element={<ProtectedRouteElement background={background} element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
+          />
+          <Route path="*" element={null} />
+        </Routes>}
+
       </main>
     </div>
   );
 }
-
 export default App;

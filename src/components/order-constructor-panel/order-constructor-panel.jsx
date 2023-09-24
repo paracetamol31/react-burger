@@ -8,19 +8,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from 'react-redux';
 
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
 import orderConstructorpPanelStyles from "./order-constructor-panel.module.css";
-import { applayOrderId } from "../../services/actions/order";
-import {
-    showOrderMoal,
-    closeOrderModal
-} from "../../services/actions/modal";
 import { countTotalPrice } from "../../services/actions/totalPrice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OrderConstructorpPanel = () => {
+    const location = useLocation();
     const dispatch = useDispatch();
-    const { isShowOrderModal } = useSelector(state => state.modal);
+    const navigate = useNavigate();
     const { totalPrice } = useSelector(state => state.totalPrice);
     const burgerConstructor = useSelector(state => state.burgerConstructor);
 
@@ -30,14 +25,9 @@ const OrderConstructorpPanel = () => {
 
     const openModalOrderDetails = useCallback(() => {
         if (burgerConstructor.bun) {
-            dispatch(applayOrderId([...burgerConstructor.constructorItems.map(item => item.id), burgerConstructor.bun.id]))
-            dispatch(showOrderMoal())
+            navigate("/order", { state: { background: location } });
         }
-    }, [dispatch, burgerConstructor]);
-
-    const closeModal = useCallback(() => {
-        dispatch(closeOrderModal())
-    }, [dispatch]);
+    }, [burgerConstructor, navigate, location]);
 
     return (
         <section className={`${orderConstructorpPanelStyles.contentWraper} mt-10 mb-10 mr-4`}>
@@ -49,10 +39,6 @@ const OrderConstructorpPanel = () => {
                     Оформить заказ
                 </Button>
             </div>
-            {isShowOrderModal
-                && <Modal closeModal={closeModal}>
-                    < OrderDetails />
-                </Modal>}
         </section>
     )
 }

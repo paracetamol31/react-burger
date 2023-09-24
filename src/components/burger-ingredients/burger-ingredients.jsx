@@ -1,12 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useCallback, useRef } from "react";
 
 import IngredientsSection from "../ingredients-section/ingredients-section";
 import TabsPanel from "../tabs-panel/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-import { cloaeIngredientModal } from "../../services/actions/modal";
 import { setCategoryIngredients } from "../../services/actions/ingredients";
 
 const tabsInfo = [
@@ -25,12 +22,7 @@ const tabsInfo = [
 ];
 
 const BurgerIngredients = () => {
-    const { isShowIngredientModal } = useSelector(state => state.modal);
-    const { currentIngredient } = useSelector(state => state.ingredients);
     const dispatch = useDispatch()
-    const closeModal = useCallback(() => {
-        dispatch(cloaeIngredientModal())
-    }, [dispatch]);
 
     const refCategoryBun = useRef();
     const refCategoryMain = useRef();
@@ -40,12 +32,12 @@ const BurgerIngredients = () => {
     const onScroll = useCallback(() => {
         if (Math.abs(refScrollBar.current.scrollTop - refCategoryBun.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)) {
-            dispatch(setCategoryIngredients({value: 0 }))
+            dispatch(setCategoryIngredients({ value: 0 }))
         } else if (Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategorySauce.current.offsetTop)) {
-            dispatch(setCategoryIngredients({value: 1 }))
+            dispatch(setCategoryIngredients({ value: 1 }))
         } else {
-            dispatch(setCategoryIngredients({value: 2}))
+            dispatch(setCategoryIngredients({ value: 2 }))
         }
     }, [dispatch]);
 
@@ -57,16 +49,11 @@ const BurgerIngredients = () => {
             <TabsPanel
                 tabsInfo={tabsInfo}
             />
-            {/* TODO: Принял во внимание замечания по функциональности scrollBar, реализую его в ветке sprint-2/step-2 */}
             <div ref={refScrollBar} onScroll={onScroll} className={`${burgerIngredientsStyles.scrollBar} pr-4 pl-4`}>
                 <IngredientsSection sectionRef={refCategoryBun} categoryName="Булки" type="bun" />
                 <IngredientsSection sectionRef={refCategoryMain} categoryName="Соусы" type="sauce" />
                 <IngredientsSection sectionRef={refCategorySauce} categoryName="Начинки" type="main" />
             </div>
-            {(currentIngredient && isShowIngredientModal)
-                && <Modal closeModal={closeModal} label={"Детали ингредиента"}>
-                    <IngredientDetails />
-                </Modal>}
         </section>
     )
 }

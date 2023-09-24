@@ -1,15 +1,24 @@
 import PropTypes from "prop-types";
-import React from "react";
+import { useEffect, useCallback } from "react";
 import ReactDOM from 'react-dom';
-import { CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { useNavigate } from "react-router-dom";
 
 const modalRoot = document.getElementById("root");
 
-const Modal = ({ label, children, closeModal }) => {
-    React.useEffect(() => {
+const Modal = ({ label, canClose = true, children }) => {
+    const navigane = useNavigate();
+
+    const closeModal = useCallback(() => {
+        if (canClose) {
+            navigane("/");
+        }
+    }, [navigane, canClose]);
+
+    useEffect(() => {
         const onEscDown = (event) => {
             if (event.code === "Escape") {
                 closeModal();
@@ -34,15 +43,15 @@ const Modal = ({ label, children, closeModal }) => {
                     {children}
                 </main>
             </div>
-            <ModalOverlay closeModal={closeModal}/>
+            <ModalOverlay closeModal={closeModal} />
         </section>,
         modalRoot
     )
 }
 
 Modal.propTypes = {
-    label: PropTypes.string,
-    closeModal: PropTypes.func.isRequired
+    canClose: PropTypes.bool,
+    label: PropTypes.string
 }
 
 export default Modal;
