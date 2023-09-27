@@ -1,6 +1,5 @@
-import { useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import headerMenuItem from "../header-menu-item/header-menu-item";
+import { FC, useCallback } from "react";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import appHeaderStyles from "./app-header.module.css";
 import {
     Logo,
@@ -10,19 +9,31 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from "react-redux";
 
+import headerMenuItem, { IPropsHeaderMenuItem } from "../header-menu-item/header-menu-item";
 import {
     burgerConstructor,
     orderFeed,
     userProfile
 } from "../../services/actions/header";
 
-const AppHeader = () => {
-    const { currentItem } = useSelector(state => state.header);
-    const navigate = useNavigate();
+const AppHeader: FC = () => {
+    const { currentItem } = useSelector((state: any) => state.header);
+    const navigate: NavigateFunction = useNavigate();
 
-    const ConstructorTab = headerMenuItem(BurgerIcon, currentItem === burgerConstructor);
-    const OrderFeedTab = headerMenuItem(ListIcon, currentItem === orderFeed)
-    const PersonalAccountTab = headerMenuItem(ProfileIcon, currentItem === userProfile);
+    const ConstructorTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
+        Icon: BurgerIcon,
+        isTarget: currentItem === burgerConstructor
+    });
+
+    const OrderFeedTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
+        Icon: ListIcon,
+        isTarget: currentItem === orderFeed
+    });
+
+    const PersonalAccountTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
+        Icon: ProfileIcon,
+        isTarget: currentItem === userProfile
+    });
 
     const onClickByLogo = useCallback(() => {
         navigate("/");

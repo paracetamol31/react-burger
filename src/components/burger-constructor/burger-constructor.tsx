@@ -1,5 +1,5 @@
 import { useDrop } from "react-dnd";
-import { useCallback } from "react";
+import { DragEventHandler, FC, useCallback } from "react";
 import {
     useSelector,
     useDispatch
@@ -16,21 +16,21 @@ import {
     clearIndexEmptyItem
 } from "../../services/actions/burgerConstructor";
 
-const heightChildItemBurgerConstructor = 96;
+const heightChildItemBurgerConstructor: number = 96;
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
-    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector(state => state.burgerConstructor);
+    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector((state: any) => state.burgerConstructor);
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: any) {
             dispatch(addConstructorItem({
                 image: item.image,
                 price: item.price,
                 id: item.id,
                 name: item.name,
-                itemType: item.type,
+                itemType: item.itemType,
                 index: indexEmptyItem
             }));
             dispatch(clearIndexEmptyItem());
@@ -41,14 +41,14 @@ const BurgerConstructor = () => {
         }
     });
 
-    const onDragOver = useCallback((e) => {
+    const onDragOver = useCallback<DragEventHandler<HTMLElement>>((event: React.DragEvent<HTMLElement>) => {
         if (isDragStart) {
-            e.preventDefault();
-            let result = Math.floor(Math.abs(e.clientY - yPoint) / heightChildItemBurgerConstructor);
-            result = e.clientY > yPoint ? result * 1 : result * -1;
+            event.preventDefault();
+            let result = Math.floor(Math.abs(event.clientY - yPoint) / heightChildItemBurgerConstructor);
+            result = event.clientY > yPoint ? result * 1 : result * -1;
             dispatch(setEmptyItem({
                 index: indexEmptyItem + result,
-                yPoint: e.clientY
+                yPoint: event.clientY
             }))
         }
     }, [yPoint, indexEmptyItem, isDragStart, dispatch]);
@@ -69,7 +69,7 @@ const BurgerConstructor = () => {
             />}
 
             <div className={burgerConstructorStyles.scrollBar}>
-                {constructorItems.map((item, index) => {
+                {constructorItems.map((item: any, index: any) => {
                     return <BurgerConstructorItem
                         key={item.uuid}
                         extraClass="ml-2"

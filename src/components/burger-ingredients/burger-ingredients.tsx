@@ -1,35 +1,50 @@
 import { useDispatch } from 'react-redux';
-import { useCallback, useRef } from "react";
+import { FC, useCallback, useRef } from "react";
 
 import IngredientsSection from "../ingredients-section/ingredients-section";
 import TabsPanel from "../tabs-panel/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import { setCategoryIngredients } from "../../services/actions/ingredients";
 
-const tabsInfo = [
-    {
-        label: "Булки",
-        id: 0
-    },
-    {
-        label: "Соусы",
-        id: 1
-    },
-    {
-        label: "Начинки",
-        id: 2
-    }
-];
+export interface ITabInfo {
+    label: string,
+    id: number,
+    refCategory: React.MutableRefObject<HTMLDivElement | null>
+}
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
     const dispatch = useDispatch()
 
-    const refCategoryBun = useRef();
-    const refCategoryMain = useRef();
-    const refCategorySauce = useRef();
-    const refScrollBar = useRef();
+    const refCategoryBun = useRef<HTMLDivElement | null>(null);
+    const refCategoryMain = useRef<HTMLDivElement | null>(null);
+    const refCategorySauce = useRef<HTMLDivElement | null>(null);
+    const refScrollBar = useRef<HTMLDivElement | null>(null);
+
+    const tabsInfo: Array<ITabInfo> = [
+        {
+            label: "Булки",
+            id: 0,
+            refCategory: refCategoryBun
+        },
+        {
+            label: "Соусы",
+            id: 1,
+            refCategory: refCategoryMain
+        },
+        {
+            label: "Начинки",
+            id: 2,
+            refCategory: refCategorySauce
+        }
+    ];
 
     const onScroll = useCallback(() => {
+        if (!refScrollBar.current
+            || !refCategoryBun.current
+            || !refCategoryMain.current
+            || !refCategorySauce.current) {
+            return
+        }
         if (Math.abs(refScrollBar.current.scrollTop - refCategoryBun.current.offsetTop)
             < Math.abs(refScrollBar.current.scrollTop - refCategoryMain.current.offsetTop)) {
             dispatch(setCategoryIngredients({ value: 0 }))

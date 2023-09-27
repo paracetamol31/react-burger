@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { FC } from "react";
 import { useDispatch } from 'react-redux';
 import {
     CurrencyIcon,
@@ -15,28 +14,32 @@ import {
     clearBunsCounter
 } from "../../services/actions/ingredients";
 import { useLocation, useNavigate } from "react-router-dom";
+import { IDragObjct } from "../burger-сonstructor-item/burger-сonstructor-item";
 
-const IngredientСard = ({ id }) => {
+interface IPropsIngredientСard {
+    id: string
+}
+
+const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { ingredients } = useSelector(state => state.ingredients);
-    const ingredientObject = ingredients.find(ingredient => ingredient._id === id);
+    const { ingredients } = useSelector((state: any) => state.ingredients);
+    const ingredientObject = ingredients.find((ingredient: any) => ingredient._id === id);
 
     const openModal = React.useCallback(() => {
         dispatch(setCurrentIngredient({ id: ingredientObject._id }));
         navigate(`/ingredients/${ingredientObject._id}`, { state: { background: location } });
-
     }, [dispatch, ingredientObject._id, navigate, location]);
 
-    const [, dragRef] = useDrag({
+    const [, dragRef] = useDrag<IDragObjct>({
         type: "ingredient",
         item: {
             image: ingredientObject.image,
             price: ingredientObject.price,
             id: ingredientObject._id,
             name: ingredientObject.name,
-            type: ingredientObject.type
+            itemType: ingredientObject.type
         },
         end: (item, monitor) => {
             if (monitor.didDrop()) {
@@ -44,7 +47,7 @@ const IngredientСard = ({ id }) => {
                     id: item.id
                 }))
 
-                if (item.type === "bun") {
+                if (item.itemType === "bun") {
                     dispatch(clearBunsCounter({
                         id: item.id
                     }))
@@ -64,10 +67,6 @@ const IngredientСard = ({ id }) => {
             <span className={`${ingredientСardStyles.ingredientName} text text_type_main-default`}>{ingredientObject.name}</span>
         </div>
     )
-}
-
-IngredientСard.propTypes = {
-    id: PropTypes.string
 }
 
 export default IngredientСard;

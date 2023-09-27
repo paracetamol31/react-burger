@@ -1,11 +1,10 @@
 import burgerConstructorItemStyles from "./burger-сonstructor-item.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from "prop-types";
 import {
     ConstructorElement,
     DragIcon
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDrag } from "react-dnd";
+import { XYCoord, useDrag } from "react-dnd";
 
 import {
     reduceCounter
@@ -20,15 +19,42 @@ import {
     addConstructorItem,
     clearStartDragPosition
 } from "../../services/actions/burgerConstructor";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-const BurgerConstructorItem = (props) => {
-    const { constructorItems, startDragPosition } = useSelector(state => state.burgerConstructor);
+interface IPropsBurgerConstructorItem {
+    itemType: string,
+    id: string,
+    price: number,
+    text: string,
+    thumbnail: string,
+    type?: "top" | "bottom",
+    isLocked?: boolean,
+    extraClass?: string,
+    index?: number,
+}
+
+export interface IDragObjct {
+    image: string,
+    price: string,
+    id: string,
+    name: string,
+    itemType: string,
+    index?: number
+}
+
+export interface ICollectedProps {
+    isDrag: boolean,
+    initialClientOffset: XYCoord | null
+}
+
+
+const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
+    const { constructorItems, startDragPosition } = useSelector((state: any) => state.burgerConstructor);
     const dispatch = useDispatch();
-    const [{ isDrag, initialClientOffset }, dragRef] = useDrag({
+    const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IDragObjct, unknown, ICollectedProps>({
         type: "ingredient",
-        item: constructorItems[props.index],
-        canDrag: props.itemType !== "bun",
+        item: props.index !== undefined && props.index >= 0 ? constructorItems[props.index] : {},
+        canDrag: props.itemType !== "bun" && props.index !== undefined && props.index >= 0,
         collect: monitor => ({
             isDrag: monitor.isDragging(),
             initialClientOffset: monitor.getInitialClientOffset(),
@@ -52,11 +78,10 @@ const BurgerConstructorItem = (props) => {
                 dispatch(clearStartDragPosition());
             }
         }
-    }
-    );
+    });
 
     useEffect(() => {
-        if (isDrag) {
+        if (isDrag && initialClientOffset) {
             dispatch(saveStartDragPosition({
                 index: props.index
             }))
@@ -84,25 +109,19 @@ const BurgerConstructorItem = (props) => {
         {props.itemType === "empty"
             ? <div className={burgerConstructorItemStyles.emptyItem}></div>
             : <>
-                {!props.isLocked && <DragIcon />}
+                {!props.isLocked && <DragIcon type="primary" />}
                 <ConstructorElement
-                    {...props}
+                    type={props.type}
+                    thumbnail={props.thumbnail}
+                    text={props.text}
+                    price={props.price}
                     handleClose={handleClose}
+                    isLocked={props.isLocked}
+                    extraClass={props.extraClass}
                 />
             </>
         }
     </div>
-}
-
-BurgerConstructorItem.propTypes = {
-    text: PropTypes.string,
-    price: PropTypes.number,
-    thumbnail: PropTypes.string,
-    isLocked: PropTypes.bool,
-    extraClass: PropTypes.string,
-    index: PropTypes.number,
-    itemType: PropTypes.string,
-    id: PropTypes.string
 }
 
 export default BurgerConstructorItem;

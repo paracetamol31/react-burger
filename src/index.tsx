@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/app/app';
@@ -9,9 +8,13 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { rootReducer } from './services/reducers';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as any
-);
+const rootElement: HTMLElement | null = document.getElementById('root');
+
+if(!rootElement){
+  throw new Error("Не найден root элемент");
+}
+
+const root: ReactDOM.Root = ReactDOM.createRoot(rootElement);
 
 const composeEnhancers =
   typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as any
@@ -24,12 +27,10 @@ const store = createStore(rootReducer as any, enhancer);
 
 root.render(
   // <React.StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>
   // </React.StrictMode>
 );
-
-//К сожалению не успел приступить к проекту, насколько знаю после дедлайна дается еще несколько дней на доработку, постараюсь выполнить проект в ближайшие дни.
