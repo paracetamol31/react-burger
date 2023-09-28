@@ -2,7 +2,8 @@ import registrationPageStyles from "./registration-page.module.css";
 import {
     EmailInput,
     Button,
-    PasswordInput
+    PasswordInput,
+    Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useCallback, useEffect } from "react";
 import {
@@ -68,12 +69,12 @@ export const RegistrationPage: FC = () => {
             <div className={registrationPageStyles.registrationPage}>
                 <span className={`${registrationPageStyles.title} mb-6 text text_type_main-medium`}>Регистрация</span>
                 <form className={registrationPageStyles.form} onSubmit={onSubmit}>
-                    <EmailInput
+                    <Input
                         name={nameInput}
                         placeholder={'Имя'}
+                        value={name}
                         extraClass={`${registrationPageStyles.inputs} mb-6`}
                         onChange={onInputsChanged}
-                        value={name}
                     />
                     <EmailInput
                         name={emailInput}

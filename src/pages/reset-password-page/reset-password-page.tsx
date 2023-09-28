@@ -7,8 +7,8 @@ import {
 import resetPasswordPageStyles from "./reset-password-page.module.css";
 import {
     PasswordInput,
-    EmailInput,
-    Button
+    Button,
+    Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,14 +89,13 @@ export const ResetPasswordPage: FC = () => {
                         value={password}
                         onChange={onInputsChanged}
                     />
-                    <EmailInput
+                    <Input
                         name={codeInput}
                         placeholder={'Введите код из письма'}
-                        extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
                         value={code}
+                        extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
                         onChange={onInputsChanged}
                     />
-
                     <Button
                         htmlType="submit"
                         type="primary"
