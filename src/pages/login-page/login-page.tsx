@@ -3,7 +3,7 @@ import {
     Button,
     PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import {
     Link,
     Navigate,
@@ -23,24 +23,24 @@ import {
 } from "../../services/reducers/authorizationInputFields";
 import { changeInputValue } from "../../services/actions/authorizationInputFields";
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { email, password } = useSelector(state => state.authorizationInputFields.loginPage);
-    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
-    const { savedLocation } = useSelector(state => state.routing);
+    const { email, password } = useSelector((state: any) => state.authorizationInputFields.loginPage);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
+    const { savedLocation } = useSelector((state: any) => state.routing);
 
-    const onSubmit = useCallback((event) => {
+    const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         dispatch(
             login(
                 { email, password },
                 () => (navigate(savedLocation.pathname, { replace: true }))
-            )
+            ) as any
         );
     }, [navigate, dispatch, email, password, savedLocation.pathname]);
 
-    const onInputsChanged = useCallback((event) => {
+    const onInputsChanged = useCallback((event: any) => {
         dispatch(changeInputValue({
             pageName: loginPage,
             inputName: event.target.name,
@@ -50,7 +50,7 @@ export const LoginPage = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo());
+            dispatch(getUserInfo() as any);
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 
@@ -75,7 +75,6 @@ export const LoginPage = () => {
                         placeholder={'Пароль'}
                         extraClass={`${loginPageStyles.inputs} mb-6`}
                         onChange={onInputsChanged}
-                        error={false}
                         icon="ShowIcon"
                         value={password}
                     />
@@ -91,7 +90,7 @@ export const LoginPage = () => {
                 <span className={`mb-4 text text_type_main-default text_color_inactive`}>
                     <span>Вы - новый пользователь? </span>
                     <Link className={loginPageStyles.linkText} to='/registration'>
-                        Зарегестрироваться
+                        Зарегистрироваться
                     </Link>
                 </span>
                 <span className="text text_type_main-default text_color_inactive">

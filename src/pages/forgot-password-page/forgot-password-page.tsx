@@ -8,7 +8,7 @@ import {
     EmailInput,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { changeInputValue } from "../../services/actions/authorizationInputFields";
@@ -21,18 +21,18 @@ import {
     forgotPasswordPage
 } from "../../services/reducers/authorizationInputFields";
 
-export const ForgotPasswordPage = () => {
+export const ForgotPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { email } = useSelector(state => state.authorizationInputFields.forgotPasswordPage);
-    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
+    const { email } = useSelector((state: any) => state.authorizationInputFields.forgotPasswordPage);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
 
-    const onSubmit = useCallback((event) => {
+    const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(forgotPassword(email, () => navigate("/reset-password")))
+        dispatch(forgotPassword(email, () => navigate("/reset-password")) as any)
     }, [navigate, dispatch, email]);
 
-    const onInputsChanged = useCallback((event) => {
+    const onInputsChanged = useCallback<(e: React.ChangeEvent<HTMLInputElement>) => void>((event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeInputValue({
             pageName: forgotPasswordPage,
             inputName: event.target.name,
@@ -42,7 +42,7 @@ export const ForgotPasswordPage = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo());
+            dispatch(getUserInfo() as any);
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 
@@ -59,7 +59,6 @@ export const ForgotPasswordPage = () => {
                 <form className={forgotPasswordPageStyles.form} onSubmit={onSubmit} >
                     <EmailInput
                         name={emailInput}
-                        type={'text'}
                         placeholder={'Укажите E-mail'}
                         extraClass={`${forgotPasswordPageStyles.inputs} mb-6`}
                         value={email}

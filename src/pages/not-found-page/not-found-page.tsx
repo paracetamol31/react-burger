@@ -1,6 +1,7 @@
+import { FC } from "react";
 import notFoundPageStyles from "./not-found-page.module.css";
 
-export const NotFoundPage = () => {
+export const NotFoundPage: FC = () => {
     return (
         <section className={notFoundPageStyles.pageWrapper}>
             <span className={`${notFoundPageStyles.code} text text_type_main-default mb-20`}>404</span>
