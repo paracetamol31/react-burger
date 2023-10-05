@@ -101,15 +101,15 @@ export const getUserInfo = () => {
 
 export const logout = (callBack) => {
     return async (dispatch) => {
-        logoutRequest().then(() => {
+        logoutRequest().catch(e => {
+            console.error(e);
+        }).finally(() => {
             deleteCookie(accessToken);
             deleteCookie(refreshToken);
             dispatch(clearUserInfo());
             dispatch(clearHeaderState());
             dispatch(clearRoutingState());
             callBack();
-        }).catch(e => {
-            console.error(e);
         });
     }
 }

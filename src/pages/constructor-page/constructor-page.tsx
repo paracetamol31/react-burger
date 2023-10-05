@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -11,9 +11,9 @@ import {
     burgerConstructor
 } from "../../services/actions/header";
 
-export const ConstructorPage = () => {
+export const ConstructorPage: FC = () => {
     const dispatch = useDispatch();
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(state => state.ingredients);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state: any) => state.ingredients);
 
     useEffect(() => {
         dispatch(setCurrentMenuHeader(burgerConstructor));

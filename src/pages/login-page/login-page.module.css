@@ -34,3 +34,7 @@
     flex-direction: column;
     align-items: center;
 }
+
+.inputWrapper {
+    min-height: 114px;
+}

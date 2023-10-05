@@ -2,9 +2,10 @@ import registrationPageStyles from "./registration-page.module.css";
 import {
     EmailInput,
     Button,
-    PasswordInput
+    PasswordInput,
+    Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import {
     useDispatch,
     useSelector
@@ -28,24 +29,24 @@ import {
     changeInputValue
 } from "../../services/actions/authorizationInputFields";
 
-export const RegistrationPage = () => {
+export const RegistrationPage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { name, email, password } = useSelector(state => state.authorizationInputFields.registrationPage);
-    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
-    const { savedLocation } = useSelector(state => state.routing);
+    const { name, email, password } = useSelector((state: any) => state.authorizationInputFields.registrationPage);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
+    const { savedLocation } = useSelector((state: any) => state.routing);
 
-    const onSubmit = useCallback((event) => {
+    const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         dispatch(
             register(
                 { name, email, password },
                 () => navigate(savedLocation.pathname, { replace: true })
-            )
+            ) as any
         );
     }, [navigate, dispatch, name, email, password, savedLocation]);
 
-    const onInputsChanged = useCallback((event) => {
+    const onInputsChanged = useCallback<(e: React.ChangeEvent<HTMLInputElement>) => void>((event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeInputValue({
             pageName: registrationPage,
             inputName: event.target.name,
@@ -55,7 +56,7 @@ export const RegistrationPage = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo());
+            dispatch(getUserInfo() as any);
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 
@@ -68,13 +69,12 @@ export const RegistrationPage = () => {
             <div className={registrationPageStyles.registrationPage}>
                 <span className={`${registrationPageStyles.title} mb-6 text text_type_main-medium`}>Регистрация</span>
                 <form className={registrationPageStyles.form} onSubmit={onSubmit}>
-                    <EmailInput
+                    <Input
                         name={nameInput}
                         placeholder={'Имя'}
-                        extraClass={`${registrationPageStyles.inputs} mb-6`}
-                        error={false}
-                        onChange={onInputsChanged}
                         value={name}
+                        extraClass={`${registrationPageStyles.inputs} mb-6`}
+                        onChange={onInputsChanged}
                     />
                     <EmailInput
                         name={emailInput}

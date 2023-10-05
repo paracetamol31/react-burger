@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -18,15 +18,15 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { applyIngredients } from "../../services/actions/ingredients";
 
-function App() {
+const App: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { orderIdRequest } = useSelector(state => state.order);
-  const { ingredients } = useSelector(state => state.ingredients);
-  const background = location.state && location.state.background;
+  const { orderIdRequest } = useSelector((state: any) => state.order);
+  const { ingredients } = useSelector((state: any) => state.ingredients);
+  const background: any = location.state && location.state.background;
 
   useEffect(() => {
-    !ingredients && dispatch(applyIngredients());
+    !ingredients && dispatch(applyIngredients() as any);
   }, [dispatch, ingredients]);
 
   return (

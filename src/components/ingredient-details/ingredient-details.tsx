@@ -1,18 +1,19 @@
+import { FC } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Params, useParams } from "react-router-dom";
 
 import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
-import IngredientCharacteristics from "../ingredient-characteristics/ingredient characteristics";
+import IngredientCharacteristics from "../ingredient-characteristics/ingredient-characteristics";
 
-const IngredientDetails = () => {
-    const { id } = useParams();
-    const { ingredients } = useSelector(state => state.ingredients);
+const IngredientDetails: FC = () => {
+    const { id }: Readonly<Params<string>> = useParams();
+    const { ingredients } = useSelector((state: any) => state.ingredients);
 
     if (!ingredients) {
         return null;
     }
 
-    const currentIngredientObject = ingredients.find(item => item._id === id);
+    const currentIngredientObject = ingredients.find((item: any) => item._id === id);
 
     if (!currentIngredientObject) {
         return null;

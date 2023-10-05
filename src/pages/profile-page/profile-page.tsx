@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import profilePageStyles from "./profile-page.module.css";
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import {
     EmailInput,
-    PasswordInput
+    PasswordInput,
+    Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
 
@@ -13,17 +14,17 @@ import {
 } from "../../services/actions/header";
 import { logout } from "../../services/actions/user";
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { name, email } = useSelector(state => state.user.userInfo);
+    const { name, email } = useSelector((state: any) => state.user.userInfo);
 
     useEffect(() => {
         dispatch(setCurrentMenuHeader(userProfile));
     }, [dispatch])
 
-    const callLogout = useCallback(() => {
-        dispatch(logout(() => { navigate("/login") }));
+    const callLogout = useCallback<React.MouseEventHandler<HTMLSpanElement>>(() => {
+        dispatch(logout(() => { navigate("/login") }) as any);
     }, [dispatch, navigate])
 
     return <section className={profilePageStyles.pageWrapper}>
@@ -49,12 +50,14 @@ export const ProfilePage = () => {
             </div>
         </div>
         <div className={profilePageStyles.inputsWrapper}>
-            <EmailInput
+            <Input
                 placeholder={'Имя'}
                 value={name}
-                isIcon={true}
+                disabled={true}
+                icon="EditIcon"
                 error={false}
                 onChange={() => { }}
+                onIconClick={() => { }}
             />
             <EmailInput
                 placeholder={'Логин'}

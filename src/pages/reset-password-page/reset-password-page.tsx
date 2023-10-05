@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import {
     Link,
     Navigate,
@@ -7,8 +7,8 @@ import {
 import resetPasswordPageStyles from "./reset-password-page.module.css";
 import {
     PasswordInput,
-    EmailInput,
-    Button
+    Button,
+    Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,19 +28,19 @@ import {
 } from "../../services/reducers/authorizationInputFields";
 import { overPasswordReset } from "../../services/actions/routing";
 
-export const ResetPasswordPage = () => {
+export const ResetPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { password, code } = useSelector(state => state.authorizationInputFields.resetPasswordPage);
-    const { isStartedPasswordReset, isResetPassword } = useSelector(state => state.routing);
-    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
+    const { password, code } = useSelector((state: any) => state.authorizationInputFields.resetPasswordPage);
+    const { isStartedPasswordReset, isResetPassword } = useSelector((state: any) => state.routing);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
 
-    const onSubmit = useCallback((event) => {
+    const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(resetPassword(password, code, () => navigate("/login", { replace: true })))
+        dispatch(resetPassword(password, code, () => navigate("/login", { replace: true })) as any)
     }, [navigate, dispatch, password, code]);
 
-    const onInputsChanged = useCallback((event) => {
+    const onInputsChanged = useCallback<(e: React.ChangeEvent<HTMLInputElement>) => void>((event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeInputValue({
             pageName: resetPasswordPage,
             inputName: event.target.name,
@@ -57,7 +57,7 @@ export const ResetPasswordPage = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo());
+            dispatch(getUserInfo() as any);
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 
@@ -89,16 +89,13 @@ export const ResetPasswordPage = () => {
                         value={password}
                         onChange={onInputsChanged}
                     />
-                    <EmailInput
+                    <Input
                         name={codeInput}
-                        error={false}
-                        type={'text'}
                         placeholder={'Введите код из письма'}
-                        extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
                         value={code}
+                        extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
                         onChange={onInputsChanged}
                     />
-
                     <Button
                         htmlType="submit"
                         type="primary"

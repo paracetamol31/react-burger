@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, FC, MouseEventHandler } from "react";
 import ReactDOM from 'react-dom';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -7,9 +6,15 @@ import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useNavigate } from "react-router-dom";
 
-const modalRoot = document.getElementById("root");
+interface IPropsModal {
+    canClose?: boolean,
+    label?: string,
+    children: JSX.Element
+}
 
-const Modal = ({ label, canClose = true, children }) => {
+const modalRoot: HTMLElement | null = document.getElementById("root");
+
+const Modal: FC<IPropsModal> = ({ label, canClose = true, children }) => {
     const navigane = useNavigate();
 
     const closeModal = useCallback(() => {
@@ -19,7 +24,7 @@ const Modal = ({ label, canClose = true, children }) => {
     }, [navigane, canClose]);
 
     useEffect(() => {
-        const onEscDown = (event) => {
+        const onEscDown = (event: KeyboardEvent) => {
             if (event.code === "Escape") {
                 closeModal();
             }
@@ -28,7 +33,11 @@ const Modal = ({ label, canClose = true, children }) => {
         return (() => window.removeEventListener("keydown", onEscDown))
     }, [closeModal])
 
-    const stopPropagationClick = (event) => {
+    if (!modalRoot) {
+        return null;
+    }
+
+    const stopPropagationClick: MouseEventHandler<HTMLDivElement> = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
     }
 
@@ -47,11 +56,6 @@ const Modal = ({ label, canClose = true, children }) => {
         </section>,
         modalRoot
     )
-}
-
-Modal.propTypes = {
-    canClose: PropTypes.bool,
-    label: PropTypes.string
 }
 
 export default Modal;
