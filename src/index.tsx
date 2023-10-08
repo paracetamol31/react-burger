@@ -14,6 +14,8 @@ if(!rootElement){
   throw new Error("Не найден root элемент");
 }
 
+//Не успел приступить вовремя к практическому заданию. В ближайшие дни отправлю
+
 const root: ReactDOM.Root = ReactDOM.createRoot(rootElement);
 
 const composeEnhancers =
