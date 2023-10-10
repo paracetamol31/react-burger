@@ -1,7 +1,8 @@
 import {
     CHANGE_INPUT_VALUE,
     CLEAR_INPUT_VALUE,
-    CLEAR_RESET_PASSWORD_VALUE
+    CLEAR_RESET_PASSWORD_VALUE,
+    TAuthorizationInputFieldsActions
 } from "../actions/authorizationInputFields";
 
 //Константы для имен страниц
@@ -16,7 +17,34 @@ export const emailInput = "emailInput";
 export const passwordInput = "passwordInput";
 export const codeInput = "codeInput";
 
-const initialState = {
+export interface IRegistrationPageParams {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export interface ILoginPageParams {
+    email: string;
+    password: string;
+}
+
+export interface IForgotPasswordPageParams {
+    email: string;
+}
+
+export interface IResetPasswordPageParams {
+    password: string;
+    code: string;
+}
+
+export interface IAuthorizationInputFieldsSate {
+    registrationPage: IRegistrationPageParams,
+    loginPage: ILoginPageParams,
+    forgotPasswordPage: IForgotPasswordPageParams,
+    resetPasswordPage: IResetPasswordPageParams
+}
+
+const initialState: IAuthorizationInputFieldsSate = {
     registrationPage: {
         name: "",
         email: "",
@@ -35,7 +63,7 @@ const initialState = {
     }
 }
 
-export const authorizationInputFields = ((state = initialState, action) => {
+export const authorizationInputFields = ((state = initialState, action: TAuthorizationInputFieldsActions) => {
     const { type } = action;
     if (type === CHANGE_INPUT_VALUE) {
         const { pageName, inputName, value } = action.payload;

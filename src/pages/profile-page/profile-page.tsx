@@ -20,7 +20,7 @@ export const ProfilePage: FC = () => {
     const { name, email } = useSelector((state: any) => state.user.userInfo);
 
     useEffect(() => {
-        dispatch(setCurrentMenuHeader(userProfile));
+        dispatch(setCurrentMenuHeader({currentMenuItem: userProfile}));
     }, [dispatch])
 
     const callLogout = useCallback<React.MouseEventHandler<HTMLSpanElement>>(() => {

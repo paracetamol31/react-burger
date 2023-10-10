@@ -11,16 +11,28 @@ import {
     CLEAR_ALL_COUNTER
 } from "../actions/ingredients";
 
-const initialState = {
+export interface IIngredientItem extends IIngredient {
+    count: number;
+}
+
+export interface IIngredientsState {
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
+    ingredients: Array<IIngredientItem>,
+    currentIngredient: string | null,
+    currentCategory: number
+}
+
+const initialState: IIngredientsState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
-    ingredients: null,
+    ingredients: [],
     currentIngredient: null,
     currentCategory: 0
 }
 
 export const ingredientsReducer = ((state = initialState, action) => {
-    const {type, payload} = action;
+    const { type, payload } = action;
     switch (type) {
         case APPLY_INGREDIENTS_REQUEST:
             return {
