@@ -1,20 +1,26 @@
-import { COUNT_TOTAL_PRICE } from "../actions/totalPrice";
+import { IConstructorItemStateParams } from "../actions/burgerConstructor";
+import { COUNT_TOTAL_PRICE, TTotalPriceActions } from "../actions/totalPrice";
 
-const initialState = {
+export interface ITotalPriceState {
+    totalPrice: number;
+}
+
+const initialState: ITotalPriceState = {
     totalPrice: 0
 }
 
-export const totalPrice = ((state = initialState, action) => {
-    const { type, payload } = action;
-    switch (type) {
+export const totalPrice = ((state = initialState, action: TTotalPriceActions): ITotalPriceState => {
+    switch (action.type) {
         case COUNT_TOTAL_PRICE: {
-            if (payload.burgerConstructor.isDragStart) {
+            if (action.payload.burgerConstructor.isDragStart) {
                 return state;
             }
             return {
                 ...state,
-                totalPrice: payload.burgerConstructor.constructorItems.reduce((accumulator, currentItem) => accumulator + currentItem?.price || 0, 0)
-                    + (payload.burgerConstructor.bun?.price || 0) * 2
+                totalPrice: action.payload.burgerConstructor.constructorItems.reduce(
+                    (accumulator: number, currentItem: IConstructorItemStateParams) => accumulator + (currentItem.price || 0), 0
+                )
+                    + (action.payload.burgerConstructor.bun?.price || 0) * 2
             }
         }
         default:

@@ -1,8 +1,21 @@
-export const COUNT_TOTAL_PRICE = "COUNT_TOTAL_PRICE";
+import { IBurgerConstructorReducerState } from "../reducers/burgerConstructor";
 
-export const countTotalPrice = (burgerConstructor) => {
+export const COUNT_TOTAL_PRICE: "COUNT_TOTAL_PRICE" = "COUNT_TOTAL_PRICE";
+
+export interface ICountTotalPriceAction {
+    readonly type: typeof COUNT_TOTAL_PRICE;
+    readonly payload: ICountTotalPricePayload;
+}
+
+export interface ICountTotalPricePayload {
+    burgerConstructor: IBurgerConstructorReducerState
+}
+
+export const countTotalPrice = (payload: ICountTotalPricePayload): ICountTotalPriceAction => {
     return {
         type: COUNT_TOTAL_PRICE,
-        payload: { ...burgerConstructor }
+        payload
     }
-} 
+}
+
+export type TTotalPriceActions = ICountTotalPriceAction;
