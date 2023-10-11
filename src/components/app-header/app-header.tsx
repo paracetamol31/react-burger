@@ -7,7 +7,6 @@ import {
     ListIcon,
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from "react-redux";
 
 import headerMenuItem, { IPropsHeaderMenuItem } from "../header-menu-item/header-menu-item";
 import {
@@ -15,9 +14,11 @@ import {
     orderFeed,
     userProfile
 } from "../../services/actions/header";
+import { useSelector } from "react-redux";
+import { RootState } from "../../services/types";
 
 const AppHeader: FC = () => {
-    const { currentItem } = useSelector((state: any) => state.header);
+    const { currentItem } = useSelector((state: RootState) => state.header);
     const navigate: NavigateFunction = useNavigate();
 
     const ConstructorTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
@@ -62,7 +63,5 @@ const AppHeader: FC = () => {
         </header>
     )
 }
-
-
 
 export default AppHeader;

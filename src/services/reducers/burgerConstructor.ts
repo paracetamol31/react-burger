@@ -15,8 +15,8 @@ export interface IBurgerConstructorReducerState {
     constructorItems: Array<IConstructorItemStateParams>;
     bun: IConstructorItemStateParams | null;
     isDragStart: boolean,
-    indexEmptyItem: number | null,
     startDragPosition: number | null,
+    indexEmptyItem: number | null,
     yPoint: number | null
 }
 
@@ -46,7 +46,12 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
         case CREATE_EMPTY_ITEM: {
             state.constructorItems.splice(action.payload.index, 1, {
                 itemType: "empty",
-                uuid: action.payload.uuid
+                uuid: action.payload.uuid,
+                id: "",
+                image: "",
+                index: null,
+                name: "",
+                price: -1
             });
             return {
                 ...state,
@@ -79,7 +84,12 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
             state.constructorItems.splice(state.indexEmptyItem, 1);
             state.constructorItems.splice(action.payload.index, 0, {
                 itemType: "empty",
-                uuid: action.payload.uuid
+                uuid: action.payload.uuid,
+                id: "",
+                image: "",
+                index: null,
+                name: "",
+                price: -1
             });
             return {
                 ...state,
@@ -98,7 +108,8 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                         id: action.payload.id,
                         name: action.payload.name,
                         itemType: action.payload.itemType,
-                        uuid: action.payload.uuid
+                        uuid: action.payload.uuid,
+                        index: null
                     }
                 }
             }
@@ -108,7 +119,8 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 id: action.payload.id,
                 name: action.payload.name,
                 itemType: action.payload.itemType,
-                uuid: action.payload.uuid
+                uuid: action.payload.uuid,
+                index: action.payload.index
             });
             return {
                 ...state,

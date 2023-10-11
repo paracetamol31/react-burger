@@ -19,7 +19,7 @@ export interface IIngredientItem extends IIngredient {
 export interface IIngredientsState {
     ingredientsRequest: boolean,
     ingredientsFailed: boolean,
-    ingredients: Array<IIngredientItem>,
+    ingredients: Array<IIngredientItem> | null,
     currentIngredient: string | null,
     currentCategory: number
 }
@@ -27,7 +27,7 @@ export interface IIngredientsState {
 const initialState: IIngredientsState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
-    ingredients: [],
+    ingredients: null,
     currentIngredient: null,
     currentCategory: 0
 }
@@ -40,6 +40,7 @@ export const ingredientsReducer = ((state = initialState, action: TIngredientsAc
                 ingredientsRequest: true
             }
         case APPLY_INGREDIENTS_SUCCESS:
+            debugger
             return {
                 ...state,
                 ingredientsRequest: false,
@@ -71,51 +72,59 @@ export const ingredientsReducer = ((state = initialState, action: TIngredientsAc
         case INCREASE_COUNTER: {
             return {
                 ...state,
-                ingredients: [
-                    ...state.ingredients.map
-                        (
-                            item => item._id === action.payload.id
-                                ? { ...item, count: item.type === "bun" ? 2 : item.count + 1 }
-                                : item
-                        )
-                ]
+                ingredients: state.ingredients
+                    ? [
+                        ...state.ingredients.map
+                            (
+                                item => item._id === action.payload.id
+                                    ? { ...item, count: item.type === "bun" ? 2 : item.count + 1 }
+                                    : item
+                            )
+                    ]
+                    : null
             }
         }
         case REDUCE_COUNTER: {
             return {
                 ...state,
-                ingredients: [
-                    ...state.ingredients.map
-                        (
-                            item => item._id === action.payload.id
-                                ? { ...item, count: item.type === "bun" ? 0 : item.count - 1 }
-                                : item
-                        )
-                ]
+                ingredients: state.ingredients
+                    ? [
+                        ...state.ingredients.map
+                            (
+                                item => item._id === action.payload.id
+                                    ? { ...item, count: item.type === "bun" ? 0 : item.count - 1 }
+                                    : item
+                            )
+                    ]
+                    : null
             }
         }
         case CLEAR_BUNS_COUNTER: {
             return {
                 ...state,
-                ingredients: [
-                    ...state.ingredients.map
-                        (
-                            item => (item._id !== action.payload.id && item.type === "bun")
-                                ? { ...item, count: 0 }
-                                : item
-                        )
-                ]
+                ingredients: state.ingredients
+                    ? [
+                        ...state.ingredients.map
+                            (
+                                item => (item._id !== action.payload.id && item.type === "bun")
+                                    ? { ...item, count: 0 }
+                                    : item
+                            )
+                    ]
+                    : null
             }
         }
         case CLEAR_ALL_COUNTER: {
             return {
                 ...state,
-                ingredients: [
-                    ...state.ingredients.map
-                        (
-                            item => { return { ...item, count: 0 } }
-                        )
-                ]
+                ingredients: state.ingredients
+                    ? [
+                        ...state.ingredients.map
+                            (
+                                item => { return { ...item, count: 0 } }
+                            )
+                    ]
+                    : null
             }
         }
         default: {

@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
-import { ingredientsReducer } from "./ingredients.js"
-import { orderReducer } from "./order.js";
-import { burgerConstructorReducer } from "./burgerConstructor.js";
-import { totalPrice } from "./totalPrice.js";
-import { userReducer } from "./user.js";
-import { authorizationInputFields } from "./authorizationInputFields.js";
-import { headerReducer } from "./header.js";
-import { routingReducer } from "./routing.js";
+import { orderReducer } from "./order";
+import { burgerConstructorReducer } from "./burgerConstructor";
+import { totalPrice } from "./totalPrice";
+import { userReducer } from "./user";
+import { authorizationInputFields } from "./authorizationInputFields";
+import { headerReducer } from "./header";
+import { routingReducer } from "./routing";
+import { ingredientsReducer } from './ingredients';
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,

@@ -1,6 +1,7 @@
 import { makeOrderRequest } from "../../utils/api";
 import { clearBurgerConstructor } from "../../services/actions/burgerConstructor";
 import { clearAllCounter } from "../../services/actions/ingredients";
+import { AppDispatch, AppThunk } from "../types";
 
 export const APPLY_ORDER_ID_REQUEST: "APPLY_ORDER_ID_REQUEST" = "APPLY_ORDER_ID_REQUEST";
 export const APPLY_ORDER_ID_SUCCESS: "APPLY_ORDER_ID_SUCCESS" = "APPLY_ORDER_ID_SUCCESS";
@@ -23,8 +24,8 @@ export interface IApplyOrderIdFailedAction {
     readonly type: typeof APPLY_ORDER_ID_FAILED;
 }
 
-export const applyOrderId = (ingredientsData: Array<string>): Function => {
-    return async (dispatch: any) => {
+export const applyOrderId: AppThunk = (ingredientsData: Array<string>) => {
+    return async (dispatch: AppDispatch) => {
         dispatch(applyOrderIdRequest());
         makeOrderRequest(ingredientsData).then(response => {
             dispatch(applyOrderIdSuccess({

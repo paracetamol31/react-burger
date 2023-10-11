@@ -22,37 +22,66 @@ import {
     clearRoutingState
 } from "./routing";
 import { clearHeaderState } from "../../services/actions/header";
+import { AppDispatch, AppThunk } from "../types";
 
-export const SET_USER_INFO = "SET_USER_INFO";
-export const USER_INFO_LOADED = "USER_INFO_LOADED";
-export const CLEAR_USER_INFO = "CLEAR_USER_INFO";
+export const SET_USER_INFO: "SET_USER_INFO" = "SET_USER_INFO";
+export const USER_INFO_LOADED: "USER_INFO_LOADED" = "USER_INFO_LOADED";
+export const CLEAR_USER_INFO: "CLEAR_USER_INFO" = "CLEAR_USER_INFO";
 
-export const setUserInfo = (userInfo) => {
+export interface IUserInfo {
+    email?: string;
+    password?: string;
+    name?: string;
+}
+
+export interface ISetUserInfoAction {
+    readonly type: typeof SET_USER_INFO;
+    readonly payload: ISetUserInfoPayload;
+}
+
+export interface ISetUserInfoPayload {
+    userInfo: IUser;
+}
+
+export interface IUserInfoLoadedAction {
+    readonly type: typeof USER_INFO_LOADED;
+    readonly payload: IUserInfoLoadedPayload;
+}
+
+export interface IUserInfoLoadedPayload {
+    value: boolean
+}
+
+export interface IClearUserInfoAction {
+    readonly type: typeof CLEAR_USER_INFO;
+}
+
+export const setUserInfo = (payload: ISetUserInfoPayload): ISetUserInfoAction => {
     return {
         type: SET_USER_INFO,
-        payload: userInfo
+        payload
     }
 }
 
-export const userInfoLoaded = (value) => {
+export const userInfoLoaded = (payload: IUserInfoLoadedPayload): IUserInfoLoadedAction => {
     return {
         type: USER_INFO_LOADED,
-        payload: { value }
+        payload
     }
 }
 
-export const clearUserInfo = () => {
+export const clearUserInfo = (): IClearUserInfoAction => {
     return {
         type: CLEAR_USER_INFO
     }
 }
 
-export const register = (userInfo, callBack) => {
-    return async (dispatch) => {
+export const register: AppThunk = (userInfo: IUserInfo, callBack: Function) => {
+    return async (dispatch: AppDispatch) => {
         registerRequest(userInfo).then(response => {
             setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
             setCookie(refreshToken, response.refreshToken);
-            dispatch(setUserInfo(response.user));
+            dispatch(setUserInfo({ userInfo: response.user }));
             dispatch(clearInputValue());
             callBack();
         }).catch(e => {
@@ -61,12 +90,12 @@ export const register = (userInfo, callBack) => {
     }
 }
 
-export const login = (userInfo, callBack) => {
-    return async (dispatch) => {
+export const login: AppThunk = (userInfo: IUserInfo, callBack: Function) => {
+    return async (dispatch: AppDispatch) => {
         loginRequest(userInfo).then(response => {
             setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
             setCookie(refreshToken, response.refreshToken);
-            dispatch(setUserInfo(response.user));
+            dispatch(setUserInfo({ userInfo: response.user }));
             dispatch(clearInputValue());
             callBack();
         }).catch(e => {
@@ -75,11 +104,11 @@ export const login = (userInfo, callBack) => {
     }
 }
 
-export const getUserInfo = () => {
-    return async (dispatch) => {
+export const getUserInfo: AppThunk = () => {
+    return async (dispatch: AppDispatch) => {
         userInfoRequest().then(response => {
-            dispatch(setUserInfo(response.user));
-            dispatch(userInfoLoaded(true));
+            dispatch(setUserInfo({ userInfo: response.user }));
+            dispatch(userInfoLoaded({ value: true }));
         }).catch(e => {
 
             accessTokenRequest().then(response => {
@@ -88,19 +117,19 @@ export const getUserInfo = () => {
             }).then(() => {
 
                 userInfoRequest().then(response => {
-                    dispatch(setUserInfo(response.user));
-                }).finally(() => dispatch(userInfoLoaded(true)));
+                    dispatch(setUserInfo({ userInfo: response.user }));
+                }).finally(() => dispatch(userInfoLoaded({ value: true })));
 
             }).catch(e => {
-                dispatch(userInfoLoaded(true));
+                dispatch(userInfoLoaded({ value: true }));
             })
 
         })
     }
 }
 
-export const logout = (callBack) => {
-    return async (dispatch) => {
+export const logout: AppThunk = (callBack: Function) => {
+    return async (dispatch: AppDispatch) => {
         logoutRequest().catch(e => {
             console.error(e);
         }).finally(() => {
@@ -114,8 +143,8 @@ export const logout = (callBack) => {
     }
 }
 
-export const forgotPassword = (email, callBack) => {
-    return async (dispatch) => {
+export const forgotPassword: AppThunk = (email: string, callBack: Function) => {
+    return async (dispatch: AppDispatch) => {
         forgotPasswordRequest(email).then(() => {
             dispatch(startedPasswordReset());
             callBack();
@@ -125,8 +154,8 @@ export const forgotPassword = (email, callBack) => {
     }
 }
 
-export const resetPassword = (password, code, callBack) => {
-    return async (dispatch) => {
+export const resetPassword: AppThunk = (password: string, code: string, callBack: Function) => {
+    return async (dispatch: AppDispatch) => {
         resetPasswordRequest(password, code).then(() => {
             callBack();
         }).catch(e => {
@@ -134,3 +163,8 @@ export const resetPassword = (password, code, callBack) => {
         });
     }
 }
+
+export type TUserActions =
+    ISetUserInfoAction
+    | IUserInfoLoadedAction
+    | IClearUserInfoAction;

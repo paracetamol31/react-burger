@@ -1,5 +1,6 @@
 import { makeRequestIngredients } from "../../utils/api";
 import { IIngredientItem } from "../reducers/ingredients";
+import { AppDispatch, AppThunk } from "../types";
 
 export const APPLY_INGREDIENTS_REQUEST: "APPLY_INGREDIENTS_REQUEST" = "APPLY_INGREDIENTS_REQUEST";
 export const APPLY_INGREDIENTS_SUCCESS: "APPLY_INGREDIENTS_SUCCESS" = "APPLY_INGREDIENTS_SUCCESS";
@@ -85,8 +86,8 @@ export interface IClearAllCounterAction {
     readonly type: typeof CLEAR_ALL_COUNTER;
 }
 
-export const applyIngredients = (): Function => {
-    return async (dispatch: any) => {
+export const applyIngredients: AppThunk = () => {
+    return async (dispatch: AppDispatch) => {
         dispatch(applyIngredientsRequest())
         makeRequestIngredients().then(response => {
             dispatch(

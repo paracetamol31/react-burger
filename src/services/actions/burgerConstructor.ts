@@ -20,11 +20,11 @@ export interface IAddConstructorItemAction {
 }
 export interface IAddConstructorItemPayload {
     readonly itemType: string;
-    readonly image?: string;
-    readonly price?: number;
-    readonly id?: string;
-    readonly name?: string;
-    readonly index?: number;
+    readonly image: string;
+    readonly price: number;
+    readonly id: string;
+    readonly name: string;
+    readonly index: number | null;
 }
 
 export interface IConstructorItemStateParams extends IAddConstructorItemPayload {

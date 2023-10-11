@@ -1,10 +1,9 @@
 import burgerConstructorItemStyles from "./burger-сonstructor-item.module.css";
-import { useDispatch, useSelector } from 'react-redux';
 import {
     ConstructorElement,
     DragIcon
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { XYCoord, useDrag } from "react-dnd";
+import { DragSourceMonitor, XYCoord, useDrag } from "react-dnd";
 
 import {
     reduceCounter
@@ -21,6 +20,9 @@ import {
     IAddConstructorItemPayload
 } from "../../services/actions/burgerConstructor";
 import { FC, useEffect } from "react";
+import { useSelector } from "../../services/hocks";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { RootState } from "../../services/types";
 
 interface IPropsBurgerConstructorItem {
     itemType: string,
@@ -41,11 +43,11 @@ export interface ICollectedProps {
 
 
 const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
-    const { constructorItems, startDragPosition } = useSelector((state: any) => state.burgerConstructor);
+    const { constructorItems, startDragPosition } = useSelector((state: RootState) => state.burgerConstructor);
     const dispatch = useDispatch();
     const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IAddConstructorItemPayload, unknown, ICollectedProps>({
         type: "ingredient",
-        item: props.index !== undefined && props.index >= 0 ? constructorItems[props.index] : {},
+        item: props.index !== undefined && props.index >= 0 ? constructorItems[props.index] : undefined,
         canDrag: props.itemType !== "bun" && props.index !== undefined && props.index >= 0,
         collect: monitor => ({
             isDrag: monitor.isDragging(),
@@ -56,7 +58,7 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
         // не произведет какое-нибудь взаимодействаие с gui. Достаточно просто подвинуть
         // курсор. В давнном случае это заметно, если вытащить элемент за пределы блока 
         // со свойством dropadle  
-        end: (item, monitor) => {
+        end: (item: IAddConstructorItemPayload , monitor: DragSourceMonitor<IAddConstructorItemPayload, unknown>) => {
             if (!monitor.didDrop()) {
                 dispatch(clearIndexEmptyItem());
                 dispatch(addConstructorItem({
