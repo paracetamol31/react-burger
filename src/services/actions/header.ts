@@ -10,17 +10,21 @@ export type TCurrentMenuHeaders = typeof burgerConstructor | typeof orderFeed | 
 
 export interface ISetCurrentMenuHeaderAction {
     readonly type: typeof SET_CURRENT_MENU_HEADER;
-    readonly payload: { currentMenuItem: TCurrentMenuHeaders };
+    readonly payload: ISetCurrentMenuHeaderPayload
+}
+
+export interface ISetCurrentMenuHeaderPayload {
+    currentMenuItem: TCurrentMenuHeaders
 }
 
 export interface IClearHeaderStateAction {
     readonly type: typeof CLEAR_HEADER_STATE;
 }
 
-export const setCurrentMenuHeader = (currentMenuItem: TCurrentMenuHeaders) => {
+export const setCurrentMenuHeader = (payload: ISetCurrentMenuHeaderPayload): ISetCurrentMenuHeaderAction => {
     return {
         type: SET_CURRENT_MENU_HEADER,
-        payload: { currentMenuItem }
+        payload
     }
 }
 

@@ -8,12 +8,12 @@ import {
     SAVE_START_DRAG_POSITION,
     CLEAR_START_DRAG_POSITION,
     CLEAR_BURGER_CONSTRUCTOR,
-    TBurgerConstructorActions
+    TBurgerConstructorActions,
+    IConstructorItemStateParams
 } from "../../services/actions/burgerConstructor";
-
 export interface IBurgerConstructorReducerState {
-    constructorItems: Array<any>;
-    bun: string | null;
+    constructorItems: Array<IConstructorItemStateParams>;
+    bun: IConstructorItemStateParams | null;
     isDragStart: boolean,
     indexEmptyItem: number | null,
     startDragPosition: number | null,
@@ -29,7 +29,7 @@ const initialState: IBurgerConstructorReducerState = {
     yPoint: null
 }
 
-export const burgerConstructorReducer = ((state = initialState, action: TBurgerConstructorActions) => {
+export const burgerConstructorReducer = ((state = initialState, action: TBurgerConstructorActions): IBurgerConstructorReducerState => {
     switch (action.type) {
         case SAVE_START_DRAG_POSITION: {
             return {

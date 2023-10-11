@@ -16,7 +16,7 @@ export const ConstructorPage: FC = () => {
     const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state: any) => state.ingredients);
 
     useEffect(() => {
-        dispatch(setCurrentMenuHeader(burgerConstructor));
+        dispatch(setCurrentMenuHeader({ currentMenuItem: burgerConstructor }));
     }, [dispatch])
 
     return (

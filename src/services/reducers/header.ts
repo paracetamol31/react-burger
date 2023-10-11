@@ -2,14 +2,19 @@ import {
     SET_CURRENT_MENU_HEADER,
     burgerConstructor,
     CLEAR_HEADER_STATE,
-    THeaderActions
+    THeaderActions,
+    TCurrentMenuHeaders
 } from "../../services/actions/header";
 
-const initialState = {
+export interface IHeaderSate {
+    currentItem: TCurrentMenuHeaders
+}
+
+const initialState: IHeaderSate = {
     currentItem: burgerConstructor
 }
 
-export const headerReducer = ((state = initialState, action: THeaderActions) => {
+export const headerReducer = ((state = initialState, action: THeaderActions): IHeaderSate => {
     switch (action.type) {
         case SET_CURRENT_MENU_HEADER:
             return {

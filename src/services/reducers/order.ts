@@ -1,18 +1,24 @@
 import {
     APPLY_ORDER_ID_REQUEST,
     APPLY_ORDER_ID_SUCCESS,
-    APPLY_ORDER_ID_FAILED
+    APPLY_ORDER_ID_FAILED,
+    TOrderActions
 } from "../actions/order";
 
-const initialState = {
+export interface IOrderState {
+    orderId: number | null,
+    orderIdRequest: boolean,
+    orderIdFailed: boolean
+}
+
+const initialState: IOrderState = {
     orderId: null,
     orderIdRequest: false,
     orderIdFailed: false
 }
 
-export const orderReducer = ((state = initialState, action) => {
-    const { type, payload } = action;
-    switch (type) {
+export const orderReducer = ((state = initialState, action: TOrderActions): IOrderState => {
+    switch (action.type) {
         case APPLY_ORDER_ID_REQUEST:
             return {
                 ...state,
@@ -23,7 +29,7 @@ export const orderReducer = ((state = initialState, action) => {
                 ...state,
                 orderIdRequest: false,
                 orderIdFailed: false,
-                orderId: payload.value
+                orderId: action.payload.orderNumber
             }
         case APPLY_ORDER_ID_FAILED:
             return {

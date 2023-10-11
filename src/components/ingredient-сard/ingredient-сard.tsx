@@ -14,7 +14,7 @@ import {
     clearBunsCounter
 } from "../../services/actions/ingredients";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IDragObjct } from "../burger-сonstructor-item/burger-сonstructor-item";
+import { IAddConstructorItemPayload } from "../../services/actions/burgerConstructor";
 
 interface IPropsIngredientСard {
     id: string
@@ -32,7 +32,7 @@ const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
         navigate(`/ingredients/${ingredientObject._id}`, { state: { background: location } });
     }, [dispatch, ingredientObject._id, navigate, location]);
 
-    const [, dragRef] = useDrag<IDragObjct>({
+    const [, dragRef] = useDrag<IAddConstructorItemPayload>({
         type: "ingredient",
         item: {
             image: ingredientObject.image,
@@ -42,7 +42,7 @@ const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
             itemType: ingredientObject.type
         },
         end: (item, monitor) => {
-            if (monitor.didDrop()) {
+            if (monitor.didDrop() && item.id) {
                 dispatch(increaseCounter({
                     id: item.id
                 }))

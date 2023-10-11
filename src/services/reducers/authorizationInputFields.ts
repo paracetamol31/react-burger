@@ -63,7 +63,7 @@ const initialState: IAuthorizationInputFieldsSate = {
     }
 }
 
-export const authorizationInputFields = ((state = initialState, action: TAuthorizationInputFieldsActions) => {
+export const authorizationInputFields = ((state = initialState, action: TAuthorizationInputFieldsActions): IAuthorizationInputFieldsSate => {
     const { type } = action;
     if (type === CHANGE_INPUT_VALUE) {
         const { pageName, inputName, value } = action.payload;

@@ -17,7 +17,8 @@ import {
     saveStartDragPosition,
     clearIndexEmptyItem,
     addConstructorItem,
-    clearStartDragPosition
+    clearStartDragPosition,
+    IAddConstructorItemPayload
 } from "../../services/actions/burgerConstructor";
 import { FC, useEffect } from "react";
 
@@ -33,15 +34,6 @@ interface IPropsBurgerConstructorItem {
     index?: number,
 }
 
-export interface IDragObjct {
-    image: string,
-    price: string,
-    id: string,
-    name: string,
-    itemType: string,
-    index?: number
-}
-
 export interface ICollectedProps {
     isDrag: boolean,
     initialClientOffset: XYCoord | null
@@ -51,7 +43,7 @@ export interface ICollectedProps {
 const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
     const { constructorItems, startDragPosition } = useSelector((state: any) => state.burgerConstructor);
     const dispatch = useDispatch();
-    const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IDragObjct, unknown, ICollectedProps>({
+    const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IAddConstructorItemPayload, unknown, ICollectedProps>({
         type: "ingredient",
         item: props.index !== undefined && props.index >= 0 ? constructorItems[props.index] : {},
         canDrag: props.itemType !== "bun" && props.index !== undefined && props.index >= 0,
@@ -81,7 +73,7 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
     });
 
     useEffect(() => {
-        if (isDrag && initialClientOffset) {
+        if (isDrag && initialClientOffset && props.index !== undefined) {
             dispatch(saveStartDragPosition({
                 index: props.index
             }))
@@ -89,6 +81,7 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
                 index: props.index,
                 yPoint: initialClientOffset.y
             }))
+
             dispatch(setDrag({
                 isDrag: true
             }))
@@ -99,9 +92,11 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
         dispatch(reduceCounter({
             id: props.id
         }))
-        dispatch(removeConstructorItem({
-            index: props.index
-        }))
+        if (props.index !== undefined) {
+            dispatch(removeConstructorItem({
+                index: props.index
+            }))
+        }
     }
 
     return <div

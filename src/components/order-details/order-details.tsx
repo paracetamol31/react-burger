@@ -2,8 +2,9 @@ import { FC, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
 import orderDetailsStyles from "./order-details.module.css";
-import { applayOrderId } from "../../services/actions/order";
+import { applyOrderId } from "../../services/actions/order";
 import checkIcon from "../../images/check.svg"
+import { IConstructorItemStateParams } from "../../services/actions/burgerConstructor";
 
 const OrderDetails: FC = () => {
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const OrderDetails: FC = () => {
 
     useEffect(() => {
         if (burgerConstructor.constructorItems.length) {
-            dispatch(applayOrderId([...burgerConstructor.constructorItems.map((item: any) => item.id), burgerConstructor.bun.id]) as any)
+            dispatch(applyOrderId([...burgerConstructor.constructorItems.map((item: IConstructorItemStateParams) => item.id), burgerConstructor.bun.id]) as any)
         }
     }, [dispatch, burgerConstructor])
 

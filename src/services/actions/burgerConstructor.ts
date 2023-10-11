@@ -14,37 +14,67 @@ export const CLEAR_START_DRAG_POSITION: "CLEAR_START_DRAG_POSITION" = "CLEAR_STA
 
 export const CLEAR_BURGER_CONSTRUCTOR: "CLEAR_BURGER_CONSTRUCTOR" = "CLEAR_BURGER_CONSTRUCTOR";
 
-export interface IConstructorItemParams {
-    image: string,
-    price: number,
-    id: string,
-    name: string,
-    itemType: string,
-    index: number
-}
-
 export interface IAddConstructorItemAction {
     readonly type: typeof ADD_CONSTRUCTOR_ITEM;
-    readonly payload: any;
+    readonly payload: IConstructorItemStateParams;
 }
-export interface IRemoveConstructorItemAction {
-    readonly type: typeof REMOVE_CONSTRUCTOR_ITEM;
-    readonly payload: any;
+export interface IAddConstructorItemPayload {
+    readonly itemType: string;
+    readonly image?: string;
+    readonly price?: number;
+    readonly id?: string;
+    readonly name?: string;
+    readonly index?: number;
 }
 
+export interface IConstructorItemStateParams extends IAddConstructorItemPayload {
+    readonly uuid: string;
+}
+
+export interface IRemoveConstructorItemAction {
+    readonly type: typeof REMOVE_CONSTRUCTOR_ITEM;
+    readonly payload: IRemoveConstructorItemPayload;
+}
+
+export interface IRemoveConstructorItemPayload {
+    index: number;
+}
 export interface ISetDragAction {
     readonly type: typeof SET_DRAG;
-    readonly payload: any;
+    readonly payload: ISetDragPayload;
+}
+
+export interface ISetDragPayload {
+    isDrag: boolean
 }
 
 export interface ICreateEmptyItemAction {
     readonly type: typeof CREATE_EMPTY_ITEM;
-    readonly payload: any;
+    readonly payload: ICreateEmptyItemStateParams;
+}
+
+export interface ICreateEmptyItemPayload {
+    index: number,
+    yPoint: number
+}
+
+export interface ICreateEmptyItemStateParams extends ICreateEmptyItemPayload {
+    readonly uuid: string;
 }
 
 export interface ISetEmptyItemAction {
     readonly type: typeof SET_EMPTY_ITEM;
-    readonly payload: any;
+    readonly payload: ICreateEmptyItemStateParams;
+}
+
+
+export interface ISetEmptyItemPayload {
+    index: number;
+    yPoint: number;
+}
+
+export interface ICreateEmptyItemStateParams extends ISetEmptyItemPayload {
+    readonly uuid: string;
 }
 
 export interface IClearIndexEmptyItemAction {
@@ -53,7 +83,11 @@ export interface IClearIndexEmptyItemAction {
 
 export interface ISaveStartDragPositionAction {
     readonly type: typeof SAVE_START_DRAG_POSITION;
-    readonly payload: any;
+    readonly payload: ISaveStartDragPositionPayload;
+}
+
+export interface ISaveStartDragPositionPayload {
+    index: number
 }
 
 export interface IClearStartDragPositionAction {
@@ -65,43 +99,42 @@ export interface IClearBurgerConstructorAction {
 }
 
 
-export const addConstructorItem = (item: any): IAddConstructorItemAction => {
+
+export const addConstructorItem = (payload: IAddConstructorItemPayload): IAddConstructorItemAction => {
     return {
         type: ADD_CONSTRUCTOR_ITEM,
         payload: {
-            ...item,
+            ...payload,
             uuid: uuidv4()
         }
     }
 }
 
-export const removeConstructorItem = (index: any): IRemoveConstructorItemAction => {
+export const removeConstructorItem = (payload: IRemoveConstructorItemPayload): IRemoveConstructorItemAction => {
     return {
         type: REMOVE_CONSTRUCTOR_ITEM,
-        payload: {
-            index
-        }
+        payload
     }
 }
 
-export const setDrag = (isDrag: any): ISetDragAction => {
+export const setDrag = (payload: ISetDragPayload): ISetDragAction => {
     return {
         type: SET_DRAG,
-        payload: { ...isDrag }
+        payload
     }
 }
 
-export const createEmptyItem = (item: any): ICreateEmptyItemAction => {
+export const createEmptyItem = (payload: ICreateEmptyItemPayload): ICreateEmptyItemAction => {
     return {
         type: CREATE_EMPTY_ITEM,
         payload: {
-            ...item,
+            ...payload,
             uuid: uuidv4()
         }
     }
 }
 
-export const setEmptyItem = (item: any): ISetEmptyItemAction => {
+export const setEmptyItem = (item: ISetEmptyItemPayload): ISetEmptyItemAction => {
     return {
         type: SET_EMPTY_ITEM,
         payload: {
@@ -111,26 +144,26 @@ export const setEmptyItem = (item: any): ISetEmptyItemAction => {
     }
 }
 
-export const clearIndexEmptyItem = () => {
+export const clearIndexEmptyItem = (): IClearIndexEmptyItemAction => {
     return {
         type: CLEAR_INDEX_EMPTY_ITEM,
     }
 }
 
-export const saveStartDragPosition = (item: any) => {
+export const saveStartDragPosition = (payload: ISaveStartDragPositionPayload): ISaveStartDragPositionAction => {
     return {
         type: SAVE_START_DRAG_POSITION,
-        payload: { ...item }
+        payload
     }
 }
 
-export const clearStartDragPosition = () => {
+export const clearStartDragPosition = (): IClearStartDragPositionAction => {
     return {
         type: CLEAR_START_DRAG_POSITION
     }
 }
 
-export const clearBurgerConstructor = () => {
+export const clearBurgerConstructor = (): IClearBurgerConstructorAction => {
     return {
         type: CLEAR_BURGER_CONSTRUCTOR
     }
