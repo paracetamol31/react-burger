@@ -1,20 +1,33 @@
+import { Location } from "react-router-dom";
 import {
     START_PASSWORD_RESET,
     OVER_PASSWORD_RESET,
     SET_SAVED_LOCATION,
     CLEAR_SAVED_PATHNAME,
-    CLEAR_ROUTING_STATE
+    CLEAR_ROUTING_STATE,
+    TRoutingActions
 } from "../actions/routing";
 
-const initialState = {
-    isStartedPasswordReset: false,
-    isResetPassword: false,
-    savedLocation: { pathname: "/" }
+export interface IRoutingState {
+    isStartedPasswordReset: boolean,
+    isResetPassword: boolean,
+    savedLocation: Location
 }
 
-export const routingReducer = ((state = initialState, action) => {
-    const { type, payload } = action;
-    switch (type) {
+const initialState: IRoutingState = {
+    isStartedPasswordReset: false,
+    isResetPassword: false,
+    savedLocation: {
+        pathname: "/",
+        hash: "",
+        key: "",
+        search: "",
+        state: ""
+    }
+}
+
+export const routingReducer = ((state = initialState, action: TRoutingActions): IRoutingState => {
+    switch (action.type) {
         case START_PASSWORD_RESET:
             return {
                 ...state,
@@ -30,12 +43,18 @@ export const routingReducer = ((state = initialState, action) => {
         case SET_SAVED_LOCATION:
             return {
                 ...state,
-                savedLocation: payload.location
+                savedLocation: action.payload.location
             }
         case CLEAR_SAVED_PATHNAME:
             return {
                 ...state,
-                savedLocation: {}
+                savedLocation: {
+                    pathname: "",
+                    hash: "",
+                    key: "",
+                    search: "",
+                    state: ""
+                }
             }
         case CLEAR_ROUTING_STATE: {
             return {
