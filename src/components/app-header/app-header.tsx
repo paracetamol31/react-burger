@@ -47,7 +47,7 @@ const AppHeader: FC = () => {
                     <Link className={appHeaderStyles.link} to='/'>
                         <ConstructorTab text="Конструктор" />
                     </Link>
-                    <Link className={appHeaderStyles.link} to='/404'>
+                    <Link className={appHeaderStyles.link} to='/feed'>
                         <OrderFeedTab text="Лента заказов" />
                     </Link>
                 </div>
