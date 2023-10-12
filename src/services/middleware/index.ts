@@ -2,8 +2,9 @@ import { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState, TApplicationActions, TWSStoreActions } from "../types";
 import { accessToken, getCookie } from "../../utils/cookie";
 
-export const WSAddress: string = "wss://norma.nomoreparties.space/";
-export const WSPathOrdersAll: string = `${WSAddress}orders/all`;
+export const WSAddress: string = "wss://norma.nomoreparties.space";
+export const WSPathOrdersAll: string = `${WSAddress}/orders/all`;
+export const WSPathOrders: string = `${WSAddress}/orders`;
 
 export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {

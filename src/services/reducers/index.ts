@@ -9,6 +9,7 @@ import { headerReducer } from "./header";
 import { routingReducer } from "./routing";
 import { ingredientsReducer } from './ingredients';
 import { orderFeedReducer } from './orderFeed';
+import { orderHistoryReducer } from './orderHistory';
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
@@ -19,5 +20,6 @@ export const rootReducer = combineReducers({
     authorizationInputFields: authorizationInputFields,
     header: headerReducer,
     routing: routingReducer,
-    orderFeed: orderFeedReducer
+    orderFeed: orderFeedReducer,
+    orderHistory: orderHistoryReducer
 });
