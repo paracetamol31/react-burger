@@ -3,7 +3,7 @@ import { DragEventHandler, FC, useCallback } from "react";
 
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-сonstructor-item/burger-сonstructor-item";
-import OrderConstructorpPanel from "../order-constructor-panel/order-constructor-panel";
+import OrderConstructorPanel from "../order-constructor-panel/order-constructor-panel";
 import {
     addConstructorItem,
     setDrag,
@@ -66,6 +66,7 @@ const BurgerConstructor: FC = () => {
                 thumbnail={bun.image}
                 itemType="bun"
                 id={bun.id}
+                extraClass="mr-2"
             />}
 
             <div className={burgerConstructorStyles.scrollBar}>
@@ -93,7 +94,7 @@ const BurgerConstructor: FC = () => {
                 id={bun.id}
             />}
 
-            <OrderConstructorpPanel />
+            <OrderConstructorPanel />
         </section>
     )
 }

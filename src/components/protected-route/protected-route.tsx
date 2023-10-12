@@ -1,10 +1,10 @@
 import { FC, useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useLocation, Location } from 'react-router-dom';
 
 import { getUserInfo } from "../../services/actions/user";
 import { setSavedLocation } from "../../services/actions/routing";
+import { useDispatch, useSelector } from "../../services/hocks";
+import { RootState } from "../../services/types";
 
 interface IPropsProtectedRouteElement {
     element: JSX.Element,
@@ -13,11 +13,11 @@ interface IPropsProtectedRouteElement {
 
 export const ProtectedRouteElement: FC<IPropsProtectedRouteElement> = ({ element, background }) => {
     const dispatch = useDispatch();
-    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
     const location: Location = useLocation();
 
     useEffect(() => {
-        dispatch(getUserInfo() as any);
+        dispatch(getUserInfo());
         dispatch(setSavedLocation({ location: background || location }));
     }, [dispatch, location, background]);
 

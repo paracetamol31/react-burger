@@ -4,3 +4,12 @@
     padding: 0px;
     position: relative;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+    border-radius: 3px;
+}

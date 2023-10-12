@@ -1,4 +1,3 @@
-import { useSelector, useDispatch } from "react-redux";
 import profilePageStyles from "./profile-page.module.css";
 import { FC, useCallback, useEffect } from "react";
 import {
@@ -12,19 +11,21 @@ import {
     setCurrentMenuHeader,
     userProfile
 } from "../../services/actions/header";
-import { logout } from "../../services/actions/user";
+import { IUserInfo, logout } from "../../services/actions/user";
+import { useDispatch, useSelector } from "../../services/hocks";
+import { RootState } from "../../services/types";
 
 export const ProfilePage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { name, email } = useSelector((state: any) => state.user.userInfo);
+    const userInfo: IUserInfo | null = useSelector((state: RootState) => state.user.userInfo);
 
     useEffect(() => {
-        dispatch(setCurrentMenuHeader({currentMenuItem: userProfile}));
+        dispatch(setCurrentMenuHeader({ currentMenuItem: userProfile }));
     }, [dispatch])
 
     const callLogout = useCallback<React.MouseEventHandler<HTMLSpanElement>>(() => {
-        dispatch(logout(() => { navigate("/login") }) as any);
+        dispatch(logout(() => { navigate("/login") }));
     }, [dispatch, navigate])
 
     return <section className={profilePageStyles.pageWrapper}>
@@ -52,7 +53,7 @@ export const ProfilePage: FC = () => {
         <div className={profilePageStyles.inputsWrapper}>
             <Input
                 placeholder={'Имя'}
-                value={name}
+                value={userInfo?.name || ""}
                 disabled={true}
                 icon="EditIcon"
                 error={false}
@@ -61,7 +62,7 @@ export const ProfilePage: FC = () => {
             />
             <EmailInput
                 placeholder={'Логин'}
-                value={email}
+                value={userInfo?.email || ""}
                 isIcon={true}
                 onChange={() => { }}
             />

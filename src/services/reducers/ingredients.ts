@@ -40,7 +40,6 @@ export const ingredientsReducer = ((state = initialState, action: TIngredientsAc
                 ingredientsRequest: true
             }
         case APPLY_INGREDIENTS_SUCCESS:
-            debugger
             return {
                 ...state,
                 ingredientsRequest: false,

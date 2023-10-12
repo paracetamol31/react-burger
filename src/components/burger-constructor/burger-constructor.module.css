@@ -12,4 +12,9 @@
     height: 100%;
     gap: 16px;
     overflow: auto;
+    scrollbar-color: #2F2F37 #8585AD;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    padding-right: 4px;
 }

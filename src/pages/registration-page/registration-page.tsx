@@ -7,10 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useCallback, useEffect } from "react";
 import {
-    useDispatch,
-    useSelector
-} from "react-redux";
-import {
     Link,
     Navigate,
     useNavigate
@@ -28,13 +24,15 @@ import {
 import {
     changeInputValue
 } from "../../services/actions/authorizationInputFields";
+import { useDispatch, useSelector } from "../../services/hocks";
+import { RootState } from "../../services/types";
 
 export const RegistrationPage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { name, email, password } = useSelector((state: any) => state.authorizationInputFields.registrationPage);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
-    const { savedLocation } = useSelector((state: any) => state.routing);
+    const { name, email, password } = useSelector((state: RootState) => state.authorizationInputFields.registrationPage);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
+    const { savedLocation } = useSelector((state: RootState) => state.routing);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,7 +40,7 @@ export const RegistrationPage: FC = () => {
             register(
                 { name, email, password },
                 () => navigate(savedLocation.pathname, { replace: true })
-            ) as any
+            )
         );
     }, [navigate, dispatch, name, email, password, savedLocation]);
 
@@ -56,7 +54,7 @@ export const RegistrationPage: FC = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo() as any);
+            dispatch(getUserInfo());
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 

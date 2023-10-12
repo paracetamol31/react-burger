@@ -15,7 +15,7 @@ const OrderDetails: FC = () => {
 
     useEffect(() => {
         if (burgerConstructor.constructorItems.length && burgerConstructor.bun) {
-            dispatch(applyOrderId([...burgerConstructor.constructorItems.map((item: IConstructorItemStateParams) => item.id), burgerConstructor.bun.id]) as any)
+            dispatch(applyOrderId([...burgerConstructor.constructorItems.map((item: IConstructorItemStateParams) => item.id), burgerConstructor.bun.id]))
         }
     }, [dispatch, burgerConstructor])
 

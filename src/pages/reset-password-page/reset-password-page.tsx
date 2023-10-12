@@ -11,7 +11,6 @@ import {
     Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import {
     resetPassword,
@@ -27,17 +26,19 @@ import {
     resetPasswordPage
 } from "../../services/reducers/authorizationInputFields";
 import { overPasswordReset } from "../../services/actions/routing";
+import { useDispatch, useSelector } from "../../services/hocks";
+import { RootState } from "../../services/types";
 
 export const ResetPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { password, code } = useSelector((state: any) => state.authorizationInputFields.resetPasswordPage);
-    const { isStartedPasswordReset, isResetPassword } = useSelector((state: any) => state.routing);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
+    const { password, code } = useSelector((state: RootState) => state.authorizationInputFields.resetPasswordPage);
+    const { isStartedPasswordReset, isResetPassword } = useSelector((state: RootState) => state.routing);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(resetPassword(password, code, () => navigate("/login", { replace: true })) as any)
+        dispatch(resetPassword(password, code, () => navigate("/login", { replace: true })))
     }, [navigate, dispatch, password, code]);
 
     const onInputsChanged = useCallback<(e: React.ChangeEvent<HTMLInputElement>) => void>((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +58,7 @@ export const ResetPasswordPage: FC = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo() as any);
+            dispatch(getUserInfo());
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 

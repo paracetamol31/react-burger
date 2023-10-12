@@ -9,7 +9,6 @@ import {
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import { changeInputValue } from "../../services/actions/authorizationInputFields";
 import {
@@ -20,16 +19,18 @@ import {
     emailInput,
     forgotPasswordPage
 } from "../../services/reducers/authorizationInputFields";
+import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hocks";
 
 export const ForgotPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { email } = useSelector((state: any) => state.authorizationInputFields.forgotPasswordPage);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
+    const { email } = useSelector((state: RootState) => state.authorizationInputFields.forgotPasswordPage);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(forgotPassword(email, () => navigate("/reset-password")) as any)
+        dispatch(forgotPassword(email, () => navigate("/reset-password")))
     }, [navigate, dispatch, email]);
 
     const onInputsChanged = useCallback<(e: React.ChangeEvent<HTMLInputElement>) => void>((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +43,7 @@ export const ForgotPasswordPage: FC = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo() as any);
+            dispatch(getUserInfo());
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 

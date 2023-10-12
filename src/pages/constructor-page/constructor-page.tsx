@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -10,10 +9,12 @@ import {
     setCurrentMenuHeader,
     burgerConstructor
 } from "../../services/actions/header";
+import { useDispatch, useSelector } from "../../services/hocks";
+import { RootState } from "../../services/types";
 
 export const ConstructorPage: FC = () => {
     const dispatch = useDispatch();
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state: any) => state.ingredients);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state: RootState) => state.ingredients);
 
     useEffect(() => {
         dispatch(setCurrentMenuHeader({ currentMenuItem: burgerConstructor }));

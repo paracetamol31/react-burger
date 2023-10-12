@@ -9,10 +9,6 @@ import {
     Navigate,
     useNavigate
 } from "react-router-dom";
-import {
-    useDispatch,
-    useSelector
-} from "react-redux";
 
 import loginPageStyles from "./login-page.module.css";
 import { login, getUserInfo } from "../../services/actions/user";
@@ -22,13 +18,15 @@ import {
     loginPage
 } from "../../services/reducers/authorizationInputFields";
 import { changeInputValue } from "../../services/actions/authorizationInputFields";
+import { useDispatch, useSelector } from "../../services/hocks";
+import { RootState } from "../../services/types";
 
 export const LoginPage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { email, password } = useSelector((state: any) => state.authorizationInputFields.loginPage);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: any) => state.user);
-    const { savedLocation } = useSelector((state: any) => state.routing);
+    const { email, password } = useSelector((state: RootState) => state.authorizationInputFields.loginPage);
+    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
+    const { savedLocation } = useSelector((state: RootState) => state.routing);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,11 +34,11 @@ export const LoginPage: FC = () => {
             login(
                 { email, password },
                 () => (navigate(savedLocation.pathname, { replace: true }))
-            ) as any
+            )
         );
     }, [navigate, dispatch, email, password, savedLocation.pathname]);
 
-    const onInputsChanged = useCallback((event: any) => {
+    const onInputsChanged = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeInputValue({
             pageName: loginPage,
             inputName: event.target.name,
@@ -50,7 +48,7 @@ export const LoginPage: FC = () => {
 
     useEffect(() => {
         if (!userInfo && !isUserInfoLoaded) {
-            dispatch(getUserInfo() as any);
+            dispatch(getUserInfo());
         };
     }, [dispatch, userInfo, isUserInfoLoaded]);
 
