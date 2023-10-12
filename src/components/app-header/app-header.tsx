@@ -8,7 +8,7 @@ import {
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import headerMenuItem, { IPropsHeaderMenuItem } from "../header-menu-item/header-menu-item";
+import menuItem, { IPropsMenuItem } from "../menu-item/menu-item";
 import {
     burgerConstructor,
     orderFeed,
@@ -21,17 +21,17 @@ const AppHeader: FC = () => {
     const { currentItem } = useSelector((state: RootState) => state.header);
     const navigate: NavigateFunction = useNavigate();
 
-    const ConstructorTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
+    const ConstructorTab: React.FC<IPropsMenuItem> = menuItem({
         Icon: BurgerIcon,
         isTarget: currentItem === burgerConstructor
     });
 
-    const OrderFeedTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
+    const OrderFeedTab: React.FC<IPropsMenuItem> = menuItem({
         Icon: ListIcon,
         isTarget: currentItem === orderFeed
     });
 
-    const PersonalAccountTab: React.FC<IPropsHeaderMenuItem> = headerMenuItem({
+    const PersonalAccountTab: React.FC<IPropsMenuItem> = menuItem({
         Icon: ProfileIcon,
         isTarget: currentItem === userProfile
     });

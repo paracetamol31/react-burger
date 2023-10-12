@@ -14,7 +14,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
             const { dispatch } = store;
 
             if (action.type === wsActions.wsInit) {
-                socket = new WebSocket(`${wsUrl}?token=${getCookie(accessToken)}}`);
+                socket = new WebSocket(`${wsUrl}?token=${getCookie(accessToken)}`);
             }
             if (socket) {
                 socket.onopen = event => {

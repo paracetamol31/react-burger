@@ -8,6 +8,7 @@ import { TOrderActions } from "../actions/order";
 import { TRoutingActions } from "../actions/routing";
 import { TTotalPriceActions } from "../actions/totalPrice";
 import { TUserActions } from "../actions/user";
+import { TProfileActions } from "../actions/profile";
 import { store } from "../store";
 import { TBurgerConstructorActions } from "../actions/burgerConstructor";
 import {
@@ -41,7 +42,8 @@ export type TApplicationActions =
     | TTotalPriceActions
     | TUserActions
     | TWsOrderFeedSendMessageActions
-    | TWsOrderHistorySendMessageActions;
+    | TWsOrderHistorySendMessageActions
+    | TProfileActions;
 
 export type TWSStoreActions = {
     wsInit: typeof WS_ORDER_FEED_CONNECTION_START | typeof WS_ORDER_HISTORY_CONNECTION_START,
