@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.descriptionBlock {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+    gap: 24px;
+    scrollbar-color: #2F2F37 #8585AD;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    padding-right: 4px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalCount {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}

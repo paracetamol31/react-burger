@@ -10,3 +10,19 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.imagesRowWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.totalCount {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.satusPanding {
+    color: #00CCCC;
+}
