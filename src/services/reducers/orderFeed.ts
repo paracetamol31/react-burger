@@ -5,9 +5,10 @@ import {
     WS_ORDER_FEED_CONNECTION_SUCCESS,
     WS_ORDER_FEED_GET_MESSAGE
 } from "../actions/orderFeed";
+import { IOrderParams } from "./orderHistory";
 
 export interface IOrderFeedItemParams {
-    orders: Array<{ _id: string }>
+    orders: Array<IOrderParams>
     success: boolean;
     total: number;
     totalToday: number;
@@ -47,7 +48,6 @@ export const orderFeedReducer = (state = initialState, action: TWsOrderFeedSendM
             };
 
         case WS_ORDER_FEED_GET_MESSAGE:
-
             return action.payload
                 ? {
                     ...state,

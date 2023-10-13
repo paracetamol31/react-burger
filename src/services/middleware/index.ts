@@ -26,8 +26,13 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                 };
 
                 socket.onmessage = event => {
-                    const { data } = event;
-                    dispatch({ type: wsActions.onMessage, payload: data });
+                    let parsedData = null;
+                    try {
+                        parsedData = JSON.parse(event.data);
+                    } catch {
+                        parsedData = null;
+                    }
+                    dispatch({ type: wsActions.onMessage, payload: parsedData });
                 };
 
                 socket.onclose = event => {

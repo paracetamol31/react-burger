@@ -49,39 +49,39 @@ export const wcConnectionStart = (payload: IWcOrderHistoryConnectionStartPayload
     }
 }
 
-export const wsConnectionSuccess = (payload: Event): IWsOrderHistoryConnectionSuccessAction => {
-    return {
-        type: WS_ORDER_HISTORY_CONNECTION_SUCCESS,
-        payload
-    }
-}
+// export const wsConnectionSuccess = (payload: Event): IWsOrderHistoryConnectionSuccessAction => {
+//     return {
+//         type: WS_ORDER_HISTORY_CONNECTION_SUCCESS,
+//         payload
+//     }
+// }
 
-export const wsConnectionError = (payload: Event): IWsOrderHistoryConnectionErrorAction => {
-    return {
-        type: WS_ORDER_HISTORY_CONNECTION_ERROR,
-        payload
-    }
-}
+// export const wsConnectionError = (payload: Event): IWsOrderHistoryConnectionErrorAction => {
+//     return {
+//         type: WS_ORDER_HISTORY_CONNECTION_ERROR,
+//         payload
+//     }
+// }
 
-export const wsGetMessage = (payload: string): IWsOrderHistoryGetMessageAction => {
-    let data: IOrderHistoryItemParams | null = null;
-    try {
-        data = JSON.parse(payload);
-    } catch {
-        data = null;
-    }
-    return {
-        type: WS_ORDER_HISTORY_GET_MESSAGE,
-        payload: data
-    }
-}
+// export const wsGetMessage = (payload: string): IWsOrderHistoryGetMessageAction => {
+//     let data: IOrderHistoryItemParams | null = null;
+//     try {
+//         data = JSON.parse(payload);
+//     } catch {
+//         data = null;
+//     }
+//     return {
+//         type: WS_ORDER_HISTORY_GET_MESSAGE,
+//         payload: data
+//     }
+// }
 
-export const wsConnectionClosed = (payload: Event): IWsOrderHistoryConnectionClosedAction => {
-    return {
-        type: WS_ORDER_HISTORY_CONNECTION_CLOSED,
-        payload
-    }
-}
+// export const wsConnectionClosed = (payload: Event): IWsOrderHistoryConnectionClosedAction => {
+//     return {
+//         type: WS_ORDER_HISTORY_CONNECTION_CLOSED,
+//         payload
+//     }
+// }
 
 export const wsSendMessage = (payload: Object | string | number): IWsOrderHistorySendMessageAction => {
     return {

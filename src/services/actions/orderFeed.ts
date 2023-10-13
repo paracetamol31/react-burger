@@ -49,39 +49,39 @@ export const wcConnectionStart = (payload: IWcOrderFeedConnectionStartPayload): 
     }
 }
 
-export const wsConnectionSuccess = (payload: Event): IWsOrderFeedConnectionSuccessAction => {
-    return {
-        type: WS_ORDER_FEED_CONNECTION_SUCCESS,
-        payload
-    }
-}
+// export const wsConnectionSuccess = (payload: Event): IWsOrderFeedConnectionSuccessAction => {
+//     return {
+//         type: WS_ORDER_FEED_CONNECTION_SUCCESS,
+//         payload
+//     }
+// }
 
-export const wsConnectionError = (payload: Event): IWsOrderFeedConnectionErrorAction => {
-    return {
-        type: WS_ORDER_FEED_CONNECTION_ERROR,
-        payload
-    }
-}
+// export const wsConnectionError = (payload: Event): IWsOrderFeedConnectionErrorAction => {
+//     return {
+//         type: WS_ORDER_FEED_CONNECTION_ERROR,
+//         payload
+//     }
+// }
 
-export const wsGetMessage = (payload: string): IWsOrderFeedGetMessageAction => {
-    let data: IOrderFeedItemParams | null = null;
-    try {
-        data = JSON.parse(payload);
-    } catch {
-        data = null;
-    }
-    return {
-        type: WS_ORDER_FEED_GET_MESSAGE,
-        payload: data
-    }
-}
+// export const wsGetMessage = (payload: string): IWsOrderFeedGetMessageAction => {
+//     let data: IOrderFeedItemParams | null = null;
+//     try {
+//         data = JSON.parse(payload);
+//     } catch {
+//         data = null;
+//     }
+//     return {
+//         type: WS_ORDER_FEED_GET_MESSAGE,
+//         payload: data
+//     }
+// }
 
-export const wsConnectionClosed = (payload: Event): IWsOrderFeedConnectionClosedAction => {
-    return {
-        type: WS_ORDER_FEED_CONNECTION_CLOSED,
-        payload
-    }
-}
+// export const wsConnectionClosed = (payload: Event): IWsOrderFeedConnectionClosedAction => {
+//     return {
+//         type: WS_ORDER_FEED_CONNECTION_CLOSED,
+//         payload
+//     }
+// }
 
 export const wsSendMessage = (payload: Object | string | number): IWsOrderFeedSendMessageAction => {
     return {

@@ -13,7 +13,8 @@ export interface IOrderParams {
     status: string,
     number: number,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    name: string
 }
 
 export interface IOrderHistoryItemParams {
