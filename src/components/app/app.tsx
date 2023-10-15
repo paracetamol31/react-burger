@@ -19,8 +19,8 @@ import { applyIngredients } from "../../services/actions/ingredients";
 import { useDispatch, useSelector } from "../../services/hocks";
 import { RootState } from "../../services/types";
 import { OrderFeedPage } from "../../pages/order-feed-page/order-feed-page";
-import { UserProfileSetings } from "../user-profile-setings/user-profile-setings";
-import { OrderHistoryPanel } from "../order-history-panel/order-history-panel";
+import { UserProfileSetingsPage } from "../user-profile-setings-page/user-profile-setings-page";
+import { OrderHistoryPage } from "../../pages/order-history-page/order-history-page";
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -44,8 +44,8 @@ const App: FC = () => {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} >
-            <Route path="" element={<UserProfileSetings />} />
-            <Route path=":order" element={< OrderHistoryPanel />} />
+            <Route path="" element={<UserProfileSetingsPage />} />
+            <Route path=":order" element={< OrderHistoryPage />} />
           </Route>
           <Route path="/ingredients/:id" element={<IngredientsPage />} />
           <Route path="/feed" element={<OrderFeedPage />} />

@@ -1,15 +1,15 @@
 import { FC, useEffect } from "react"
 
-import orderHistoryPanelStyles from "./order-history-panel.module.css";
+import orderHistoryPageStyles from "./order-history-page.module.css";
 import { useDispatch, useSelector } from "../../services/hocks";
 import { RootState } from "../../services/types";
 import { WSPathOrders } from "../../services/middleware";
 import { wcConnectionStart } from "../../services/actions/orderHistory";
 import { setCurrentMenuProfilePanel } from "../../services/actions/profile";
-import { OrderFeedCard } from "../order-feed-card/order-feed-card";
+import { OrderFeedCard } from "../../components/order-feed-card/order-feed-card";
 
 
-export const OrderHistoryPanel: FC = (props) => {
+export const OrderHistoryPage: FC = () => {
     const dispatch = useDispatch();
     const { orderData } = useSelector((state: RootState) => state.orderHistory);
 
@@ -28,7 +28,7 @@ export const OrderHistoryPanel: FC = (props) => {
     }
   
     return (
-        <section className={orderHistoryPanelStyles.wrapper}>
+        <section className={orderHistoryPageStyles.wrapper}>
             {orderData.orders.map((item) => <OrderFeedCard key={item._id} orderInfo={item} needShowStatus/>).reverse()}
         </section>
     );
