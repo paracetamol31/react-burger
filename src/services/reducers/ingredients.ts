@@ -19,7 +19,7 @@ export interface IIngredientItem extends IIngredient {
 export interface IIngredientsState {
     ingredientsRequest: boolean,
     ingredientsFailed: boolean,
-    ingredients: Array<IIngredientItem> | null,
+    ingredients: Map<string, IIngredientItem> | null,
     currentIngredient: string | null,
     currentCategory: number
 }
@@ -72,44 +72,37 @@ export const ingredientsReducer = ((state = initialState, action: TIngredientsAc
             return {
                 ...state,
                 ingredients: state.ingredients
-                    ? [
-                        ...state.ingredients.map
-                            (
-                                item => item._id === action.payload.id
-                                    ? { ...item, count: item.type === "bun" ? 2 : item.count + 1 }
-                                    : item
-                            )
-                    ]
+                    ? new Map(Array.from(state.ingredients).map(
+                        (item: [string, IIngredientItem]) => item[0] === action.payload.id
+                            ? [item[0], { ...item[1], count: item[1].type === "bun" ? 2 : item[1].count + 1 }]
+                            : item
+                    ))
                     : null
             }
         }
+
         case REDUCE_COUNTER: {
             return {
                 ...state,
                 ingredients: state.ingredients
-                    ? [
-                        ...state.ingredients.map
-                            (
-                                item => item._id === action.payload.id
-                                    ? { ...item, count: item.type === "bun" ? 0 : item.count - 1 }
-                                    : item
-                            )
-                    ]
+                    ? new Map(Array.from(state.ingredients).map(
+                        (item: [string, IIngredientItem]) => item[0] === action.payload.id
+                            ? [item[0], { ...item[1], count: item[1].type === "bun" ? 0 : item[1].count - 1 }]
+                            : item
+                    ))
                     : null
             }
         }
+
         case CLEAR_BUNS_COUNTER: {
             return {
                 ...state,
                 ingredients: state.ingredients
-                    ? [
-                        ...state.ingredients.map
-                            (
-                                item => (item._id !== action.payload.id && item.type === "bun")
-                                    ? { ...item, count: 0 }
-                                    : item
-                            )
-                    ]
+                    ? new Map(Array.from(state.ingredients).map(
+                        (item: [string, IIngredientItem]) => (item[0] !== action.payload.id && item[1].type === "bun")
+                            ? [item[0], { ...item[1], count: 0 }]
+                            : item
+                    ))
                     : null
             }
         }
@@ -117,12 +110,9 @@ export const ingredientsReducer = ((state = initialState, action: TIngredientsAc
             return {
                 ...state,
                 ingredients: state.ingredients
-                    ? [
-                        ...state.ingredients.map
-                            (
-                                item => { return { ...item, count: 0 } }
-                            )
-                    ]
+                    ? new Map(Array.from(state.ingredients).map(
+                        (item: [string, IIngredientItem]) => [item[0], { ...item[1], count: 0 }]
+                    ))
                     : null
             }
         }

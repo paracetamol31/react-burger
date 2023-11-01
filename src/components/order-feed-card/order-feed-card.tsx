@@ -19,7 +19,7 @@ export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
     const images: Array<string> = [];
 
     for (const ingredientid of props.orderInfo.ingredients) {
-        const ingredient = ingredients?.find((item) => item._id === ingredientid);
+        const ingredient = ingredients?.get(ingredientid);
 
         if (!ingredient) {
             continue;

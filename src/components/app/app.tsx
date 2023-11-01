@@ -19,7 +19,7 @@ import { applyIngredients } from "../../services/actions/ingredients";
 import { useDispatch, useSelector } from "../../services/hocks";
 import { RootState } from "../../services/types";
 import { OrderFeedPage } from "../../pages/order-feed-page/order-feed-page";
-import { UserProfileSetingsPage } from "../user-profile-setings-page/user-profile-setings-page";
+import { UserProfileSetingsPage } from "../../pages/user-profile-setings-page/user-profile-setings-page";
 import { OrderHistoryPage } from "../../pages/order-history-page/order-history-page";
 
 const App: FC = () => {

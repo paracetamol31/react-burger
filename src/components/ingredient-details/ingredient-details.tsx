@@ -5,17 +5,16 @@ import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient-characteristics";
 import { useSelector } from "../../services/hocks";
 import { RootState } from "../../services/types";
-import { IIngredientItem } from "../../services/reducers/ingredients";
 
 const IngredientDetails: FC = () => {
     const { id }: Readonly<Params<string>> = useParams();
     const { ingredients } = useSelector((state: RootState) => state.ingredients);
 
-    if (!ingredients) {
+    if (!ingredients || !id) {
         return null;
     }
 
-    const currentIngredientObject = ingredients.find((item: IIngredientItem) => item._id === id);
+    const currentIngredientObject = ingredients.get(id)
 
     if (!currentIngredientObject) {
         return null;

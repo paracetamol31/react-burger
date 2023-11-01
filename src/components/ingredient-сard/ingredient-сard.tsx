@@ -27,7 +27,7 @@ const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { ingredients } = useSelector((state: RootState) => state.ingredients);
-    const ingredientObject: IIngredientItem | null = ingredients?.find((ingredient: IIngredientItem) => ingredient._id === id) || null;
+    const ingredientObject: IIngredientItem | null = ingredients?.get(id) || null;
 
     const openModal = React.useCallback(() => {
         if (ingredientObject) {

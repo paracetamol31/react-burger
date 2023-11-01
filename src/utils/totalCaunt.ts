@@ -1,9 +1,9 @@
 import { IIngredientItem } from "../services/reducers/ingredients";
 
-export const getTotalCaunt = (ingredientsId: Array<string>, ingredients: Array<IIngredientItem>): number => {
+export const getTotalCaunt = (ingredientsId: Array<string>, ingredients: Map<string, IIngredientItem>): number => {
     let count: number = 0;
     for (const ingredientId of ingredientsId) {
-        const ingredient = ingredients.find((item: IIngredientItem) => item._id === ingredientId);
+        const ingredient = ingredients.get(ingredientId);
         if (!ingredient) {
             continue;
         }

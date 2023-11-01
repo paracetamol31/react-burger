@@ -21,7 +21,7 @@ export interface IApplyIngredientsRequestAction {
 }
 
 export interface IApplyIngredientsSuccessPayload {
-    ingredients: Array<IIngredientItem>
+    ingredients: Map<string, IIngredientItem>
 }
 
 export interface IApplyIngredientsSuccessAction {
@@ -91,7 +91,7 @@ export const applyIngredients: AppThunk = () => {
         dispatch(applyIngredientsRequest())
         makeRequestIngredients().then(response => {
             dispatch(
-                applyIngredientsSuccess({ ingredients: response.data.map(item => { return { ...item, count: 0 } }) })
+                applyIngredientsSuccess({ ingredients: new Map(response.data.map(item => { return [item._id, { ...item, count: 0 }] })) })
             )
         }).catch(e => {
             console.error(e);
