@@ -17,9 +17,9 @@ export const ProtectedRouteElement: FC<IPropsProtectedRouteElement> = ({ element
     const location: Location = useLocation();
 
     useEffect(() => {
-        dispatch(getUserInfo());
+        !userInfo && dispatch(getUserInfo());
         dispatch(setSavedLocation({ location: background || location }));
-    }, [dispatch, location, background]);
+    }, [dispatch, location, background, userInfo]);
 
     if (!isUserInfoLoaded) {
         return null

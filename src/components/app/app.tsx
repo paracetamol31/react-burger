@@ -21,6 +21,7 @@ import { RootState } from "../../services/types";
 import { OrderFeedPage } from "../../pages/order-feed-page/order-feed-page";
 import { UserProfileSetingsPage } from "../../pages/user-profile-setings-page/user-profile-setings-page";
 import { OrderHistoryPage } from "../../pages/order-history-page/order-history-page";
+import { clearOrderInfo } from "../../services/actions/order";
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,10 @@ const App: FC = () => {
           />
           <Route
             path="/order"
-            element={<ProtectedRouteElement background={background} element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
+            element={<ProtectedRouteElement
+              background={background}
+              element={<Modal canClose={!orderIdRequest} onClose={() => (dispatch(clearOrderInfo()))}>< OrderDetails /></Modal>}
+            />}
           />
           <Route path="*" element={null} />
         </Routes>}

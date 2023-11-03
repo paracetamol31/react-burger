@@ -2,6 +2,7 @@ import {
     APPLY_ORDER_ID_REQUEST,
     APPLY_ORDER_ID_SUCCESS,
     APPLY_ORDER_ID_FAILED,
+    CLEAR_ORDER_INFO,
     TOrderActions
 } from "../actions/order";
 
@@ -36,6 +37,10 @@ export const orderReducer = ((state = initialState, action: TOrderActions): IOrd
                 ...state,
                 orderIdRequest: false,
                 orderIdFailed: true
+            }
+        case CLEAR_ORDER_INFO:
+            return {
+                ...initialState
             }
         default:
             return state;

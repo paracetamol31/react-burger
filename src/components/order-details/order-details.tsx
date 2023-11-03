@@ -17,7 +17,7 @@ const OrderDetails: FC = () => {
         if (burgerConstructor.constructorItems.length && burgerConstructor.bun) {
             dispatch(applyOrderId([...burgerConstructor.constructorItems.map((item: IConstructorItemStateParams) => item.id), burgerConstructor.bun.id]))
         }
-    }, [dispatch, burgerConstructor])
+    }, [dispatch, burgerConstructor]);
 
     return (
         <>
@@ -31,7 +31,6 @@ const OrderDetails: FC = () => {
                     <span className="text text_type_main-default mb-2">Ваш заказ начали готовить</span>
                     <span className="text text_type_main-default text_color_inactive mb-15">Дождитесь готовности на орбитальной станции</span>
                 </section >
-
             }
             {
                 orderIdRequest

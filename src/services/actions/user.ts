@@ -12,7 +12,8 @@ import {
     expires20Minute,
     accessToken,
     refreshToken,
-    deleteCookie
+    deleteCookie,
+    getCookie
 } from "../../utils/cookie";
 import {
     clearInputValue
@@ -106,25 +107,25 @@ export const login: AppThunk = (userInfo: IUserInfo, callBack: Function) => {
 
 export const getUserInfo: AppThunk = () => {
     return async (dispatch: AppDispatch) => {
-        userInfoRequest().then(response => {
-            dispatch(setUserInfo({ userInfo: response.user }));
-            dispatch(userInfoLoaded({ value: true }));
-        }).catch(e => {
+        const userInfoRequestCallback: Function = () => 
+            userInfoRequest().then(response => {
+                dispatch(setUserInfo({ userInfo: response.user }));
+            }).finally(() => {
+                dispatch(userInfoLoaded({ value: true }));
+            });
 
+        if (!getCookie(accessToken)) {
             accessTokenRequest().then(response => {
                 setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
                 setCookie(refreshToken, response.refreshToken)
             }).then(() => {
-
-                userInfoRequest().then(response => {
-                    dispatch(setUserInfo({ userInfo: response.user }));
-                }).finally(() => dispatch(userInfoLoaded({ value: true })));
-
-            }).catch(e => {
+                userInfoRequestCallback();
+            }).catch(()=> {
                 dispatch(userInfoLoaded({ value: true }));
             })
-
-        })
+        } else {
+            userInfoRequestCallback();
+        }
     }
 }
 
