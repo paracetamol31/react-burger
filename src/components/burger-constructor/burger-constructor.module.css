@@ -17,4 +17,5 @@
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
     padding-right: 4px;
+    box-sizing: border-box;
 }

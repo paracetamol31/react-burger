@@ -1,5 +1,6 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import orderFeedCardStyles from "./order-feed-card.module.css";
 import { ImagesRow } from "../images-row/images-row";
@@ -15,6 +16,8 @@ export interface OrderFeedCardProps {
 
 export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
     const { ingredients } = useSelector((state: RootState) => state.ingredients);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const images: Array<string> = [];
 
@@ -28,9 +31,13 @@ export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
         images.push(ingredient.image_mobile);
     }
 
+    const onClickOnCard = useCallback(() => {
+        navigate(`${props.orderInfo._id}`, { state: { background: location } });
+    }, [location, navigate, props.orderInfo._id]) 
+
     return (
         ingredients
-            ? <section className={`${orderFeedCardStyles.orderCard} pl-4 pr-4 pt-6 pb-6`}>
+            ? <section onClick={onClickOnCard} className={`${orderFeedCardStyles.orderCard} pl-4 pr-4 pt-6 pb-6`}>
                 <div className={`${orderFeedCardStyles.header} text text_type_digits-default mb-6`}>
                     <span>#{props.orderInfo.number}</span>
                     <span className="text text_color_inactive text_type_main-default">

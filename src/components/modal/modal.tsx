@@ -10,20 +10,21 @@ interface IPropsModal {
     children: JSX.Element,
     canClose?: boolean,
     onClose?: Function,
-    label?: string
+    label?: string,
+    pathToBack?: string
 }
 
 const modalRoot: HTMLElement | null = document.getElementById("root");
 
-const Modal: FC<IPropsModal> = ({ children, canClose = true, onClose = () => { }, label }) => {
+const Modal: FC<IPropsModal> = ({ children, canClose = true, onClose = () => { }, label, pathToBack = "/" }) => {
     const navigane = useNavigate();
 
     const closeModal = useCallback(() => {
         if (canClose) {
             onClose();
-            navigane("/");
+            navigane(pathToBack);
         }
-    }, [canClose, onClose, navigane]);
+    }, [canClose, onClose, navigane, pathToBack]);
 
     useEffect(() => {
         const onEscDown = (event: KeyboardEvent) => {

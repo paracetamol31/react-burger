@@ -16,7 +16,7 @@ export const RoundImage: FC<IPropsRoundImage> = ({ size, src, index, extraStyle 
             style={{
                 zIndex: index ?? "auto",
                 maxWidth: `${size}px`,
-                maxHeight: `${size}px`,
+                height: `${size}px`,
                 ...extraStyle
             }}
         >
