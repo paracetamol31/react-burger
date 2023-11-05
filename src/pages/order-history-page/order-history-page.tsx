@@ -4,7 +4,7 @@ import orderHistoryPageStyles from "./order-history-page.module.css";
 import { useDispatch, useSelector } from "../../services/hocks";
 import { RootState } from "../../services/types";
 import { WSPathOrders } from "../../services/middleware";
-import { wcConnectionStart } from "../../services/actions/orderHistory";
+import { wcConnectionEnd, wcConnectionStart } from "../../services/actions/orderHistory";
 import { setCurrentMenuProfilePanel } from "../../services/actions/profile";
 import { OrderFeedCard } from "../../components/order-feed-card/order-feed-card";
 
@@ -21,6 +21,9 @@ export const OrderHistoryPage: FC = () => {
             }
         ))
         dispatch(wcConnectionStart({ url: WSPathOrders }));
+        return ()=> {
+            dispatch(wcConnectionEnd())
+        }
     }, [dispatch])
 
     if (!orderData) {

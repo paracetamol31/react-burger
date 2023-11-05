@@ -39,6 +39,11 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                     dispatch({ type: wsActions.onClose, payload: event });
                 };
 
+                if(action.type === wsActions.wsClose) {
+                    debugger
+                    socket.close();
+                }
+
                 if (action.type === wsActions.wsSendMessage) {
                     const message = action.payload;
                     socket.send(JSON.stringify(message));
