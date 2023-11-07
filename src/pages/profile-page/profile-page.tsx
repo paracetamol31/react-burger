@@ -5,7 +5,7 @@ import {
     setCurrentMenuHeader,
     userProfile
 } from "../../services/actions/header";
-import { useDispatch } from "../../services/hocks";
+import { useDispatch } from "../../services/hooks";
 import { ProfilePanel } from "../../components/profile-panel/profile-panel";
 import { Outlet } from "react-router-dom";
 

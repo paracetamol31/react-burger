@@ -14,11 +14,10 @@ import {
     orderFeed,
     userProfile
 } from "../../services/actions/header";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/types";
+import { useSelector } from "../../services/hooks";
 
 const AppHeader: FC = () => {
-    const { currentItem } = useSelector((state: RootState) => state.header);
+    const { currentItem } = useSelector((state) => state.header);
     const navigate: NavigateFunction = useNavigate();
 
     const ConstructorTab: React.FC<IPropsMenuItem> = menuItem({

@@ -3,8 +3,7 @@ import { Navigate, useLocation, Location } from 'react-router-dom';
 
 import { getUserInfo } from "../../services/actions/user";
 import { setSavedLocation } from "../../services/actions/routing";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 interface IPropsProtectedRouteElement {
     element: JSX.Element,
@@ -13,7 +12,7 @@ interface IPropsProtectedRouteElement {
 
 export const ProtectedRouteElement: FC<IPropsProtectedRouteElement> = ({ element, background }) => {
     const dispatch = useDispatch();
-    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
+    const { userInfo, isUserInfoLoaded } = useSelector(state=> state.user);
     const location: Location = useLocation();
 
     useEffect(() => {

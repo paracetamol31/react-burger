@@ -13,14 +13,13 @@ import {
     IAddConstructorItemPayload,
     IConstructorItemStateParams
 } from "../../services/actions/burgerConstructor";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 const heightChildItemBurgerConstructor: number = 96;
 
 const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
-    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector((state: RootState) => state.burgerConstructor);
+    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector(state => state.burgerConstructor);
 
     const [, dropTarget] = useDrop<IAddConstructorItemPayload>({
         accept: "ingredient",

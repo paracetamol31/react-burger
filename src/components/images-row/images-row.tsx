@@ -15,7 +15,6 @@ export const ImagesRow: FC<ImagesRowProps> = ({ images, quantityShowedImages = 6
     }
     for (let i = 0; i < quantityShowedImages; i++) {
         roundImages.push(
-            <>
                 <RoundImage size={64} src={images[i]} index={quantityShowedImages - i} key={i} extraStyle={{ right: `${i * 20}px` }}>
                     {(i === quantityShowedImages - 1 && quantityShowedImages < images.length) &&
                         <div
@@ -25,8 +24,6 @@ export const ImagesRow: FC<ImagesRowProps> = ({ images, quantityShowedImages = 6
                         </div>}
                     
                 </RoundImage>
-
-            </>
         );
     }
     return (

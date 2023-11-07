@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { useDispatch } from 'react-redux';
 import {
     CurrencyIcon,
     Counter
@@ -14,8 +13,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IAddConstructorItemPayload } from "../../services/actions/burgerConstructor";
-import { useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { IIngredientItem } from "../../services/reducers/ingredients";
 
 interface IPropsIngredientСard {
@@ -26,7 +24,7 @@ const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { ingredients } = useSelector((state: RootState) => state.ingredients);
+    const { ingredients } = useSelector(state=> state.ingredients);
     const ingredientObject: IIngredientItem | null = ingredients?.get(id) || null;
 
     const openModal = React.useCallback(() => {

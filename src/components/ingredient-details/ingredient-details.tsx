@@ -3,12 +3,11 @@ import { Params, useParams } from "react-router-dom";
 
 import ingredientCharacteristicsStyles from "./ingredient-details.module.css";
 import IngredientCharacteristics from "../ingredient-characteristics/ingredient-characteristics";
-import { useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useSelector } from "../../services/hooks";
 
 const IngredientDetails: FC = () => {
     const { id }: Readonly<Params<string>> = useParams();
-    const { ingredients } = useSelector((state: RootState) => state.ingredients);
+    const { ingredients } = useSelector(state => state.ingredients);
 
     if (!ingredients || !id) {
         return null;

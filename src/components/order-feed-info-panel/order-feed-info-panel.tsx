@@ -1,13 +1,11 @@
 import { FC } from "react";
 
 import orderFeedInfoPanelStyles from "./order-feed-info-panel.module.css";
-import { IOrderParams } from "../../services/reducers/orderHistory";
 import { IOrderFeedItemParams } from "../../services/reducers/orderFeed";
-import { useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useSelector } from "../../services/hooks";
 
 export const OrderFeedInfoPanel: FC = () => {
-    const { orderData }: { orderData: IOrderFeedItemParams | null } = useSelector((state: RootState) => state.orderFeed);
+    const { orderData }: { orderData: IOrderFeedItemParams | null } = useSelector(state => state.orderFeed);
 
     if (!orderData) {
         return null;
@@ -21,8 +19,8 @@ export const OrderFeedInfoPanel: FC = () => {
                     <div className={orderFeedInfoPanelStyles.deoneItems}>
                         {
                             orderData.orders
-                                .filter((item: IOrderParams) => item.status === "done")
-                                .map((item: IOrderParams) => <span key={item._id} className="text text_type_digits-default">{item.number}</span>)
+                                .filter((item: IOrderShortInfo) => item.status === "done")
+                                .map((item: IOrderShortInfo) => <span key={item._id} className="text text_type_digits-default">{item.number}</span>)
                                 .slice(0, 5)
                         }
                     </div>
@@ -31,8 +29,8 @@ export const OrderFeedInfoPanel: FC = () => {
                     <span className="mb-6 text text_type_main-medium">В работе:</span>
                     {
                         orderData.orders
-                            .filter((item: IOrderParams) => item.status !== "done")
-                            .map((item: IOrderParams) => <span key={item._id} className="text text_type_digits-default">{item.number}</span>)
+                            .filter((item: IOrderShortInfo) => item.status !== "done")
+                            .map((item: IOrderShortInfo) => <span key={item._id} className="text text_type_digits-default">{item.number}</span>)
                     }
                 </div>
             </div>

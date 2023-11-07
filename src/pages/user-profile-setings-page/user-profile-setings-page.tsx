@@ -3,12 +3,11 @@ import { FC, useEffect } from "react"
 
 import userProfileSetingsPageStyles from "./user-profile-setings-page.module.css";
 import { IUserInfo } from "../../services/actions/user";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { setCurrentMenuProfilePanel } from "../../services/actions/profile";
 
 export const UserProfileSetingsPage: FC = () => {
-    const userInfo: IUserInfo | null = useSelector((state: RootState) => state.user.userInfo);
+    const userInfo: IUserInfo | null = useSelector(state => state.user.userInfo);
     const dispatch = useDispatch();
 
     useEffect(() => {

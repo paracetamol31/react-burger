@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 
 import orderFeedPageStyles from "./order-feed-page.module.css";
-import { useDispatch } from "../../services/hocks";
+import { useDispatch } from "../../services/hooks";
 import { wcConnectionEnd, wcConnectionStart } from "../../services/actions/orderFeed";
 import { setCurrentMenuHeader, orderFeed } from "../../services/actions/header";
 import { WSPathOrdersAll } from "../../services/middleware";

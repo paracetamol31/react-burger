@@ -7,18 +7,8 @@ import {
     WS_ORDER_HISTORY_GET_MESSAGE
 } from "../actions/orderHistory";
 
-export interface IOrderParams {
-    ingredients: Array<string>,
-    _id: string,
-    status: string,
-    number: number,
-    createdAt: string,
-    updatedAt: string,
-    name: string
-}
-
 export interface IOrderHistoryItemParams {
-    orders: Array<IOrderParams>
+    orders: Array<IOrderShortInfo>
     success: boolean;
     total: number;
     totalToday: number;

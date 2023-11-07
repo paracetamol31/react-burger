@@ -15,6 +15,7 @@ const urlRequestToken: string = `${BASE_URL}/auth/token`; //эндпоинт о�
 const urlRequestUserInfo: string = `${BASE_URL}/auth/user`; //эндпоинт запроса данных о пользователе
 const urlRequestPasswordForgot: string = `${BASE_URL}/password-reset`;
 const urlRequestPasswordReset: string = `${BASE_URL}/password-reset/reset`;
+const urlRequestMakeOrderInfoByNumber: string = `${BASE_URL}/orders`;
 
 interface IParamsMakeRequest {
     url: string,
@@ -42,7 +43,7 @@ interface IResponseRegisterRequest extends IResponseLoginRequest { };
 
 interface IResponseMakeOrderRequest extends IResponse {
     name: string,
-    order: IOrder
+    order: IOrderInfo
 }
 
 interface IResponseAccessTokenRequest extends IResponse {
@@ -58,6 +59,9 @@ interface IResponseForgotPasswordRequest extends IResponseLogoutRequest { }
 
 interface IResponseResetPasswordRequest extends IResponseLogoutRequest { }
 
+interface IResponseOrdersInfo extends IResponse {
+    orders: Array<IOrderShortInfo>
+}
 
 const makeRequest = async <T extends IResponse>({ url, method = "GET", headers = {}, body }: IParamsMakeRequest): Promise<T> => {
     const response: Response = await fetch(url, {
@@ -86,6 +90,12 @@ export const makeOrderRequest = async (idItems: Array<string>): Promise<IRespons
             ingredients: idItems.map((item: string) => item)
         })
     });
+}
+
+export const makeOrderInfoByNumber = async (orderNumber: number): Promise<IResponseOrdersInfo> => {
+    return await makeRequest<IResponseOrdersInfo>({
+        url: `${urlRequestMakeOrderInfoByNumber}/${orderNumber}`
+    })
 }
 
 export const registerRequest = async (userInfo: IUserInfo): Promise<IResponseRegisterRequest> => {

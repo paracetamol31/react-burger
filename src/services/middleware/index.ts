@@ -40,7 +40,6 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                 };
 
                 if(action.type === wsActions.wsClose) {
-                    debugger
                     socket.close();
                 }
 

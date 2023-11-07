@@ -26,15 +26,14 @@ import {
     resetPasswordPage
 } from "../../services/reducers/authorizationInputFields";
 import { overPasswordReset } from "../../services/actions/routing";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 export const ResetPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { password, code } = useSelector((state: RootState) => state.authorizationInputFields.resetPasswordPage);
-    const { isStartedPasswordReset, isResetPassword } = useSelector((state: RootState) => state.routing);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
+    const { password, code } = useSelector(state => state.authorizationInputFields.resetPasswordPage);
+    const { isStartedPasswordReset, isResetPassword } = useSelector(state => state.routing);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -89,6 +88,8 @@ export const ResetPasswordPage: FC = () => {
                         extraClass={`${resetPasswordPageStyles.inputs} mb-6`}
                         value={password}
                         onChange={onInputsChanged}
+                        //TODO: отключена вваледация полей ввода
+                        {...{ error: false }}
                     />
                     <Input
                         name={codeInput}

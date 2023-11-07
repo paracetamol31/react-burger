@@ -18,15 +18,14 @@ import {
     loginPage
 } from "../../services/reducers/authorizationInputFields";
 import { changeInputValue } from "../../services/actions/authorizationInputFields";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 export const LoginPage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { email, password } = useSelector((state: RootState) => state.authorizationInputFields.loginPage);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
-    const { savedLocation } = useSelector((state: RootState) => state.routing);
+    const { email, password } = useSelector(state => state.authorizationInputFields.loginPage);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
+    const { savedLocation } = useSelector(state => state.routing);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -67,6 +66,8 @@ export const LoginPage: FC = () => {
                         extraClass={`${loginPageStyles.inputs} mb-6`}
                         onChange={onInputsChanged}
                         value={email}
+                        //TODO: отключена вваледация полей ввода
+                        {...{ error: false }}
                     />
                     <PasswordInput
                         name={passwordInput}
@@ -75,6 +76,8 @@ export const LoginPage: FC = () => {
                         onChange={onInputsChanged}
                         icon="ShowIcon"
                         value={password}
+                        //TODO: отключена вваледация полей ввода
+                        {...{ error: false }}
                     />
 
                     <Button

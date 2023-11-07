@@ -3,15 +3,14 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import tabsPanelStyles from "./tabs-panel.module.css";
 import { ITabInfo } from '../burger-ingredients/burger-ingredients';
-import { useSelector } from '../../services/hocks';
-import { RootState } from '../../services/types';
+import { useSelector } from '../../services/hooks';
 
 interface IPropsTabsPanel {
     tabsInfo: Array<ITabInfo>
 }
 
 const TabsPanel: FC<IPropsTabsPanel> = ({ tabsInfo }) => {
-    const { currentCategory } = useSelector((state: RootState) => state.ingredients);
+    const { currentCategory } = useSelector(state => state.ingredients);
 
     return (
         <div className={tabsPanelStyles.tabsPanel} >

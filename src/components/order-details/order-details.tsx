@@ -4,14 +4,13 @@ import orderDetailsStyles from "./order-details.module.css";
 import { applyOrderId } from "../../services/actions/order";
 import checkIcon from "../../images/check.svg"
 import { IConstructorItemStateParams } from "../../services/actions/burgerConstructor";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { IBurgerConstructorReducerState } from "../../services/reducers/burgerConstructor";
 
 const OrderDetails: FC = () => {
     const dispatch = useDispatch();
-    const burgerConstructor: IBurgerConstructorReducerState = useSelector((state: RootState) => state.burgerConstructor);
-    const { orderId, orderIdRequest, orderIdFailed } = useSelector((state: RootState) => state.order);
+    const burgerConstructor: IBurgerConstructorReducerState = useSelector(state => state.burgerConstructor);
+    const { orderId, orderIdRequest, orderIdFailed } = useSelector(state => state.order);
 
     useEffect(() => {
         if (burgerConstructor.constructorItems.length && burgerConstructor.bun) {

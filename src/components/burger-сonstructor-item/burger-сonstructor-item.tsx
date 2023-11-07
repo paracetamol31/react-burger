@@ -20,9 +20,8 @@ import {
     IAddConstructorItemPayload
 } from "../../services/actions/burgerConstructor";
 import { FC, useEffect } from "react";
-import { useSelector } from "../../services/hocks";
+import { useSelector } from "../../services/hooks";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { RootState } from "../../services/types";
 
 interface IPropsBurgerConstructorItem {
     itemType: string,
@@ -43,7 +42,7 @@ export interface ICollectedProps {
 
 
 const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
-    const { constructorItems, startDragPosition } = useSelector((state: RootState) => state.burgerConstructor);
+    const { constructorItems, startDragPosition } = useSelector(state => state.burgerConstructor);
     const dispatch = useDispatch();
     const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IAddConstructorItemPayload, unknown, ICollectedProps>({
         type: "ingredient",

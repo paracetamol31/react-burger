@@ -4,18 +4,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import orderFeedCardStyles from "./order-feed-card.module.css";
 import { ImagesRow } from "../images-row/images-row";
-import { useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
-import { getTotalCaunt } from "../../utils/totalCaunt";
-import { IOrderParams } from "../../services/reducers/orderHistory";
+import { useSelector } from "../../services/hooks";
+import { getTotalCount } from "../../utils/priceСalculator";
 
 export interface OrderFeedCardProps {
-    orderInfo: IOrderParams
+    orderInfo: IOrderShortInfo
     needShowStatus?: boolean
 }
 
 export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
-    const { ingredients } = useSelector((state: RootState) => state.ingredients);
+    const { ingredients } = useSelector(state => state.ingredients);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -56,7 +54,7 @@ export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
                 <div className={`${orderFeedCardStyles.imagesRowWrapper} mt-6 mb-6`}>
                     <ImagesRow images={images} />
                     <div className={`${orderFeedCardStyles.totalCount} text text_type_digits-default`}>
-                        {getTotalCaunt(props.orderInfo.ingredients, ingredients)}
+                        {getTotalCount(props.orderInfo.ingredients, ingredients)}
                         <CurrencyIcon type="primary" />
                     </div>
                 </div>

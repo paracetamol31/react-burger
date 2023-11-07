@@ -3,12 +3,12 @@ import {
     APPLY_DISPLAYED_ORDER_INFO_REQUEST,
     APPLY_DISPLAYED_ORDER_INFO_SUCCESS,
     CLEAR_DISPLAYED_ORDER_INFO,
-    DisplayedOrderActions
+    SET_DISPLAYED_ORDER_INFO,
+    TDisplayedOrderActions
 } from "../actions/displayedOrder";
-import { IOrderParams } from "./orderHistory";
 
 export interface IDisplayedOrderState {
-    displayedOrderInfo: IOrderParams | null,
+    displayedOrderInfo: IOrderShortInfo | null,
     displayedOrderIdRequest: boolean,
     displayedOrderIdFailed: boolean
 }
@@ -19,7 +19,7 @@ const initialState: IDisplayedOrderState = {
     displayedOrderIdFailed: false
 }
 
-export const displayedOrderReducer = ((state = initialState, action: DisplayedOrderActions): IDisplayedOrderState => {
+export const displayedOrderReducer = ((state = initialState, action: TDisplayedOrderActions): IDisplayedOrderState => {
     switch (action.type) {
         case APPLY_DISPLAYED_ORDER_INFO_REQUEST:
             return {
@@ -38,6 +38,13 @@ export const displayedOrderReducer = ((state = initialState, action: DisplayedOr
                 ...state,
                 displayedOrderIdRequest: false,
                 displayedOrderIdFailed: true
+            }
+        case SET_DISPLAYED_ORDER_INFO:
+            return {
+                ...state,
+                displayedOrderIdRequest: false,
+                displayedOrderIdFailed: false,
+                displayedOrderInfo: action.payload.displayedOrderInfo
             }
         case CLEAR_DISPLAYED_ORDER_INFO:
             return {

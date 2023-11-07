@@ -1,10 +1,11 @@
-import { IOrderParams } from "../reducers/orderHistory";
+import { makeOrderInfoByNumber } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../types";
 
 export const APPLY_DISPLAYED_ORDER_INFO_REQUEST: "APPLY_DISPLAYED_ORDER_INFO_REQUEST" = "APPLY_DISPLAYED_ORDER_INFO_REQUEST";
 export const APPLY_DISPLAYED_ORDER_INFO_SUCCESS: "APPLY_DISPLAYED_ORDER_INFO_SUCCESS" = "APPLY_DISPLAYED_ORDER_INFO_SUCCESS";
 export const APPLY_DISPLAYED_ORDER_INFO_FAILED: "APPLY_DISPLAYED_ORDER_INFO_FAILED" = "APPLY_DISPLAYED_ORDER_INFO_FAILED";
 export const CLEAR_DISPLAYED_ORDER_INFO: "CLEAR_DISPLAYED_ORDER_INFO" = "CLEAR_DISPLAYED_ORDER_INFO";
+export const SET_DISPLAYED_ORDER_INFO: "SET_DISPLAYED_ORDER_INFO" = "SET_DISPLAYED_ORDER_INFO";
 
 export interface IApplyDisplayedOrderInfoRequestAction {
     readonly type: typeof APPLY_DISPLAYED_ORDER_INFO_REQUEST
@@ -16,7 +17,7 @@ export interface IApplyDisplayedOrderInfoSuccessAction {
 }
 
 export interface IApplyDisplayedOrderInfoSuccessPayload {
-    readonly displayedOrderInfo: IOrderParams
+    readonly displayedOrderInfo: IOrderShortInfo
 }
 
 export interface IApplyDisplayedOrderInfoFailedAction {
@@ -25,6 +26,15 @@ export interface IApplyDisplayedOrderInfoFailedAction {
 
 export interface IClearDisplayedOrderInfoAction {
     readonly type: typeof CLEAR_DISPLAYED_ORDER_INFO
+}
+
+export interface ISetDisplayedOrderInfoAction {
+    readonly type: typeof SET_DISPLAYED_ORDER_INFO,
+    readonly payload: ISetDisplayedOrderInfoPayload
+}
+
+export interface ISetDisplayedOrderInfoPayload {
+    readonly displayedOrderInfo: IOrderShortInfo
 }
 
 export const applyDisplayedOrderInfoRequest = (): IApplyDisplayedOrderInfoRequestAction => {
@@ -52,23 +62,32 @@ export const clearDisplayedOrderInfo = (): IClearDisplayedOrderInfoAction => {
     }
 }
 
-// export const requestOrderInfoByNumber: AppThunk = (number: number) => {
-//     return async (dispatch: AppDispatch) => {
-//         dispatch(applyDisplayedOrderInfoRequest());
-//         accessTokenRequest().then(response => {
-//             setCookie(accessToken, response.accessToken.split('Bearer ')[1], { expires: expires20Minute });
-//             setCookie(refreshToken, response.refreshToken)
-//         }).then(() => {
-//             makeOrderRequestCallback();
-//         }).catch((e) => {
-//             console.error(e);
-//             dispatch(applyOrderIdFailed());
-//         })
-//     }
-// }
+export const setDisplayedOrderInfo = (payload: ISetDisplayedOrderInfoPayload): ISetDisplayedOrderInfoAction => {
+    return {
+        type: SET_DISPLAYED_ORDER_INFO,
+        payload
+    }
+}
 
-export type DisplayedOrderActions =
+export const requestOrderInfoByNumber: AppThunk = (number: number) => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(applyDisplayedOrderInfoRequest());
+        makeOrderInfoByNumber(number).then(response => {
+            if (response.success && response.orders[0]) {
+                dispatch(applyDisplayedOrderInfoSuccess({ displayedOrderInfo: response.orders[0] }))
+            } else {
+                dispatch(applyDisplayedOrderInfoFailed());
+            }
+        }).catch((e) => {
+            console.error(e);
+            dispatch(applyDisplayedOrderInfoFailed());
+        });
+    }
+}
+
+export type TDisplayedOrderActions =
     IApplyDisplayedOrderInfoRequestAction
     | IApplyDisplayedOrderInfoSuccessAction
     | IApplyDisplayedOrderInfoFailedAction
-    | IClearDisplayedOrderInfoAction;
+    | IClearDisplayedOrderInfoAction
+    | ISetDisplayedOrderInfoAction;

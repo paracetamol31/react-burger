@@ -19,14 +19,13 @@ import {
     emailInput,
     forgotPasswordPage
 } from "../../services/reducers/authorizationInputFields";
-import { RootState } from "../../services/types";
-import { useDispatch, useSelector } from "../../services/hocks";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 export const ForgotPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { email } = useSelector((state: RootState) => state.authorizationInputFields.forgotPasswordPage);
-    const { userInfo, isUserInfoLoaded } = useSelector((state: RootState) => state.user);
+    const { email } = useSelector(state => state.authorizationInputFields.forgotPasswordPage);
+    const { userInfo, isUserInfoLoaded } = useSelector(state => state.user);
 
     const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -64,6 +63,8 @@ export const ForgotPasswordPage: FC = () => {
                         extraClass={`${forgotPasswordPageStyles.inputs} mb-6`}
                         value={email}
                         onChange={onInputsChanged}
+                        //TODO: отключена вваледация полей ввода
+                        {...{ error: false }}
                     />
 
                     <Button

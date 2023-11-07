@@ -2,8 +2,7 @@ import { FC } from "react";
 
 import IngredientСard from "../ingredient-сard/ingredient-сard";
 import ingredientsSectionStyles from "./ingredients-section.module.css";
-import { useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useSelector } from "../../services/hooks";
 import { IIngredientItem } from "../../services/reducers/ingredients";
 
 interface IPropsIngredientsSection {
@@ -13,7 +12,7 @@ interface IPropsIngredientsSection {
 }
 
 const IngredientsSection: FC<IPropsIngredientsSection> = ({ sectionRef, type, categoryName }) => {
-    const { ingredients } = useSelector((state: RootState) => state.ingredients)
+    const { ingredients } = useSelector(state => state.ingredients)
     if (!ingredients) {
         return null;
     }

@@ -38,7 +38,7 @@ interface IOwner {
     updatedAt: string
 }
 
-interface IOrder {
+interface IOrderInfo {
     createdAt: string,
     ingredients: Array<IIngredient>,
     name: string,
@@ -48,4 +48,14 @@ interface IOrder {
     status: string,
     updatedAt: string,
     _id: string
+}
+
+interface IOrderShortInfo {
+    ingredients: Array<string>,
+    _id: string,
+    status: string,
+    number: number,
+    createdAt: string,
+    updatedAt: string,
+    name: string
 }

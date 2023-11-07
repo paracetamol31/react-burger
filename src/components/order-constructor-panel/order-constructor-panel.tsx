@@ -11,15 +11,14 @@ import {
 import orderConstructorPanelStyles from "./order-constructor-panel.module.css";
 import { countTotalPrice } from "../../services/actions/totalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 const OrderConstructorPanel: FC = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { totalPrice } = useSelector((state: RootState) => state.totalPrice);
-    const burgerConstructor = useSelector((state: RootState) => state.burgerConstructor);
+    const { totalPrice } = useSelector(state => state.totalPrice);
+    const burgerConstructor = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
         dispatch(countTotalPrice({ burgerConstructor }));

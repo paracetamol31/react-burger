@@ -5,10 +5,9 @@ import {
     WS_ORDER_FEED_CONNECTION_SUCCESS,
     WS_ORDER_FEED_GET_MESSAGE
 } from "../actions/orderFeed";
-import { IOrderParams } from "./orderHistory";
 
 export interface IOrderFeedItemParams {
-    orders: Array<IOrderParams>
+    orders: Array<IOrderShortInfo>
     success: boolean;
     total: number;
     totalToday: number;

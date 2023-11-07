@@ -2,10 +2,9 @@ import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import profilePanelStyles from "./profile-panel.module.css";
-import { useDispatch, useSelector } from "../../services/hocks";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { logout } from "../../services/actions/user";
 import menuItem, { IPropsMenuItem } from "../menu-item/menu-item";
-import { RootState } from "../../services/types";
 import { setCurrentMenuProfilePanel } from "../../services/actions/profile";
 
 export const menuItemProfile: "menuItemProfile" = "menuItemProfile";
@@ -21,7 +20,7 @@ export const ProfilePanel: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { currentItem, footerText } = useSelector((state: RootState) => state.profile);
+    const { currentItem, footerText } = useSelector(state => state.profile);
 
     const callLogout = useCallback<React.MouseEventHandler<HTMLSpanElement>>(() => {
         dispatch(setCurrentMenuProfilePanel(
@@ -56,13 +55,13 @@ export const ProfilePanel: FC = () => {
         <div className={`${profilePanelStyles.profilePanel}`} >
             <div className={`${profilePanelStyles.menuPanel} mb-20`} >
                 <div className={profilePanelStyles.menuItem} onClick={openUserProfileSetings}>
-                    <MenuItemProfile text="Профиль" extraClass="text_type_main-medium"/>
+                    <MenuItemProfile text="Профиль" extraClass="text_type_main-medium" />
                 </div>
                 <div className={profilePanelStyles.menuItem} onClick={openOrderHistory}>
                     <MenuItemOrderHistory text="История заказов" extraClass="text_type_main-medium" />
                 </div>
                 <div className={profilePanelStyles.menuItem} onClick={callLogout}>
-                    <MenuItemLogout text="Выход" extraClass="text_type_main-medium"/>
+                    <MenuItemLogout text="Выход" extraClass="text_type_main-medium" />
                 </div>
             </div>
             <div className={`${profilePanelStyles.menuPanel} ${profilePanelStyles.footerRightPanel}`} >

@@ -16,8 +16,7 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { applyIngredients } from "../../services/actions/ingredients";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { OrderFeedPage } from "../../pages/order-feed-page/order-feed-page";
 import { UserProfileSetingsPage } from "../../pages/user-profile-setings-page/user-profile-setings-page";
 import { OrderHistoryPage } from "../../pages/order-history-page/order-history-page";
@@ -28,8 +27,8 @@ import { DisplayedOrderPage } from "../../pages/displayed-order-page/displayed-o
 const App: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { orderIdRequest } = useSelector((state: RootState) => state.order);
-  const { ingredients } = useSelector((state: RootState) => state.ingredients);
+  const { orderIdRequest } = useSelector((state) => state.order);
+  const { ingredients } = useSelector((state) => state.ingredients);
   const background: Location = location.state && location.state.background;
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const App: FC = () => {
           </Route>
           <Route path="/ingredients/:number" element={<IngredientsPage />} />
           <Route path="/feed" element={<OrderFeedPage />} />
-          <Route path="/feed/:id" element={<DisplayedOrderPage />} />
+          <Route path="/feed/:number" element={<DisplayedOrderPage />} />
           <Route path="/profile/order/:number" element={<DisplayedOrderPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

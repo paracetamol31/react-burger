@@ -9,12 +9,11 @@ import {
     setCurrentMenuHeader,
     burgerConstructor
 } from "../../services/actions/header";
-import { useDispatch, useSelector } from "../../services/hocks";
-import { RootState } from "../../services/types";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 export const ConstructorPage: FC = () => {
     const dispatch = useDispatch();
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state: RootState) => state.ingredients);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(state=> state.ingredients);
 
     useEffect(() => {
         dispatch(setCurrentMenuHeader({ currentMenuItem: burgerConstructor }));

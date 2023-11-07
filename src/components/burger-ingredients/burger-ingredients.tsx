@@ -1,10 +1,10 @@
-import { useDispatch } from 'react-redux';
 import { FC, useCallback, useRef } from "react";
 
 import IngredientsSection from "../ingredients-section/ingredients-section";
 import TabsPanel from "../tabs-panel/tabs-panel";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import { setCategoryIngredients } from "../../services/actions/ingredients";
+import { useDispatch } from "../../services/hooks";
 
 export interface ITabInfo {
     label: string,
