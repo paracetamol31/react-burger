@@ -11,6 +11,7 @@ import { TUserActions } from "../actions/user";
 import { TProfileActions } from "../actions/profile";
 import { store } from "../store";
 import { TBurgerConstructorActions } from "../actions/burgerConstructor";
+import { IApplyDisplayedOrderInfoRequestAction } from "../actions/displayedOrder";
 import {
     TWsOrderFeedSendMessageActions,
     WS_ORDER_FEED_CONNECTION_CLOSED,
@@ -45,7 +46,8 @@ export type TApplicationActions =
     | TUserActions
     | TWsOrderFeedSendMessageActions
     | TWsOrderHistorySendMessageActions
-    | TProfileActions;
+    | TProfileActions
+    | IApplyDisplayedOrderInfoRequestAction;
 
 export type TWSStoreActions = {
     wsInit: typeof WS_ORDER_FEED_CONNECTION_START | typeof WS_ORDER_HISTORY_CONNECTION_START,

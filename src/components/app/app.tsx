@@ -23,6 +23,7 @@ import { UserProfileSetingsPage } from "../../pages/user-profile-setings-page/us
 import { OrderHistoryPage } from "../../pages/order-history-page/order-history-page";
 import { clearOrderInfo } from "../../services/actions/order";
 import { OrderItemInfo } from "../order-Item-info/order-Item-info";
+import { DisplayedOrderPage } from "../../pages/displayed-order-page/displayed-order-page";
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -49,8 +50,10 @@ const App: FC = () => {
             <Route path="" element={<UserProfileSetingsPage />} />
             <Route path=":order" element={< OrderHistoryPage />} />
           </Route>
-          <Route path="/ingredients/:id" element={<IngredientsPage />} />
+          <Route path="/ingredients/:number" element={<IngredientsPage />} />
           <Route path="/feed" element={<OrderFeedPage />} />
+          <Route path="/feed/:id" element={<DisplayedOrderPage />} />
+          <Route path="/profile/order/:number" element={<DisplayedOrderPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
 
@@ -67,12 +70,12 @@ const App: FC = () => {
             />}
           />
           <Route
-            path="/feed/:id"
+            path="/feed/:number"
             element={<Modal pathToBack="/feed"><OrderItemInfo /></Modal>}
           />
           <Route path="/profile" element={null} >
             <Route
-              path=":order/:id"
+              path=":order/:number"
               element={<Modal pathToBack="/profile/order"><OrderItemInfo /></Modal>}
             />
           </Route>

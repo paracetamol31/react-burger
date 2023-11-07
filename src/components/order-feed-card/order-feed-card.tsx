@@ -21,8 +21,8 @@ export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
 
     const images: Array<string> = [];
 
-    for (const ingredientid of props.orderInfo.ingredients) {
-        const ingredient = ingredients?.get(ingredientid);
+    for (const ingredientId of props.orderInfo.ingredients) {
+        const ingredient = ingredients?.get(ingredientId);
 
         if (!ingredient) {
             continue;
@@ -32,8 +32,8 @@ export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
     }
 
     const onClickOnCard = useCallback(() => {
-        navigate(`${props.orderInfo._id}`, { state: { background: location } });
-    }, [location, navigate, props.orderInfo._id]) 
+        navigate(`${props.orderInfo.number}`, { state: { background: location } });
+    }, [location, navigate, props.orderInfo.number])
 
     return (
         ingredients

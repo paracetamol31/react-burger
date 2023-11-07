@@ -11,6 +11,7 @@ import { ingredientsReducer } from './ingredients';
 import { orderFeedReducer } from './orderFeed';
 import { orderHistoryReducer } from './orderHistory';
 import { profileReducer } from './profile';
+import { displayedOrderReducer } from './displayedOrder';
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
@@ -23,5 +24,6 @@ export const rootReducer = combineReducers({
     routing: routingReducer,
     orderFeed: orderFeedReducer,
     orderHistory: orderHistoryReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    displayedOrder: displayedOrderReducer
 });
