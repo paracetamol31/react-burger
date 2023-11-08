@@ -1,12 +1,11 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState, TApplicationActions, TWSStoreActions } from "../types";
-import { accessToken, getCookie } from "../../utils/cookie";
 
 export const WSAddress: string = "wss://norma.nomoreparties.space";
 export const WSPathOrdersAll: string = `${WSAddress}/orders/all`;
 export const WSPathOrders: string = `${WSAddress}/orders`;
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Middleware => {
+export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
@@ -14,7 +13,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
             const { dispatch } = store;
 
             if (action.type === wsActions.wsInit) {
-                socket = new WebSocket(`${wsUrl}?token=${getCookie(accessToken)}`);
+                socket = new WebSocket(`${action.payload.url}${action.payload.token ? "?token=" + action.payload.token : ""}`);
             }
             if (socket) {
                 socket.onopen = event => {
@@ -39,7 +38,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                     dispatch({ type: wsActions.onClose, payload: event });
                 };
 
-                if(action.type === wsActions.wsClose) {
+                if (action.type === wsActions.wsClose) {
                     socket.close();
                 }
 

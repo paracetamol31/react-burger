@@ -18,11 +18,18 @@ export const OrderFeedCard: FC<OrderFeedCardProps> = (props) => {
     const location = useLocation();
 
     const images: Array<string> = [];
-
+    let isFoundBun: boolean = false;
     for (const ingredientId of props.orderInfo.ingredients) {
         const ingredient = ingredients?.get(ingredientId);
-
         if (!ingredient) {
+            continue;
+        }
+
+        if (ingredient.type === "bun") {
+            if (!isFoundBun) {
+                isFoundBun = true;
+                images.unshift(ingredient.image_mobile);
+            }
             continue;
         }
 

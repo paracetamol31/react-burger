@@ -11,7 +11,7 @@ import { TUserActions } from "../actions/user";
 import { TProfileActions } from "../actions/profile";
 import { store } from "../store";
 import { TBurgerConstructorActions } from "../actions/burgerConstructor";
-import { IApplyDisplayedOrderInfoRequestAction, TDisplayedOrderActions } from "../actions/displayedOrder";
+import { TDisplayedOrderActions } from "../actions/displayedOrder";
 import {
     TWsOrderFeedSendMessageActions,
     WS_ORDER_FEED_CONNECTION_CLOSED,

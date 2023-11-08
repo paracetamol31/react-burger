@@ -13,7 +13,7 @@ export const OrderFeedPage: FC = () => {
     useEffect(() => {
         dispatch(setCurrentMenuHeader({ currentMenuItem: orderFeed }));
         dispatch(wcConnectionStart({ url: WSPathOrdersAll }));
-        return ()=> {
+        return () => {
             dispatch(wcConnectionEnd())
         }
     }, [dispatch])

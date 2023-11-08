@@ -6,8 +6,6 @@ import {
 import thunk from "redux-thunk";
 import { rootReducer } from "../reducers";
 import {
-    WSPathOrders,
-    WSPathOrdersAll,
     socketMiddleware
 } from "../middleware";
 import {
@@ -39,7 +37,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(
     thunk,
-    socketMiddleware(WSPathOrdersAll,
+    socketMiddleware(
         {
             wsInit: WS_ORDER_FEED_CONNECTION_START,
             wsClose: WS_ORDER_FEED_CONNECTION_END,
@@ -50,7 +48,7 @@ const enhancer = composeEnhancers(applyMiddleware(
             onOpen: WS_ORDER_FEED_CONNECTION_SUCCESS
         }
     ),
-    socketMiddleware(WSPathOrders,
+    socketMiddleware(
         {
             wsInit: WS_ORDER_HISTORY_CONNECTION_START,
             wsClose: WS_ORDER_HISTORY_CONNECTION_END,

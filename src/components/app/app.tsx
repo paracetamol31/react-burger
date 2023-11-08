@@ -49,7 +49,7 @@ const App: FC = () => {
             <Route path="" element={<UserProfileSetingsPage />} />
             <Route path=":order" element={< OrderHistoryPage />} />
           </Route>
-          <Route path="/ingredients/:number" element={<IngredientsPage />} />
+          <Route path="/ingredients/:id" element={<IngredientsPage />} />
           <Route path="/feed" element={<OrderFeedPage />} />
           <Route path="/feed/:number" element={<DisplayedOrderPage />} />
           <Route path="/profile/order/:number" element={<DisplayedOrderPage />} />
