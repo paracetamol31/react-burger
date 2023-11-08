@@ -1,4 +1,5 @@
 import { IOrderFeedItemParams } from "../reducers/orderFeed";
+import { AppDispatch, AppThunk } from "../types";
 
 export const WS_ORDER_FEED_CONNECTION_START: "WS_ORDER_FEED_CONNECTION_START" = "WS_ORDER_FEED_CONNECTION_START";
 export const WS_ORDER_FEED_CONNECTION_END: "WS_ORDER_FEED_CONNECTION_END" = "WS_ORDER_FEED_CONNECTION_END";
@@ -64,6 +65,16 @@ export const wsSendMessage = (payload: Object | string | number): IWsOrderFeedSe
     return {
         type: WS_ORDER_FEED_SEND_MESSAGE,
         payload
+    }
+}
+
+export interface IParamsInitWSConnectionOrderFeed {
+    url: string
+}
+
+export const initWSConnectionOrderHistory: AppThunk = (params: IParamsInitWSConnectionOrderFeed) => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(wcConnectionStart({ url: params.url }));
     }
 }
 

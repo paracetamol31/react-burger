@@ -1,12 +1,12 @@
 import { EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FC, useEffect } from "react"
 
-import userProfileSetingsPageStyles from "./user-profile-setings-page.module.css";
+import userProfileSettingsPageStyles from "./user-profile-settings-page.module.css";
 import { IUserInfo } from "../../services/actions/user";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { setCurrentMenuProfilePanel } from "../../services/actions/profile";
 
-export const UserProfileSetingsPage: FC = () => {
+export const UserProfileSettingsPage: FC = () => {
     const userInfo: IUserInfo | null = useSelector(state => state.user.userInfo);
     const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ export const UserProfileSetingsPage: FC = () => {
     }, [dispatch]);
 
     return (
-        <section className={userProfileSetingsPageStyles.inputsWrapper}>
+        <section className={userProfileSettingsPageStyles.inputsWrapper}>
             <Input
                 placeholder={'Имя'}
                 value={userInfo?.name || ""}

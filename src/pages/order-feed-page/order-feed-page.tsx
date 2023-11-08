@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 
 import orderFeedPageStyles from "./order-feed-page.module.css";
 import { useDispatch } from "../../services/hooks";
-import { wcConnectionEnd, wcConnectionStart } from "../../services/actions/orderFeed";
+import { initWSConnectionOrderHistory, wcConnectionEnd } from "../../services/actions/orderFeed";
 import { setCurrentMenuHeader, orderFeed } from "../../services/actions/header";
 import { WSPathOrdersAll } from "../../services/middleware";
 import { OrderFeedPanel } from "../../components/order-feed-panel/order-feed-panel";
@@ -12,7 +12,7 @@ export const OrderFeedPage: FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setCurrentMenuHeader({ currentMenuItem: orderFeed }));
-        dispatch(wcConnectionStart({ url: WSPathOrdersAll }));
+        dispatch(initWSConnectionOrderHistory({ url: WSPathOrdersAll }));
         return () => {
             dispatch(wcConnectionEnd())
         }

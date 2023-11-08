@@ -3,10 +3,9 @@ import { FC, useEffect } from "react"
 import orderHistoryPageStyles from "./order-history-page.module.css";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { WSPathOrders } from "../../services/middleware";
-import { wcConnectionEnd, wcConnectionStart } from "../../services/actions/orderHistory";
+import { initWSConnectionOrderHistory, wcConnectionEnd } from "../../services/actions/orderHistory";
 import { setCurrentMenuProfilePanel } from "../../services/actions/profile";
 import { OrderFeedCard } from "../../components/order-feed-card/order-feed-card";
-import { accessToken, getCookie } from "../../utils/cookie";
 
 
 export const OrderHistoryPage: FC = () => {
@@ -20,7 +19,7 @@ export const OrderHistoryPage: FC = () => {
                 footerText: "В этом разделе вы можете просмотреть свою историю заказов"
             }
         ))
-        dispatch(wcConnectionStart({ url: WSPathOrders, token: getCookie(accessToken) }));
+        dispatch(initWSConnectionOrderHistory({ url: WSPathOrders }));
         return () => {
             dispatch(wcConnectionEnd())
         }
