@@ -7,21 +7,24 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useNavigate } from "react-router-dom";
 
 interface IPropsModal {
+    children: JSX.Element,
     canClose?: boolean,
+    onClose?: Function,
     label?: string,
-    children: JSX.Element
+    pathToBack?: string
 }
 
 const modalRoot: HTMLElement | null = document.getElementById("root");
 
-const Modal: FC<IPropsModal> = ({ label, canClose = true, children }) => {
+const Modal: FC<IPropsModal> = ({ children, canClose = true, onClose = () => { }, label, pathToBack = "/" }) => {
     const navigane = useNavigate();
 
     const closeModal = useCallback(() => {
         if (canClose) {
-            navigane("/");
+            onClose();
+            navigane(pathToBack);
         }
-    }, [navigane, canClose]);
+    }, [canClose, onClose, navigane, pathToBack]);
 
     useEffect(() => {
         const onEscDown = (event: KeyboardEvent) => {

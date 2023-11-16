@@ -1,0 +1,6 @@
+.inputsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    grid-column: 2;
+}

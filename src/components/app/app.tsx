@@ -1,6 +1,5 @@
 import { useEffect, FC } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Routes, Route, useLocation, Location } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
 import { ConstructorPage } from "../../pages/constructor-page/constructor-page";
@@ -17,16 +16,23 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { applyIngredients } from "../../services/actions/ingredients";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { OrderFeedPage } from "../../pages/order-feed-page/order-feed-page";
+import { OrderHistoryPage } from "../../pages/order-history-page/order-history-page";
+import { clearOrderInfo } from "../../services/actions/order";
+import { OrderItemInfo } from "../order-Item-info/order-Item-info";
+import { DisplayedOrderPage } from "../../pages/displayed-order-page/displayed-order-page";
+import { UserProfileSettingsPage } from "../../pages/user-profile-settings-page/user-profile-settings-page";
 
 const App: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { orderIdRequest } = useSelector((state: any) => state.order);
-  const { ingredients } = useSelector((state: any) => state.ingredients);
-  const background: any = location.state && location.state.background;
+  const { orderIdRequest } = useSelector((state) => state.order);
+  const { ingredients } = useSelector((state) => state.ingredients);
+  const background: Location = location.state && location.state.background;
 
   useEffect(() => {
-    !ingredients && dispatch(applyIngredients() as any);
+    !ingredients && dispatch(applyIngredients());
   }, [dispatch, ingredients]);
 
   return (
@@ -39,8 +45,14 @@ const App: FC = () => {
           <Route path="/" element={<ConstructorPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+          <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} >
+            <Route path="" element={<ProtectedRouteElement element={<UserProfileSettingsPage />} />} />
+            <Route path=":order" element={<ProtectedRouteElement element={< OrderHistoryPage />} />} />
+          </Route>
           <Route path="/ingredients/:id" element={<IngredientsPage />} />
+          <Route path="/feed" element={<OrderFeedPage />} />
+          <Route path="/feed/:number" element={<DisplayedOrderPage />} />
+          <Route path="/profile/order/:number" element={<DisplayedOrderPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
 
@@ -51,8 +63,21 @@ const App: FC = () => {
           />
           <Route
             path="/order"
-            element={<ProtectedRouteElement background={background} element={<Modal canClose={!orderIdRequest} >< OrderDetails /></Modal>} />}
+            element={<ProtectedRouteElement
+              background={background}
+              element={<Modal canClose={!orderIdRequest} onClose={() => (dispatch(clearOrderInfo()))}>< OrderDetails /></Modal>}
+            />}
           />
+          <Route
+            path="/feed/:number"
+            element={<Modal pathToBack="/feed"><OrderItemInfo /></Modal>}
+          />
+          <Route path="/profile" element={null} >
+            <Route
+              path=":order/:number"
+              element={<Modal pathToBack="/profile/order"><OrderItemInfo /></Modal>}
+            />
+          </Route>
           <Route path="*" element={null} />
         </Routes>}
 

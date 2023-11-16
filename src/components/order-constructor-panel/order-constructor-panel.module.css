@@ -1,10 +1,10 @@
-.contentWraper {
+.contentWrapper {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.content{
+.content {
     display: flex;
     align-items: center;
 }

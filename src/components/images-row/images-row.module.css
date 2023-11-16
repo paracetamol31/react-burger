@@ -1,0 +1,16 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 64px;
+    flex-grow: 1;
+}
+
+.numberRemainingElements {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: rgb(242,242,243);
+    background-color: rgba(19, 19, 22, 0.6);
+}

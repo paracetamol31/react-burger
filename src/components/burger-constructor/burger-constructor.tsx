@@ -1,30 +1,29 @@
 import { useDrop } from "react-dnd";
 import { DragEventHandler, FC, useCallback } from "react";
-import {
-    useSelector,
-    useDispatch
-} from 'react-redux';
 
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-сonstructor-item/burger-сonstructor-item";
-import OrderConstructorpPanel from "../order-constructor-panel/order-constructor-panel";
+import OrderConstructorPanel from "../order-constructor-panel/order-constructor-panel";
 import {
     addConstructorItem,
     setDrag,
     setEmptyItem,
     clearStartDragPosition,
-    clearIndexEmptyItem
+    clearIndexEmptyItem,
+    IAddConstructorItemPayload,
+    IConstructorItemStateParams
 } from "../../services/actions/burgerConstructor";
+import { useDispatch, useSelector } from "../../services/hooks";
 
 const heightChildItemBurgerConstructor: number = 96;
 
 const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
-    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector((state: any) => state.burgerConstructor);
+    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector(state => state.burgerConstructor);
 
-    const [, dropTarget] = useDrop({
+    const [, dropTarget] = useDrop<IAddConstructorItemPayload>({
         accept: "ingredient",
-        drop(item: any) {
+        drop(item: IAddConstructorItemPayload) {
             dispatch(addConstructorItem({
                 image: item.image,
                 price: item.price,
@@ -42,7 +41,7 @@ const BurgerConstructor: FC = () => {
     });
 
     const onDragOver = useCallback<DragEventHandler<HTMLElement>>((event: React.DragEvent<HTMLElement>) => {
-        if (isDragStart) {
+        if (isDragStart && yPoint !== null && indexEmptyItem !== null) {
             event.preventDefault();
             let result = Math.floor(Math.abs(event.clientY - yPoint) / heightChildItemBurgerConstructor);
             result = event.clientY > yPoint ? result * 1 : result * -1;
@@ -66,10 +65,11 @@ const BurgerConstructor: FC = () => {
                 thumbnail={bun.image}
                 itemType="bun"
                 id={bun.id}
+                extraClass="mr-2"
             />}
 
             <div className={burgerConstructorStyles.scrollBar}>
-                {constructorItems.map((item: any, index: any) => {
+                {constructorItems.map((item: IConstructorItemStateParams, index: number) => {
                     return <BurgerConstructorItem
                         key={item.uuid}
                         extraClass="ml-2"
@@ -93,7 +93,7 @@ const BurgerConstructor: FC = () => {
                 id={bun.id}
             />}
 
-            <OrderConstructorpPanel />
+            <OrderConstructorPanel />
         </section>
     )
 }

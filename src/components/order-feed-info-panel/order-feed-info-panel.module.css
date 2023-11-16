@@ -1,0 +1,28 @@
+.panelWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.statusBar {
+    display: flex;
+    flex-direction: row;
+}
+
+.staatusBlock {
+    display: flex;
+    flex-direction: column;
+    min-height: 86px;
+    flex-grow: 1;
+}
+
+.orderCountBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.deoneItems {
+    color: #00CCCC;
+    display: flex;
+    flex-direction: column;
+}

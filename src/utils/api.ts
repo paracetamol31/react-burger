@@ -1,3 +1,4 @@
+import { IUserInfo } from "../services/actions/user";
 import {
     accessToken,
     getCookie,
@@ -14,6 +15,7 @@ const urlRequestToken: string = `${BASE_URL}/auth/token`; //эндпоинт о�
 const urlRequestUserInfo: string = `${BASE_URL}/auth/user`; //эндпоинт запроса данных о пользователе
 const urlRequestPasswordForgot: string = `${BASE_URL}/password-reset`;
 const urlRequestPasswordReset: string = `${BASE_URL}/password-reset/reset`;
+const urlRequestMakeOrderInfoByNumber: string = `${BASE_URL}/orders`;
 
 interface IParamsMakeRequest {
     url: string,
@@ -41,7 +43,7 @@ interface IResponseRegisterRequest extends IResponseLoginRequest { };
 
 interface IResponseMakeOrderRequest extends IResponse {
     name: string,
-    order: IOrder
+    order: IOrderInfo
 }
 
 interface IResponseAccessTokenRequest extends IResponse {
@@ -57,6 +59,9 @@ interface IResponseForgotPasswordRequest extends IResponseLogoutRequest { }
 
 interface IResponseResetPasswordRequest extends IResponseLogoutRequest { }
 
+interface IResponseOrdersInfo extends IResponse {
+    orders: Array<IOrderShortInfo>
+}
 
 const makeRequest = async <T extends IResponse>({ url, method = "GET", headers = {}, body }: IParamsMakeRequest): Promise<T> => {
     const response: Response = await fetch(url, {
@@ -87,7 +92,13 @@ export const makeOrderRequest = async (idItems: Array<string>): Promise<IRespons
     });
 }
 
-export const registerRequest = async (userInfo: any): Promise<IResponseRegisterRequest> => {
+export const makeOrderInfoByNumber = async (orderNumber: number): Promise<IResponseOrdersInfo> => {
+    return await makeRequest<IResponseOrdersInfo>({
+        url: `${urlRequestMakeOrderInfoByNumber}/${orderNumber}`
+    })
+}
+
+export const registerRequest = async (userInfo: IUserInfo): Promise<IResponseRegisterRequest> => {
     return await makeRequest<IResponseRegisterRequest>({
         url: urlRequestRegister,
         method: "POST",
@@ -95,7 +106,7 @@ export const registerRequest = async (userInfo: any): Promise<IResponseRegisterR
     });
 }
 
-export const loginRequest = async (userInfo: any): Promise<IResponseLoginRequest> => {
+export const loginRequest = async (userInfo: IUserInfo): Promise<IResponseLoginRequest> => {
     return await makeRequest<IResponseLoginRequest>({
         url: urlRequestLogin,
         method: "POST",
@@ -126,7 +137,7 @@ export const logoutRequest = async (): Promise<IResponseLogoutRequest> => {
     });
 }
 
-export const forgotPasswordRequest = async (email: any): Promise<IResponseForgotPasswordRequest> => {
+export const forgotPasswordRequest = async (email: string): Promise<IResponseForgotPasswordRequest> => {
     return await makeRequest<IResponseForgotPasswordRequest>({
         url: urlRequestPasswordForgot,
         method: "POST",
@@ -134,7 +145,7 @@ export const forgotPasswordRequest = async (email: any): Promise<IResponseForgot
     });
 }
 
-export const resetPasswordRequest = async (password: any, token: any): Promise<IResponseResetPasswordRequest> => {
+export const resetPasswordRequest = async (password: string, token: string): Promise<IResponseResetPasswordRequest> => {
     return await makeRequest<IResponseResetPasswordRequest>({
         url: urlRequestPasswordReset,
         method: "POST",

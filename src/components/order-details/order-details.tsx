@@ -1,20 +1,22 @@
 import { FC, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
 
 import orderDetailsStyles from "./order-details.module.css";
-import { applayOrderId } from "../../services/actions/order";
+import { applyOrderId } from "../../services/actions/order";
 import checkIcon from "../../images/check.svg"
+import { IConstructorItemStateParams } from "../../services/actions/burgerConstructor";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { IBurgerConstructorReducerState } from "../../services/reducers/burgerConstructor";
 
 const OrderDetails: FC = () => {
     const dispatch = useDispatch();
-    const burgerConstructor = useSelector((state: any) => state.burgerConstructor);
-    const { orderId, orderIdRequest, orderIdFailed } = useSelector((state: any) => state.order);
+    const burgerConstructor: IBurgerConstructorReducerState = useSelector(state => state.burgerConstructor);
+    const { orderId, orderIdRequest, orderIdFailed } = useSelector(state => state.order);
 
     useEffect(() => {
-        if (burgerConstructor.constructorItems.length) {
-            dispatch(applayOrderId([...burgerConstructor.constructorItems.map((item: any) => item.id), burgerConstructor.bun.id]) as any)
+        if (burgerConstructor.constructorItems.length && burgerConstructor.bun) {
+            dispatch(applyOrderId([...burgerConstructor.constructorItems.map((item: IConstructorItemStateParams) => item.id), burgerConstructor.bun.id]))
         }
-    }, [dispatch, burgerConstructor])
+    }, [dispatch, burgerConstructor]);
 
     return (
         <>
@@ -28,7 +30,6 @@ const OrderDetails: FC = () => {
                     <span className="text text_type_main-default mb-2">Ваш заказ начали готовить</span>
                     <span className="text text_type_main-default text_color_inactive mb-15">Дождитесь готовности на орбитальной станции</span>
                 </section >
-
             }
             {
                 orderIdRequest
