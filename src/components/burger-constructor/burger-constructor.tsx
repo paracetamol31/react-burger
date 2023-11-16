@@ -8,7 +8,6 @@ import {
     addConstructorItem,
     setDrag,
     setEmptyItem,
-    clearStartDragPosition,
     clearIndexEmptyItem,
     IAddConstructorItemPayload,
     IConstructorItemStateParams
@@ -19,7 +18,7 @@ const heightChildItemBurgerConstructor: number = 96;
 
 const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
-    const { constructorItems, bun, isDragStart, yPoint, indexEmptyItem } = useSelector(state => state.burgerConstructor);
+    const { constructorItems, bun, isDragStart, startYPointEmptyItem: yPoint, indexEmptyItem } = useSelector(state => state.burgerConstructor);
 
     const [, dropTarget] = useDrop<IAddConstructorItemPayload>({
         accept: "ingredient",
@@ -33,7 +32,6 @@ const BurgerConstructor: FC = () => {
                 index: indexEmptyItem
             }));
             dispatch(clearIndexEmptyItem());
-            dispatch(clearStartDragPosition());
             dispatch(setDrag({
                 isDrag: false
             }));
@@ -91,6 +89,7 @@ const BurgerConstructor: FC = () => {
                 thumbnail={bun.image}
                 itemType="bun"
                 id={bun.id}
+                extraClass="mr-2"
             />}
 
             <OrderConstructorPanel />

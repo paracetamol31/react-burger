@@ -9,9 +9,6 @@ export const CREATE_EMPTY_ITEM: "CREATE_EMPTY_ITEM" = "CREATE_EMPTY_ITEM";
 export const SET_EMPTY_ITEM: "SET_EMPTY_ITEM" = "SET_EMPTY_ITEM";
 export const CLEAR_INDEX_EMPTY_ITEM: "CLEAR_INDEX_EMPTY_ITEM" = "CLEAR_INDEX_EMPTY_ITEM";
 
-export const SAVE_START_DRAG_POSITION: "CREATE_START_DRAG_POSITION" = "CREATE_START_DRAG_POSITION";
-export const CLEAR_START_DRAG_POSITION: "CLEAR_START_DRAG_POSITION" = "CLEAR_START_DRAG_POSITION";
-
 export const CLEAR_BURGER_CONSTRUCTOR: "CLEAR_BURGER_CONSTRUCTOR" = "CLEAR_BURGER_CONSTRUCTOR";
 
 export interface IAddConstructorItemAction {
@@ -81,19 +78,6 @@ export interface IClearIndexEmptyItemAction {
     readonly type: typeof CLEAR_INDEX_EMPTY_ITEM;
 }
 
-export interface ISaveStartDragPositionAction {
-    readonly type: typeof SAVE_START_DRAG_POSITION;
-    readonly payload: ISaveStartDragPositionPayload;
-}
-
-export interface ISaveStartDragPositionPayload {
-    index: number
-}
-
-export interface IClearStartDragPositionAction {
-    readonly type: typeof CLEAR_START_DRAG_POSITION;
-}
-
 export interface IClearBurgerConstructorAction {
     readonly type: typeof CLEAR_BURGER_CONSTRUCTOR;
 }
@@ -150,19 +134,6 @@ export const clearIndexEmptyItem = (): IClearIndexEmptyItemAction => {
     }
 }
 
-export const saveStartDragPosition = (payload: ISaveStartDragPositionPayload): ISaveStartDragPositionAction => {
-    return {
-        type: SAVE_START_DRAG_POSITION,
-        payload
-    }
-}
-
-export const clearStartDragPosition = (): IClearStartDragPositionAction => {
-    return {
-        type: CLEAR_START_DRAG_POSITION
-    }
-}
-
 export const clearBurgerConstructor = (): IClearBurgerConstructorAction => {
     return {
         type: CLEAR_BURGER_CONSTRUCTOR
@@ -176,6 +147,4 @@ export type TBurgerConstructorActions =
     | ICreateEmptyItemAction
     | ISetEmptyItemAction
     | IClearIndexEmptyItemAction
-    | ISaveStartDragPositionAction
-    | IClearStartDragPositionAction
     | IClearBurgerConstructorAction

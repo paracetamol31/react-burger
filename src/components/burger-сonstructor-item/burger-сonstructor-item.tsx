@@ -13,10 +13,8 @@ import {
     removeConstructorItem,
     createEmptyItem,
     setDrag,
-    saveStartDragPosition,
     clearIndexEmptyItem,
     addConstructorItem,
-    clearStartDragPosition,
     IAddConstructorItemPayload
 } from "../../services/actions/burgerConstructor";
 import { FC, useEffect } from "react";
@@ -42,7 +40,7 @@ export interface ICollectedProps {
 
 
 const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
-    const { constructorItems, startDragPosition } = useSelector(state => state.burgerConstructor);
+    const { constructorItems } = useSelector(state => state.burgerConstructor);
     const dispatch = useDispatch();
     const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IAddConstructorItemPayload, unknown, ICollectedProps>({
         type: "ingredient",
@@ -57,7 +55,7 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
         // не произведет какое-нибудь взаимодействаие с gui. Достаточно просто подвинуть
         // курсор. В давнном случае это заметно, если вытащить элемент за пределы блока 
         // со свойством dropadle  
-        end: (item: IAddConstructorItemPayload , monitor: DragSourceMonitor<IAddConstructorItemPayload, unknown>) => {
+        end: (item: IAddConstructorItemPayload, monitor: DragSourceMonitor<IAddConstructorItemPayload, unknown>) => {
             if (!monitor.didDrop()) {
                 dispatch(clearIndexEmptyItem());
                 dispatch(addConstructorItem({
@@ -66,18 +64,14 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
                     id: item.id,
                     name: item.name,
                     itemType: item.itemType,
-                    index: startDragPosition
+                    index: props.index ?? null
                 }));
-                dispatch(clearStartDragPosition());
             }
         }
     });
 
     useEffect(() => {
         if (isDrag && initialClientOffset && props.index !== undefined) {
-            dispatch(saveStartDragPosition({
-                index: props.index
-            }))
             dispatch(createEmptyItem({
                 index: props.index,
                 yPoint: initialClientOffset.y

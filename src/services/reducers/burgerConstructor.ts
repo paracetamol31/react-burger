@@ -5,8 +5,6 @@ import {
     SET_DRAG,
     CLEAR_INDEX_EMPTY_ITEM,
     CREATE_EMPTY_ITEM,
-    SAVE_START_DRAG_POSITION,
-    CLEAR_START_DRAG_POSITION,
     CLEAR_BURGER_CONSTRUCTOR,
     TBurgerConstructorActions,
     IConstructorItemStateParams
@@ -15,9 +13,8 @@ export interface IBurgerConstructorReducerState {
     constructorItems: Array<IConstructorItemStateParams>;
     bun: IConstructorItemStateParams | null;
     isDragStart: boolean,
-    startDragPosition: number | null,
     indexEmptyItem: number | null,
-    yPoint: number | null
+    startYPointEmptyItem: number | null
 }
 
 const initialState: IBurgerConstructorReducerState = {
@@ -25,24 +22,11 @@ const initialState: IBurgerConstructorReducerState = {
     bun: null,
     isDragStart: false,
     indexEmptyItem: null,
-    startDragPosition: null,
-    yPoint: null
+    startYPointEmptyItem: null
 }
 
 export const burgerConstructorReducer = ((state = initialState, action: TBurgerConstructorActions): IBurgerConstructorReducerState => {
     switch (action.type) {
-        case SAVE_START_DRAG_POSITION: {
-            return {
-                ...state,
-                startDragPosition: action.payload.index
-            }
-        }
-        case CLEAR_START_DRAG_POSITION: {
-            return {
-                ...state,
-                startDragPosition: null
-            }
-        }
         case CREATE_EMPTY_ITEM: {
             state.constructorItems.splice(action.payload.index, 1, {
                 itemType: "empty",
@@ -57,7 +41,7 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 ...state,
                 constructorItems: [...state.constructorItems],
                 indexEmptyItem: action.payload.index,
-                yPoint: action.payload.yPoint
+                startYPointEmptyItem: action.payload.yPoint
             }
         }
         case SET_DRAG: {
@@ -71,7 +55,7 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 ...state,
                 constructorItems: [...state.constructorItems.filter(item => item.itemType !== "empty")],
                 indexEmptyItem: null,
-                yPoint: null
+                startYPointEmptyItem: null
             }
         }
         case SET_EMPTY_ITEM: {
@@ -95,7 +79,7 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 ...state,
                 constructorItems: [...state.constructorItems],
                 indexEmptyItem: action.payload.index,
-                yPoint: action.payload.yPoint
+                startYPointEmptyItem: action.payload.yPoint
             }
         }
         case ADD_CONSTRUCTOR_ITEM: {
@@ -120,7 +104,7 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 name: action.payload.name,
                 itemType: action.payload.itemType,
                 uuid: action.payload.uuid,
-                index: action.payload.index
+                index: action.payload.index || state.constructorItems.length
             });
             return {
                 ...state,
@@ -140,8 +124,7 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 bun: null,
                 isDragStart: false,
                 indexEmptyItem: null,
-                startDragPosition: null,
-                yPoint: null
+                startYPointEmptyItem: null
             }
         }
         default:
