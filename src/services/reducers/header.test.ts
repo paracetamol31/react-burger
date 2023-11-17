@@ -1,4 +1,7 @@
-import { CLEAR_HEADER_STATE, SET_CURRENT_MENU_HEADER } from "../actions/header";
+import {
+    CLEAR_HEADER_STATE,
+    SET_CURRENT_MENU_HEADER
+} from "../actions/header";
 import {
     headerReducer as reducer,
     initialState,

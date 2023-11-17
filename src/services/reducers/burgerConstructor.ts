@@ -17,6 +17,16 @@ export interface IBurgerConstructorReducerState {
     startYPointEmptyItem: number | null
 }
 
+export const emptyItem = {
+    itemType: "empty",
+    uuid: "",
+    id: "",
+    image: "",
+    index: null,
+    name: "",
+    price: -1
+}
+
 const initialState: IBurgerConstructorReducerState = {
     constructorItems: [],
     bun: null,
@@ -29,13 +39,8 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
     switch (action.type) {
         case CREATE_EMPTY_ITEM: {
             state.constructorItems.splice(action.payload.index, 1, {
-                itemType: "empty",
-                uuid: action.payload.uuid,
-                id: "",
-                image: "",
-                index: null,
-                name: "",
-                price: -1
+                ...emptyItem,
+                uuid: action.payload.uuid
             });
             return {
                 ...state,
@@ -67,13 +72,8 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
             }
             state.constructorItems.splice(state.indexEmptyItem, 1);
             state.constructorItems.splice(action.payload.index, 0, {
-                itemType: "empty",
-                uuid: action.payload.uuid,
-                id: "",
-                image: "",
-                index: null,
-                name: "",
-                price: -1
+                ...emptyItem,
+                uuid: action.payload.uuid
             });
             return {
                 ...state,
