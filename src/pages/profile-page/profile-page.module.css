@@ -1,6 +1,0 @@
-.pageWrapper {
-    display: grid;
-    width: 100%;
-    margin-top: 120px;
-    grid-template-columns: 1fr 480px 1fr;
-}
