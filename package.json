@@ -51,6 +51,8 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.5"
+    "@types/uuid": "^9.0.5",
+    "cypress": "^13.5.1",
+    "eslint-plugin-cypress": "^2.15.1"
   }
 }

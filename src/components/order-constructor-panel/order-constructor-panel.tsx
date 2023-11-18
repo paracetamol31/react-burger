@@ -35,7 +35,7 @@ const OrderConstructorPanel: FC = () => {
             <div className={orderConstructorPanelStyles.content}>
                 <span className="text text_type_main-large mr-2">{totalPrice}</span>
                 <CurrencyIcon type="primary" />
-                <Button htmlType="button" type="primary" size="medium" extraClass="ml-10"
+                <Button test-data="create-order-button" htmlType="button" type="primary" size="medium" extraClass="ml-10"
                     onClick={openModalOrderDetails}>
                     Оформить заказ
                 </Button>

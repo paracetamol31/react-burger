@@ -63,7 +63,7 @@ const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
 
     return (
         ingredientObject
-            ? <div ref={dragRef} onClick={openModal} className={`${ingredientСardStyles.card} pl-4 pr-4`}>
+            ? <div ref={dragRef} onClick={openModal} data-test="ingredientСard" className={`${ingredientСardStyles.card} pl-4 pr-4`}>
                 {!!ingredientObject.count && <Counter count={ingredientObject.count} size="default" extraClass="m-1" />}
                 <img src={ingredientObject.image} alt="Картина ингредиента" />
                 <div className={`${ingredientСardStyles.priceFrame} mt-1 mb-1`}>

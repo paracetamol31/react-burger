@@ -24,7 +24,12 @@ const OrderDetails: FC = () => {
                 (!orderIdRequest && !orderIdFailed)
                 &&
                 <section className={orderDetailsStyles.wrapper}>
-                    <span className={`${orderDetailsStyles.orderId} text text_type_digits-large mb-8 mt-9`}>{orderId}</span>
+                    <span
+                        className={`${orderDetailsStyles.orderId} text text_type_digits-large mb-8 mt-9`}
+                        test-data={"order-details-order-id"}
+                    >
+                        {orderId}
+                    </span>
                     <span className="text text_type_main-medium mb-15">идентификатор заказа</span>
                     <img className="mb-15" src={checkIcon.toString()} alt="Картинка недоступная человеческому восприятию" />
                     <span className="text text_type_main-default mb-2">Ваш заказ начали готовить</span>
