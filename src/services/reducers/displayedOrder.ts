@@ -13,7 +13,7 @@ export interface IDisplayedOrderState {
     displayedOrderIdFailed: boolean
 }
 
-const initialState: IDisplayedOrderState = {
+export const initialState: IDisplayedOrderState = {
     displayedOrderInfo: null,
     displayedOrderIdRequest: false,
     displayedOrderIdFailed: false
@@ -47,9 +47,7 @@ export const displayedOrderReducer = ((state = initialState, action: TDisplayedO
                 displayedOrderInfo: action.payload.displayedOrderInfo
             }
         case CLEAR_DISPLAYED_ORDER_INFO:
-            return {
-                ...initialState
-            }
+            return initialState;
         default:
             return state;
     }

@@ -19,7 +19,7 @@ export interface IOrderFeedState {
     error?: Event;
 }
 
-const initialState: IOrderFeedState = {
+export const initialState: IOrderFeedState = {
     orderData: null,
     wsConnected: false
 }

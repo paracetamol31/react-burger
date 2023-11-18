@@ -1,4 +1,8 @@
-import { CHANGE_INPUT_VALUE, CLEAR_INPUT_VALUE, CLEAR_RESET_PASSWORD_VALUE } from "../actions/authorizationInputFields";
+import {
+    CHANGE_INPUT_VALUE,
+    CLEAR_INPUT_VALUE,
+    CLEAR_RESET_PASSWORD_VALUE
+} from "../actions/authorizationInputFields";
 import {
     authorizationInputFields as reducer,
     initialState,
@@ -149,7 +153,7 @@ describe("Redex::authorizationInputFields", () => {
             registrationPage: { email: "email", name: "name", password: "password" },
             loginPage: { email: "email", password: "password" },
             resetPasswordPage: { password: "password", code: "code" },
-            forgotPasswordPage: {email: "email"}
+            forgotPasswordPage: { email: "email" }
         }, {
             type: CLEAR_INPUT_VALUE
         })).toEqual(initialState);
