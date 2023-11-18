@@ -28,6 +28,6 @@
 
 ###
 
-<p align="left">Посмотреть можно [здесь](https://paracetamol31.github.io/react-burger/)</p>
+<p align="left">Посмотреть можно на GitHub Pages <a href="https://paracetamol31.github.io/react-burger">здесь</a></p>
 
 ###
