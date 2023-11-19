@@ -11,7 +11,7 @@ export interface IUserState {
     isUserInfoLoaded: boolean
 }
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
     userInfo: null,
     isUserInfoLoaded: false
 }
@@ -33,10 +33,7 @@ export const userReducer = ((state = initialState, action: TUserActions): IUserS
                 isUserInfoLoaded: action.payload.value
             }
         case CLEAR_USER_INFO:
-            return {
-                ...state,
-                ...initialState
-            }
+            return initialState;
         default:
             return state;
     }

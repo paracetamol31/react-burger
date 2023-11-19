@@ -5,11 +5,11 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-сonstructor-item/burger-сonstructor-item";
 import OrderConstructorPanel from "../order-constructor-panel/order-constructor-panel";
 import {
-    addConstructorItem,
+    insertConstructorItem,
     setDrag,
-    setEmptyItem,
+    replaceEmptyItem,
     clearIndexEmptyItem,
-    IAddConstructorItemPayload,
+    IInsertConstructorItemPayload,
     IConstructorItemStateParams
 } from "../../services/actions/burgerConstructor";
 import { useDispatch, useSelector } from "../../services/hooks";
@@ -20,10 +20,10 @@ const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
     const { constructorItems, bun, isDragStart, startYPointEmptyItem: yPoint, indexEmptyItem } = useSelector(state => state.burgerConstructor);
 
-    const [, dropTarget] = useDrop<IAddConstructorItemPayload>({
+    const [, dropTarget] = useDrop<IInsertConstructorItemPayload>({
         accept: "ingredient",
-        drop(item: IAddConstructorItemPayload) {
-            dispatch(addConstructorItem({
+        drop(item: IInsertConstructorItemPayload) {
+            dispatch(insertConstructorItem({
                 image: item.image,
                 price: item.price,
                 id: item.id,
@@ -43,7 +43,7 @@ const BurgerConstructor: FC = () => {
             event.preventDefault();
             let result = Math.floor(Math.abs(event.clientY - yPoint) / heightChildItemBurgerConstructor);
             result = event.clientY > yPoint ? result * 1 : result * -1;
-            dispatch(setEmptyItem({
+            dispatch(replaceEmptyItem({
                 index: indexEmptyItem + result,
                 yPoint: event.clientY
             }))

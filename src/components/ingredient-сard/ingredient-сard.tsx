@@ -12,7 +12,7 @@ import {
     clearBunsCounter
 } from "../../services/actions/ingredients";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IAddConstructorItemPayload } from "../../services/actions/burgerConstructor";
+import { IInsertConstructorItemPayload } from "../../services/actions/burgerConstructor";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { IIngredientItem } from "../../services/reducers/ingredients";
 
@@ -34,7 +34,7 @@ const IngredientСard: FC<IPropsIngredientСard> = ({ id }) => {
         }
     }, [dispatch, ingredientObject, navigate, location]);
 
-    const [, dragRef] = useDrag<IAddConstructorItemPayload>({
+    const [, dragRef] = useDrag<IInsertConstructorItemPayload>({
         type: "ingredient",
         item: ingredientObject
             ? {

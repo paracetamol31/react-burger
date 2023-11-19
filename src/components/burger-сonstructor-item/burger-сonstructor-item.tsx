@@ -14,8 +14,8 @@ import {
     createEmptyItem,
     setDrag,
     clearIndexEmptyItem,
-    addConstructorItem,
-    IAddConstructorItemPayload
+    insertConstructorItem,
+    IInsertConstructorItemPayload
 } from "../../services/actions/burgerConstructor";
 import { FC, useEffect } from "react";
 import { useSelector } from "../../services/hooks";
@@ -42,7 +42,7 @@ export interface ICollectedProps {
 const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
     const { constructorItems } = useSelector(state => state.burgerConstructor);
     const dispatch = useDispatch();
-    const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IAddConstructorItemPayload, unknown, ICollectedProps>({
+    const [{ isDrag, initialClientOffset }, dragRef] = useDrag<IInsertConstructorItemPayload, unknown, ICollectedProps>({
         type: "ingredient",
         item: props.index !== undefined && props.index >= 0 ? constructorItems[props.index] : undefined,
         canDrag: props.itemType !== "bun" && props.index !== undefined && props.index >= 0,
@@ -55,10 +55,10 @@ const BurgerConstructorItem: FC<IPropsBurgerConstructorItem> = (props) => {
         // не произведет какое-нибудь взаимодействаие с gui. Достаточно просто подвинуть
         // курсор. В давнном случае это заметно, если вытащить элемент за пределы блока 
         // со свойством dropadle  
-        end: (item: IAddConstructorItemPayload, monitor: DragSourceMonitor<IAddConstructorItemPayload, unknown>) => {
+        end: (item: IInsertConstructorItemPayload, monitor: DragSourceMonitor<IInsertConstructorItemPayload, unknown>) => {
             if (!monitor.didDrop()) {
                 dispatch(clearIndexEmptyItem());
-                dispatch(addConstructorItem({
+                dispatch(insertConstructorItem({
                     image: item.image,
                     price: item.price,
                     id: item.id,

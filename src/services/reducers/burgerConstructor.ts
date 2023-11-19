@@ -1,7 +1,7 @@
 import {
-    ADD_CONSTRUCTOR_ITEM,
+    INSERT_CONSTRUCTOR_ITEM,
     REMOVE_CONSTRUCTOR_ITEM,
-    SET_EMPTY_ITEM,
+    REPLACE_EMPTY_ITEM,
     SET_DRAG,
     CLEAR_INDEX_EMPTY_ITEM,
     CREATE_EMPTY_ITEM,
@@ -27,7 +27,7 @@ export const emptyItem = {
     price: -1
 }
 
-const initialState: IBurgerConstructorReducerState = {
+export const initialState: IBurgerConstructorReducerState = {
     constructorItems: [],
     bun: null,
     isDragStart: false,
@@ -38,13 +38,15 @@ const initialState: IBurgerConstructorReducerState = {
 export const burgerConstructorReducer = ((state = initialState, action: TBurgerConstructorActions): IBurgerConstructorReducerState => {
     switch (action.type) {
         case CREATE_EMPTY_ITEM: {
-            state.constructorItems.splice(action.payload.index, 1, {
+            const copyConstructorItems = [...state.constructorItems];
+            copyConstructorItems.splice(action.payload.index, 1, {
                 ...emptyItem,
                 uuid: action.payload.uuid
-            });
+            })
+
             return {
                 ...state,
-                constructorItems: [...state.constructorItems],
+                constructorItems: copyConstructorItems,
                 indexEmptyItem: action.payload.index,
                 startYPointEmptyItem: action.payload.yPoint
             }
@@ -63,26 +65,27 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                 startYPointEmptyItem: null
             }
         }
-        case SET_EMPTY_ITEM: {
+        case REPLACE_EMPTY_ITEM: {
             if (action.payload.index === state.indexEmptyItem
                 || state.indexEmptyItem === null
                 || action.payload.index < 0
                 || action.payload.index > state.constructorItems.length - 1) {
                 return state;
             }
-            state.constructorItems.splice(state.indexEmptyItem, 1);
-            state.constructorItems.splice(action.payload.index, 0, {
+            const copyConstructorItems = [...state.constructorItems];
+            copyConstructorItems.splice(state.indexEmptyItem, 1); 
+            copyConstructorItems.splice(action.payload.index, 0, {
                 ...emptyItem,
                 uuid: action.payload.uuid
             });
             return {
                 ...state,
-                constructorItems: [...state.constructorItems],
+                constructorItems: copyConstructorItems,
                 indexEmptyItem: action.payload.index,
                 startYPointEmptyItem: action.payload.yPoint
             }
         }
-        case ADD_CONSTRUCTOR_ITEM: {
+        case INSERT_CONSTRUCTOR_ITEM: {
             if (action.payload.itemType === "bun") {
                 return {
                     ...state,
@@ -97,35 +100,31 @@ export const burgerConstructorReducer = ((state = initialState, action: TBurgerC
                     }
                 }
             }
-            state.constructorItems.splice(action.payload.index ?? state.constructorItems.length, 0, {
+            const copyConstructorItems = [...state.constructorItems];
+            copyConstructorItems.splice(action.payload.index ?? copyConstructorItems.length, 0, {
                 image: action.payload.image,
                 price: action.payload.price,
                 id: action.payload.id,
                 name: action.payload.name,
                 itemType: action.payload.itemType,
                 uuid: action.payload.uuid,
-                index: action.payload.index || state.constructorItems.length
+                index: action.payload.index || copyConstructorItems.length
             });
             return {
                 ...state,
-                constructorItems: [...state.constructorItems]
+                constructorItems: copyConstructorItems
             }
         }
         case REMOVE_CONSTRUCTOR_ITEM: {
-            state.constructorItems.splice(action.payload.index, 1);
+            const copyConstructorItems = [...state.constructorItems];
+            copyConstructorItems.splice(action.payload.index, 1);
             return {
                 ...state,
-                constructorItems: [...state.constructorItems]
+                constructorItems: copyConstructorItems
             }
         }
         case CLEAR_BURGER_CONSTRUCTOR: {
-            return {
-                constructorItems: [],
-                bun: null,
-                isDragStart: false,
-                indexEmptyItem: null,
-                startYPointEmptyItem: null
-            }
+            return initialState;
         }
         default:
             return state;
