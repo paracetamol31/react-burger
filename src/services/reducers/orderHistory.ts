@@ -20,7 +20,7 @@ export interface IOrderHistoryState {
     error?: Event;
 }
 
-const initialState: IOrderHistoryState = {
+export const initialState: IOrderHistoryState = {
     orderData: null,
     wsConnected: false
 }

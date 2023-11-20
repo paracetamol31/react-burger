@@ -44,7 +44,7 @@ export interface IAuthorizationInputFieldsSate {
     resetPasswordPage: IResetPasswordPageParams
 }
 
-const initialState: IAuthorizationInputFieldsSate = {
+export const initialState: IAuthorizationInputFieldsSate = {
     registrationPage: {
         name: "",
         email: "",
@@ -157,17 +157,10 @@ export const authorizationInputFields = ((state = initialState, action: TAuthori
     } else if (type === CLEAR_RESET_PASSWORD_VALUE) {
         return {
             ...state,
-            resetPasswordPage: {
-                ...state.resetPasswordPage,
-                password: "",
-                code: ""
-            }
+            resetPasswordPage: initialState.resetPasswordPage
         }
     } else if (type === CLEAR_INPUT_VALUE) {
-        return {
-            ...state,
-            ...initialState
-        }
+        return initialState
     }
     return state;
 });

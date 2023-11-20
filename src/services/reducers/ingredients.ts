@@ -24,7 +24,7 @@ export interface IIngredientsState {
     currentCategory: number
 }
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
     ingredients: null,

@@ -49,7 +49,9 @@ const Modal: FC<IPropsModal> = ({ children, canClose = true, onClose = () => { }
             <div onClick={stopPropagationClick} className={`${modalStyles.modalWindow} pl-10 pt-10 pr-10 pb-15`}>
                 <header className={modalStyles.header}>
                     <span className={`${modalStyles.label} text text text_type_main-large`}>{label}</span>
-                    <CloseIcon onClick={closeModal} type="primary" />
+                    <div data-test="modal-window-close-icon" onClick={closeModal}>
+                        <CloseIcon type="primary" />
+                    </div>
                 </header>
                 <main className={modalStyles.main}>
                     {children}

@@ -14,7 +14,15 @@ export interface IRoutingState {
     savedLocation: Location
 }
 
-const initialState: IRoutingState = {
+export const emptyLocation = {
+    pathname: "",
+    hash: "",
+    key: "",
+    search: "",
+    state: ""
+}
+
+export const initialState: IRoutingState = {
     isStartedPasswordReset: false,
     isResetPassword: false,
     savedLocation: {
@@ -48,19 +56,10 @@ export const routingReducer = ((state = initialState, action: TRoutingActions): 
         case CLEAR_SAVED_PATHNAME:
             return {
                 ...state,
-                savedLocation: {
-                    pathname: "",
-                    hash: "",
-                    key: "",
-                    search: "",
-                    state: ""
-                }
+                savedLocation: emptyLocation
             }
         case CLEAR_ROUTING_STATE: {
-            return {
-                ...state,
-                ...initialState
-            }
+            return initialState;
         }
         default:
             return state;

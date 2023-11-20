@@ -6,7 +6,7 @@ export interface IProfileState {
     footerText?: string;
 }
 
-const initialState: IProfileState = {
+export  const initialState: IProfileState = {
     currentItem: "menuItemProfile",
     footerText: ""
 }

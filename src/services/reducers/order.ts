@@ -12,7 +12,7 @@ export interface IOrderState {
     orderIdFailed: boolean
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
     orderId: null,
     orderIdRequest: false,
     orderIdFailed: false

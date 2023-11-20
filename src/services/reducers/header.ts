@@ -10,7 +10,7 @@ export interface IHeaderSate {
     currentItem: TCurrentMenuHeaders
 }
 
-const initialState: IHeaderSate = {
+export const initialState: IHeaderSate = {
     currentItem: burgerConstructor
 }
 
